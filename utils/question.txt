@@ -1,0 +1,17 @@
+(I am learning English, so please excuse my English)
+
+```nim
+import strutils
+import sequtils
+
+let N = 10
+let S = "grape banana tomato"
+let A = newSeqWith(N, S.split)
+echo A
+```
+I know split has 2 patterns, iterator and procedure.
+In this pattern, I thought the split was executed as as procedure.
+why do i get a error?
+```txt
+Error: type mismatch: got 'seq[string]' for 'split(S, {' ', '\t', '\v', '\r', '\n', '\f'}, -1)' but expected 'string'
+```

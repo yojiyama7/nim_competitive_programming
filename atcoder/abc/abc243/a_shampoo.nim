@@ -59,3 +59,17 @@ template newSeqWith*(len: int, init: untyped): untyped =
 
 ################################
 
+let (_, V, A, B, C) = stdin.readLine.scanTuple("$i $i $i $i")
+
+var remain = V mod (A + B + C)
+
+block:
+  if remain < A:
+    echo "F"
+    break
+  remain -= A
+  if remain < B:
+    echo "M"
+    break
+  remain -= B
+  echo "T"

@@ -43,3 +43,10 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let (A, B, C, D) = stdin.readLine.split.map(parseInt).toTuple(4)
+
+if (A, B) <= (C, D):
+  echo "Takahashi"
+else:
+  echo "Aoki"

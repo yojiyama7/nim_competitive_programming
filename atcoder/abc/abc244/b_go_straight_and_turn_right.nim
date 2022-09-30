@@ -43,3 +43,25 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  N = stdin.readLine.parseInt
+  T = stdin.readLine
+
+var
+  x, y, d = 0
+
+for t in T:
+  if t == 'S':
+    if d == 0:
+      x += 1
+    elif d == 1:
+      y -= 1
+    elif d == 2:
+      x -= 1
+    else:
+      y += 1
+  else:
+    d = (d+1) mod 4
+
+echo fmt"{x} {y}"

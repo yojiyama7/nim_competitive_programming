@@ -43,3 +43,15 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  N = stdin.readLine.parseInt
+  A = stdin.readLine.split.map(parseInt)
+
+let l = A.sorted
+var x = 0
+for li in l:
+  if x == li:
+    x += 1
+
+echo x

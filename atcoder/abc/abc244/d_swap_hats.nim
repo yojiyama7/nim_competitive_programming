@@ -43,3 +43,24 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+# 0つ違う(正解) -> 2つ違う
+# 2つ違う      -> 0つ違う, 3つ違う
+# 3つ違う      -> 2つ違う
+
+# 0 - 2 - 3
+
+
+let
+  S = stdin.readLine
+  T = stdin.readLine
+
+var d = 0
+for (s, t) in zip(S, T):
+  if s != t:
+    d += 1
+
+if d == 2:
+  echo "No"
+else:
+  echo "Yes"

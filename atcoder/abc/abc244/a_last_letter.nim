@@ -43,3 +43,9 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  N = stdin.readLine.parseInt
+  S = stdin.readLine
+
+echo S[^1]

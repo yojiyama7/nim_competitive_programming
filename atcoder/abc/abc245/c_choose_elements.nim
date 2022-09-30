@@ -43,3 +43,28 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  (N, K) = stdin.readLine.split.map(parseInt).toTuple(2)
+  A = stdin.readLine.split.map(parseInt)
+  B = stdin.readLine.split.map(parseInt)
+
+let AB = zip(A, B)
+
+var dp = newSeqWith(N, @[false, false])
+dp[0] = @[true, true]
+for i in 1..<N:
+  if dp[i-1][0] and abs(A[i-1]-AB[i][0]) <= K:
+    dp[i][0] = true
+  if dp[i-1][1] and abs(B[i-1]-AB[i][0]) <= K:
+    dp[i][0] = true
+  if dp[i-1][0] and abs(A[i-1]-AB[i][1]) <= K:
+    dp[i][1] = true
+  if dp[i-1][1] and abs(B[i-1]-AB[i][1]) <= K:
+    dp[i][1] = true
+
+if dp[N-1][0] or dp[N-1][1]:
+  echo "Yes"
+else:
+  echo "No"
+

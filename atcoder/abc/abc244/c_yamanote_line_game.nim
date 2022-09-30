@@ -43,3 +43,19 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let N = stdin.readLine.parseInt
+
+var
+  flags = newSeqWith(2*N+2, false)
+  min_unused = 1
+
+while min_unused <= 2*N+1:
+  echo min_unused
+  flags[min_unused] = true
+  let aoki = stdin.readLine.parseInt
+  if aoki == 0:
+    break
+  flags[aoki] = true
+  while flags[min_unused]:
+    min_unused += 1

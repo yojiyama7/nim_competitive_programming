@@ -43,20 +43,3 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
-
-let N = stdin.readLine.parseInt
-
-var result = 10^18+1
-
-for a in 0..10^6:
-  var (ng, ok) = (-1, 10^6)
-  while abs(ok-ng) > 1:
-    let mid = (ok+ng) div 2
-    if (a^2 + mid^2) * (a + mid) >= N:
-      ok = mid
-    else:
-      ng = mid
-  let score = (a^2 + ok^2) * (a + ok)
-  result = min(score, result)
-
-echo result

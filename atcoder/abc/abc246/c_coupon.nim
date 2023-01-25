@@ -43,3 +43,22 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  (N, K, X) = stdin.readLine.split.map(parseInt).toTuple(3)
+  A = stdin.readline.split.map(parseInt)
+
+var couponCnt = K
+var cost = A.sum
+
+let fullUsableCouponCnt = A.mapIt(it div X).sum()
+let fullUseCoupon = min(couponCnt, fullUsableCouponCnt)
+couponCnt -= fullUseCoupon
+cost -= fullUseCoupon*X
+
+if couponCnt > 0:
+  var prices = A.mapIt(it mod X)
+  prices.sort()
+  cost -= prices[^min(couponCnt, N)..^1].sum()
+
+echo cost

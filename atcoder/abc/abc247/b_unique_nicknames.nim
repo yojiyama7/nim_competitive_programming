@@ -42,21 +42,36 @@ macro toTuple[T](a: openArray[T], n: static[int]): untyped =
 proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
+proc unzip*[S, T](s: openArray[(S, T)]): (seq[S], seq[T]) =
+  result[0] = newSeq[S](s.len)
+  result[1] = newSeq[T](s.len)
+  for i in 0..<s.len:
+    result[0][i] = s[i][0]
+    result[1][i] = s[i][1]
+
 ################################
 
-let N = stdin.readLine.parseInt
+let
+  N = stdin.readLine.parseInt
+  ST = newSeqWith(N, stdin.readLine.split.toTuple(2))
 
-var result = 10^18+1
+let
+  (S, T) = unzip(ST)
+var
+  wordCountTable = (S & T).toCountTable
 
-for a in 0..10^6:
-  var (ng, ok) = (-1, 10^6)
-  while abs(ok-ng) > 1:
-    let mid = (ok+ng) div 2
-    if (a^2 + mid^2) * (a + mid) >= N:
-      ok = mid
-    else:
-      ng = mid
-  let score = (a^2 + ok^2) * (a + ok)
-  result = min(score, result)
+# echo wordCountTable
+# echo wordCountTable["tanaka"]
 
-echo result
+for (s, t) in ST:
+  wordCountTable[s] = wordCountTable[s] - 1 # QUESTION: なぜ -= と書けないのか
+  wordCountTable[t] = wordCountTable[t] - 1
+
+  if wordCountTable[s] > 0 and wordCountTable[t] > 0:
+    echo "No"
+    quit()
+
+  wordCountTable[s] = wordCountTable[s] + 1
+  wordCountTable[t] = wordCountTable[t] + 1
+
+echo "Yes"

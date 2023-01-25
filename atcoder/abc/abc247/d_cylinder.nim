@@ -44,19 +44,25 @@ proc just[T, U](x: T, f: T -> U): U =
 
 ################################
 
-let N = stdin.readLine.parseInt
+let
+  Q = stdin.readLine.parseInt()
+  QUERY = newSeqWith(Q, stdin.readLine.split.map(parseInt))
 
-var result = 10^18+1
-
-for a in 0..10^6:
-  var (ng, ok) = (-1, 10^6)
-  while abs(ok-ng) > 1:
-    let mid = (ok+ng) div 2
-    if (a^2 + mid^2) * (a + mid) >= N:
-      ok = mid
-    else:
-      ng = mid
-  let score = (a^2 + ok^2) * (a + ok)
-  result = min(score, result)
-
-echo result
+var q = initDeque[tuple[num, cnt: int]](Q.nextPowerOfTwo())
+for query in QUERY:
+  if query[0] == 1:
+    # echo query[1 ..< ^0]
+    let (x, c) = query[1 ..< ^0].toTuple(2)
+    q.addLast( (x, c) )
+  elif query[0] == 2:
+    var c = query[1]
+    var sumNum = 0
+    while c > 0:
+      var first = q.popFirst()
+      let z = min(c, first.cnt)
+      c -= z
+      sumNum += first.num * z
+      first.cnt -= z
+      if first.cnt > 0:
+        q.addFirst(first)
+    echo sumNum

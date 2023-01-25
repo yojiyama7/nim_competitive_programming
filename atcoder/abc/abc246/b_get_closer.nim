@@ -43,3 +43,9 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let (A, B) = stdin.readLine.split.map(parseFloat).toTuple(2)
+
+let p = sqrt(A^2 + B^2)
+
+echo(fmt"{A/p} {B/p}")

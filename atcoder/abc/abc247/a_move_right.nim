@@ -43,3 +43,7 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let S = stdin.readLine
+
+echo "0" & S[0..<3]

@@ -45,16 +45,24 @@ proc just[T, U](x: T, f: T -> U): U =
 ################################
 
 let
-  Q = stdin.readline.parseInt()
-  QUERY = newSeqWith(Q, stdin.readline.split.map(parseInt))
+  Q = stdin.readLine.parseInt()
+  QUERY = newSeqWith(Q, stdin.readLine.split.map(parseInt))
 
-var q: seq[(int, int)]
-var x = 0'i64
-
+var q = initDeque[tuple[num, cnt: int]](Q.nextPowerOfTwo())
 for query in QUERY:
   if query[0] == 1:
-    let (x, c) = query[1..^0].toTuple(2)
-    q.add((x, c))
-  elif query[1] == 2:
-    let c = query[1]
-
+    # echo query[1 ..< ^0]
+    let (x, c) = query[1 ..< ^0].toTuple(2)
+    q.addLast( (x, c) )
+  elif query[0] == 2:
+    var c = query[1]
+    var sumNum = 0
+    while c > 0:
+      var first = q.popFirst()
+      let z = min(c, first.cnt)
+      c -= z
+      sumNum += first.num * z
+      first.cnt -= z
+      if first.cnt > 0:
+        q.addFirst(first)
+    echo sumNum

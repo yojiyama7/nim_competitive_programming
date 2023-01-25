@@ -43,14 +43,3 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
-
-let N = stdin.readline.parseInt()
-
-proc f(x: int): seq[int] =
-  if x == 1:
-    return @[1]
-  let beforeX = f(x-1)
-  # 足し算で描きたい
-  return concat(beforeX, @[x], beforeX)
-
-echo f(N).join(" ")

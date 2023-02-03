@@ -43,3 +43,22 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  N = stdin.readLine.parseInt()
+  A = stdin.readLine.split.map(parseInt)
+  Q = stdin.readLine.parseInt()
+  QUERY = newSeqWith(Q, stdin.readLine.split.map(parseInt))
+
+var l = A
+
+for query in QUERY:
+  let kind = query[0]
+  if kind == 1:
+    var (k, x) = query[1..^1].toTuple(2)
+    k -= 1
+    l[k] = x
+  else:
+    var k = query[1]
+    k -= 1
+    echo l[k]

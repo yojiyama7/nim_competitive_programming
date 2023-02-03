@@ -43,3 +43,12 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  S = stdin.readLine
+  T = stdin.readLine
+
+if S.contains(T):
+  echo "Yes"
+else:
+  echo "No"

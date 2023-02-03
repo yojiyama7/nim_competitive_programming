@@ -14,10 +14,6 @@ template countIt*(s, pred: untyped): int =
   for it {.inject.} in s:
     if pred: result += 1
   result
-# since (1, 1):
-func maxIndex*[T](s: openArray[T]): int =
-  for i in 1..high(s):
-    if s[i] > s[result]: result = i
 
 macro toTuple[T](a: openArray[T], n: static[int]): untyped =
   ## かなり原始的に書いている
@@ -47,3 +43,11 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  T = stdin.readLine.parseInt()
+
+for _ in 0..<T:
+  let N = stdin.readLine.parseInt()
+  let A = stdin.readLine.split.map(parseInt)
+  echo A.countIt(it mod 2 == 1)

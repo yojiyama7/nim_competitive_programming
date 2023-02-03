@@ -47,3 +47,10 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let ABC = stdin.readLine.split.map(parseInt)
+
+if ABC.isSorted or ABC.isSorted(Descending):
+  echo "Yes"
+else:
+  echo "No"

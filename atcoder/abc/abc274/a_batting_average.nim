@@ -47,3 +47,8 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let (A, B) = stdin.readLine.split.map(parseInt).toTuple(2)
+
+let n = (B / A).round(3)
+echo &"{n:.3f}"

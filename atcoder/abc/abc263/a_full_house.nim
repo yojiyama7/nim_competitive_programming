@@ -47,3 +47,12 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let ABCDE = stdin.readLine.split.map(parseInt)
+
+var ct = ABCDE.toCountTable
+ct.sort()
+if toSeq(ct.values) == @[3, 2]:
+  echo "Yes"
+else:
+  echo "No"

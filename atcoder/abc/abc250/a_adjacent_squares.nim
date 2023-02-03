@@ -47,3 +47,19 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  (H, W) = stdin.readline.split.map(parseInt).toTuple(2)
+  (R, C) = stdin.readline.split.map(parseInt).toTuple(2)
+
+var result = 4
+if R == 1:
+  result -= 1
+if R == H:
+  result -= 1
+if C == 1:
+  result -= 1
+if C == W:
+  result -= 1
+
+echo result

@@ -47,3 +47,9 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  N = stdin.readLine.parseInt()
+  H = stdin.readLine.split.map(parseInt)
+
+echo H.maxIndex()+1

@@ -47,3 +47,7 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let ABCDE = stdin.readLine.split.map(parseInt)
+
+echo ABCDE.toHashSet.len

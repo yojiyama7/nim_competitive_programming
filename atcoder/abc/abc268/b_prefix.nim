@@ -47,3 +47,13 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  S = stdin.readLine
+  T = stdin.readLine
+
+if T.startsWith(S):
+  echo "Yes"
+else:
+  echo "No"
+

@@ -47,3 +47,7 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let (N, X) = stdin.readLine.split.map(parseInt).toTuple(2)
+
+echo ('A'..'Z').toSeq.join()[(X-1) div N]

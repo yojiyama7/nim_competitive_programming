@@ -47,3 +47,11 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let (X, Y, N) = stdin.readLine.split.map(parseInt).toTuple(3)
+
+let
+  price1 = X
+  price3 = min(X*3, Y)
+
+echo (N div 3)*price3 + (N mod 3)*price1

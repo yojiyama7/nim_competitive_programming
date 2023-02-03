@@ -47,3 +47,12 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  (N, P, Q, R, S) = stdin.readLine.split.map(parseInt).toTuple(5)
+  A = stdin.readLine.split.map(parseInt)
+
+let (p, q, r, s) = (P-1, Q, R-1, S)
+let res = A[0..<p] & A[r..<s] & A[q..<r] & A[p..<q] & A[s..<N]
+
+echo res.join(" ")

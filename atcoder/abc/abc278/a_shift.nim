@@ -47,3 +47,11 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  (N, K) = stdin.readLine.split.map(parseInt).toTuple(2)
+  A = stdin.readLine.split.map(parseInt)
+
+let nkmin = min(N, K)
+let l = A[nkmin..^1] & newSeqWith(nkmin, 0)
+echo l.join(" ")

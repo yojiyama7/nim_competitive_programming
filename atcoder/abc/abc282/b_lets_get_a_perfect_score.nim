@@ -44,3 +44,7 @@ proc just[T, U](x: T, f: T -> U): U =
 
 ################################
 
+let
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+  S = newSeqWith(N, stdin.readLine)
+

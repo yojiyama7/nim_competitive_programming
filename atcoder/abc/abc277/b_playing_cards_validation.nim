@@ -43,3 +43,21 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  N = stdin.readLine.parseInt()
+  S = newSeqWith(N, stdin.readLine)
+
+block solving:
+  for s in S:
+    if s[0] notin "HDCS".toSet:
+      echo "No"
+      break solving
+  for s in S:
+    if s[1] notin "A23456789TJQK".toSet:
+      echo "No"
+      break solving
+  if S.len != S.toHashSet.len:
+    echo "No"
+    break solving
+  echo "Yes"

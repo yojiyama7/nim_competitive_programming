@@ -47,3 +47,14 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  (H, W) = stdin.readLine.split.map(parseInt).toTuple(2)
+  C = newSeqWith(H, stdin.readLine)
+
+for x in 0..<W:
+  var cnt = 0
+  for y in 0..<H:
+    if C[y][x] == '#':
+      cnt += 1
+  echo cnt

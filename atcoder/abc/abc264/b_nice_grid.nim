@@ -43,3 +43,12 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let (R, C) = stdin.readLine.split.map(parseInt).toTuple(2)
+
+let (x, y) = (C-8, R-8)
+
+echo  if max(abs(x), abs(y)) mod 2 == 1:
+        "black"
+      else:
+        "white"

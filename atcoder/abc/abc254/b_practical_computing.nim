@@ -43,3 +43,19 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let N = stdin.readLine.parseInt()
+
+var result: seq[seq[int]] = @[]
+for i in 0..<N:
+  result.add(newSeq[int](i+1))
+
+for i in 0..<N:
+  for j in 0..<i+1:
+    result[i][j] =  if j == 0 or j == i:
+                      1
+                    else:
+                      result[i-1][j-1] + result[i-1][j]
+
+for r in result:
+  echo r.join(" ")

@@ -1,6 +1,6 @@
 import sequtils, strutils, strformat, strscans, algorithm, math, sugar, hashes, tables
 import complex, random, deques, heapqueue, sets, macros
-{. warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off .}
+{. warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off .}
 
 template newSeqWith*(len: int, init: untyped): untyped =
   var result = newSeq[typeof(init, typeOfProc)](len)
@@ -14,6 +14,10 @@ template countIt*(s, pred: untyped): int =
   for it {.inject.} in s:
     if pred: result += 1
   result
+# since (1, 1):
+func maxIndex*[T](s: openArray[T]): int =
+  for i in 1..high(s):
+    if s[i] > s[result]: result = i
 
 macro toTuple[T](a: openArray[T], n: static[int]): untyped =
   ## かなり原始的に書いている
@@ -44,3 +48,9 @@ proc just[T, U](x: T, f: T -> U): U =
 
 ################################
 
+let S = stdin.readLine
+
+if S != S.toLower and S != S.toUpper and S.len == S.toHashSet.len:
+  echo "Yes"
+else:
+  echo "No"

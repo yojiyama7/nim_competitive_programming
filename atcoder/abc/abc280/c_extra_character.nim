@@ -43,3 +43,14 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  S = stdin.readLine
+  T = stdin.readLine
+
+block solving:
+  for i, (s, t) in zip(S, T):
+    if s != t:
+      echo i + 1
+      break solving
+  echo T.len

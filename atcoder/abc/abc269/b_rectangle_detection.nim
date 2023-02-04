@@ -43,3 +43,24 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  S = newSeqWith(10, stdin.readLine)
+
+proc isDot(i, j: int): bool =
+  if i in 0..<10 and j in 0..<10:
+    return S[i][j] == '.'
+  return true
+
+var a, b, c, d = 0
+for i in 0..<10:
+  for j in 0..<10:
+    if isDot(i, j):
+      continue
+    if isDot(i-1, j) and isDot(i, j-1):
+      (a, c) = (i+1, j+1)
+    if isDot(i+1, j) and isDot(i, j+1):
+      (b, d) = (i+1, j+1)
+
+echo &"{a} {b}"
+echo &"{c} {d}"

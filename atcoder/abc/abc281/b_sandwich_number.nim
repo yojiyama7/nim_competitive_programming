@@ -43,3 +43,17 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let S = stdin.readLine
+
+let res = if S.len != 8:
+            "No"
+          elif S[0] notin {'A'..'Z'}:
+            "No"
+          elif S[7] notin {'A'..'Z'}:
+            "No"
+          elif not (100000..999999).toSeq.anyIt($it == S[1..6]):
+            "No"
+          else:
+            "Yes"
+echo res

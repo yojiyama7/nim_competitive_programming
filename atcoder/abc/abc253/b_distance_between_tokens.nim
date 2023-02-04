@@ -47,3 +47,19 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  (H, W) = stdin.readLine.split.map(parseInt).toTuple(2)
+  S = newSeqWith(H, stdin.readLine)
+
+var posSeq: seq[(int, int)]
+for y, line in S:
+  for x, c in line:
+    if c == 'o':
+      posSeq.add((x, y))
+
+let
+  (x1, y1) = posSeq[0]
+  (x2, y2) = posSeq[1]
+
+echo abs(x1-x2) + abs(y1-y2)

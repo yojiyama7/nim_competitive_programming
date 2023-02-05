@@ -48,3 +48,10 @@ let
   (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
   S = newSeqWith(N, stdin.readLine)
 
+var cnt = 0
+for i in 0..<N:
+  for j in i+1..<N:
+    if zip(S[i], S[j]).allIt(it[0] == 'o' or it[1] == 'o'):
+      cnt += 1
+
+echo cnt

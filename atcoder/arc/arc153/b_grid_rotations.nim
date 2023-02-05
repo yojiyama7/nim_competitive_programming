@@ -47,21 +47,3 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
-
-let
-  N = stdin.readLine.parseInt()
-  A = newSeqWith(N, stdin.readLine)
-
-block solving:
-  for i in 0..<N:
-    for j in i+1..<N:
-      let
-        a = A[i][j]
-        b = A[j][i]
-      # if a&b notin ["WL", "LW", "DD"]:
-      if not ((a == 'W' and b == 'L') or
-              (a == 'L' and b == 'W') or
-              (a == 'D' and b == 'D')):
-        echo "incorrect"
-        break solving
-  echo "correct"

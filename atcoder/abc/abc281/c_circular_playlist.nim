@@ -43,3 +43,15 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  (N, T) = stdin.readLine.split.map(parseInt).toTuple(2)
+  A = stdin.readLine.split.map(parseInt)
+
+let stopSec = T mod A.sum()
+var elapsedSec = 0
+for i, a in A:
+  if elapsedSec + a > stopSec:
+    echo &"{i+1} {stopSec - elapsedSec}"
+    break
+  elapsedSec += a

@@ -48,17 +48,26 @@ proc just[T, U](x: T, f: T -> U): U =
 
 ################################
 
-let (H, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+let
+  N = stdin.readLine.parseInt()
+  S = stdin.readLine
+# let
+#   N = 10^5
+#   S = 'x'.repeat(N)
 
-proc isEasyToMisjudge(timeMin: int): bool =
-  let (h, m) = (timeMin div 60, timeMin mod 60)
-  # echo [h, m]
-  let (a, b, c, d) = (h div 10, h mod 10, m div 10, m mod 10)
-  let (anotherH, anotherM) = (a*10+c, b*10+d)
-  anotherH in 0..<24 and anotherM in 0..<60
+var consecutiveCnts = newSeq[int]()
+var cnt = 1
+var i = 1
+while i < N:
+  if S[i-1] == S[i]:
+    cnt += 1
+  else:
+    consecutiveCnts.add(cnt)
+    cnt = 1
+  i += 1
+consecutiveCnts.add(cnt)
 
-var timeMin = H*60+M
-while not timeMin.isEasyToMisjudge:
-  timeMin = (timeMin+1) mod (60*24)
-let (resH, resM) = (timeMin div 60, timeMin mod 60 )
-echo [resH, resM].join(" ")
+proc nC2(n: int): int =
+  (n*(n-1)) div 2
+
+echo consecutiveCnts.map(nC2).sum()

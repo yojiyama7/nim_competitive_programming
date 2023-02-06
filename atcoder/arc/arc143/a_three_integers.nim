@@ -48,17 +48,25 @@ proc just[T, U](x: T, f: T -> U): U =
 
 ################################
 
-let (H, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+# A, B, C で昇順になるようにソート
+# A = a+x
+# B = b+x
+# C = a+b+x
+# ただし(a, b, x は非負整数 & a <= b)
+# であるとして表現できるとき Yes
+#
+# A + B = a+b+2x
+# A + B - C = x
+# となり
+# xが負のとき No である
+# xが非負のとき C 回の操作で可能
 
-proc isEasyToMisjudge(timeMin: int): bool =
-  let (h, m) = (timeMin div 60, timeMin mod 60)
-  # echo [h, m]
-  let (a, b, c, d) = (h div 10, h mod 10, m div 10, m mod 10)
-  let (anotherH, anotherM) = (a*10+c, b*10+d)
-  anotherH in 0..<24 and anotherM in 0..<60
+var ABC = stdin.readLine.split.map(parseInt)
+ABC.sort()
+let (A, B, C) = ABC.toTuple(3)
 
-var timeMin = H*60+M
-while not timeMin.isEasyToMisjudge:
-  timeMin = (timeMin+1) mod (60*24)
-let (resH, resM) = (timeMin div 60, timeMin mod 60 )
-echo [resH, resM].join(" ")
+let x = A + B - C
+if x < 0:
+  echo -1
+else:
+  echo C

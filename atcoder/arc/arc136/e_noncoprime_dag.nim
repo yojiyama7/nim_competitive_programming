@@ -47,18 +47,3 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
-
-let (H, M) = stdin.readLine.split.map(parseInt).toTuple(2)
-
-proc isEasyToMisjudge(timeMin: int): bool =
-  let (h, m) = (timeMin div 60, timeMin mod 60)
-  # echo [h, m]
-  let (a, b, c, d) = (h div 10, h mod 10, m div 10, m mod 10)
-  let (anotherH, anotherM) = (a*10+c, b*10+d)
-  anotherH in 0..<24 and anotherM in 0..<60
-
-var timeMin = H*60+M
-while not timeMin.isEasyToMisjudge:
-  timeMin = (timeMin+1) mod (60*24)
-let (resH, resM) = (timeMin div 60, timeMin mod 60 )
-echo [resH, resM].join(" ")

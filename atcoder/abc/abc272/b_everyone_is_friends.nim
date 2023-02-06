@@ -43,3 +43,22 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+  X = newSeqWith(M, stdin.readLine.split.map(parseInt)[1..^1])
+
+var isFriend = newSeqWith(N, newSeq[bool](N))
+for x in X:
+  # もっと書きようがありそう product がタプルを受け取ったときはタプルを返すとか？
+  for ab in product([x, x]):
+      var (a, b) = ab.toTuple(2)
+      a -= 1
+      b -= 1
+      isFriend[a][b] = true
+      isFriend[b][a] = true
+
+if isFriend.foldl(a & b).allIt(it):
+  echo "Yes"
+else:
+  echo "No"

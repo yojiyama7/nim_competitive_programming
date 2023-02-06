@@ -47,3 +47,16 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  N = stdin.readLine.parseInt()
+  P = @[-1, -1] & stdin.readLine.split.map(parseInt)
+
+var pos = N
+var generationAgoNum = 0
+while pos > 1:
+  # echo pos
+  pos = P[pos]
+  generationAgoNum += 1
+
+echo generationAgoNum

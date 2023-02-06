@@ -43,3 +43,17 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+const INF = 10^18
+
+let
+  N = stdin.readLine.parseInt()
+  S = stdin.readLine
+
+for i in 1..N-1:
+  for l in 1..INF:
+    if l + i > N or S[l-1] == S[l-1 + i]:
+      echo l-1
+      break
+
+# なんかうまく解けなかったな

@@ -43,3 +43,18 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  N = stdin.readLine.parseInt()
+var
+  S = stdin.readLine
+
+var quoteCnt = 0
+for i in 0..<S.len:
+  if S[i] == '"':
+    quoteCnt += 1
+  elif S[i] == ',':
+    if quoteCnt mod 2 == 0:
+      S[i] = '.'
+
+echo S

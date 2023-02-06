@@ -1,5 +1,5 @@
 import sequtils, strutils, strformat, strscans, algorithm, math, sugar, hashes, tables
-import complex, random, deques, heapqueue, sets, macros
+import complex, random, deques, heapqueue, sets, macros, rationals
 {. warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off .}
 
 template newSeqWith*(len: int, init: untyped): untyped =
@@ -47,3 +47,16 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let (A, B, C, D, E, F, X) = stdin.readLine.split.map(parseInt).toTuple(7)
+
+let
+  t = ((X div (A+C)) * A*B) + min(A, X mod (A+C)) * B
+  a = ((X div (D+F)) * D*E) + min(A, X mod (D+F)) * E
+
+if t > a:
+  echo "Takahashi"
+elif t < a:
+  echo "Aoki"
+else:
+  echo "Draw"

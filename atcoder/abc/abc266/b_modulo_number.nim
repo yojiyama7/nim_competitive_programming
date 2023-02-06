@@ -43,3 +43,9 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let N = stdin.readLine.parseInt()
+
+const MOD = 998244353
+
+echo ((N mod MOD) + MOD) mod MOD # 1.0.6 特有?

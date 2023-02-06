@@ -47,3 +47,19 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let (N, A, B) = stdin.readLine.split.map(parseInt).toTuple(3)
+
+var result = newSeqWith(A*N, newString(B*N))
+
+for i in 0..<N:
+  for j in 0..<N:
+    for y in 0..<A:
+      for x in 0..<B:
+        result[i*A + y][j*B + x] =  if (i+j) mod 2 == 0:
+                                      '.'
+                                    else:
+                                      '#'
+
+for line in result:
+  echo line

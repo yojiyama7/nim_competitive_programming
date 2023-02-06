@@ -47,3 +47,17 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let (X, Y, Z) = stdin.readLine.split.map(parseInt).toTuple(3)
+
+if Y in 0..X or Y in X..0:
+  # can get hammer?
+  if Y in 0..Z or Y in Z..0:
+    # can't
+    echo -1
+  else:
+    # can
+    echo abs(Z-0) + abs(X-Z)
+else:
+  # direct
+  echo abs(X)

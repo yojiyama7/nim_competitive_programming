@@ -47,3 +47,19 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  (N, K, Q) = stdin.readLine.split.map(parseInt).toTuple(3)
+  A = stdin.readLine.split.map(parseInt)
+  L = stdin.readLine.split.map(parseInt)
+
+var posList = A
+for l in L:
+  let pawnId = l-1
+  if posList[pawnId] == N:
+    continue
+  if pawnId+1 < K and posList[pawnId] + 1 == posList[pawnId+1]:
+    continue
+  posList[pawnId] += 1
+
+echo posList.join(" ")

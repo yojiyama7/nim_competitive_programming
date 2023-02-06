@@ -49,11 +49,11 @@ proc just[T, U](x: T, f: T -> U): U =
 ################################
 
 let
-  (N, Q) = stdin.readLine.split.map(parseInt).toTuple(2)
-  L = newSeqWith(N, stdin.readLine.split.map(parseInt)[1..^1] )
-  ST = newSeqWith(Q, stdin.readLine.split.map(parseInt).toTuple(2))
+  N = stdin.readLine.parseInt()
 
-# echo L
-
-for (s, t) in ST:
-  echo L[s-1][t-1]
+echo 2*N
+var res = ""
+if N mod 4 > 0:
+  res &= (N mod 4).intToStr
+res &= '4'.repeat(N div 4)
+echo res

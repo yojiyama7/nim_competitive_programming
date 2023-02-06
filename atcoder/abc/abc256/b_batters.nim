@@ -43,3 +43,16 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  N = stdin.readLine.parseInt()
+  A = stdin.readLine.split.map(parseInt)
+
+var l = newSeq[bool](4)
+var result = 0
+for a in A:
+  l[0] = true
+  result += l[4-a..^1].count(true)
+  l = newSeq[bool](a) & l[0..<4-a]
+
+echo result

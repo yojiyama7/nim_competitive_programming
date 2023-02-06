@@ -43,3 +43,16 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let S = stdin.readLine
+
+var idx = 0
+var cnt = 0
+while idx < S.len:
+  if idx+2 <= S.len and S[idx..<idx+2] == "00":
+    idx += 2
+  else:
+    idx += 1
+  cnt += 1
+
+echo cnt

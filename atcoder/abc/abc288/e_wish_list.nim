@@ -47,13 +47,3 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
-
-let
-  (N, Q) = stdin.readLine.split.map(parseInt).toTuple(2)
-  L = newSeqWith(N, stdin.readLine.split.map(parseInt)[1..^1] )
-  ST = newSeqWith(Q, stdin.readLine.split.map(parseInt).toTuple(2))
-
-# echo L
-
-for (s, t) in ST:
-  echo L[s-1][t-1]

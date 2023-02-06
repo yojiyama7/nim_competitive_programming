@@ -47,3 +47,29 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let N = stdin.readLine.parseInt()
+
+# a  b c d  e  f
+# 12 3 4 56 79 8
+
+proc parseDigits(x: int): seq[int] =
+  var n = x
+  while n > 0:
+    result.add(n mod 10)
+    n = n div 10
+  result
+
+proc UnparseFromDigits(nums: openArray[int]): int =
+  for x in nums:
+    result *= 10
+    result += x
+  result
+
+var beautifulNums = newSeq[int]()
+for i in 100000..999999:
+  let (f, e, d, c, b, a) = parseDigits(i).toTuple(6)
+  let bNum = UnparseFromDigits([a, a, b, c, d, d, e, f, e])
+  beautifulNums.add(bNum)
+
+echo beautifulNums[N-1]

@@ -47,3 +47,24 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  (H, W) = stdin.readLine.split.map(parseInt).toTuple(2)
+var
+  C = newSeqWith(H, stdin.readLine)
+
+
+for cy in 0..<H:
+  for cx in 0..<W:
+    if C[cy][cx] != '.':
+      continue
+    var colorCands = "12345".toSet()
+    for (dx, dy) in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+      let (x, y) = (cx+dx, cy+dy)
+      if not (x in 0..<W and y in 0..<H):
+        continue
+      colorCands.excl(C[y][x])
+    C[cy][cx] = colorCands.toSeq[0]
+
+for line in C:
+  echo line

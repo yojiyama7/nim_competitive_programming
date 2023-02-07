@@ -44,3 +44,15 @@ proc just[T, U](x: T, f: T -> U): U =
 
 ################################
 
+let
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+  AB = newSeqWith(M, stdin.readLine.split.map(parseInt).toTuple(2))
+
+var g = newSeqWith(N+1, initHashSet[int]())
+for (a, b) in AB:
+  g[a].incl(b)
+  g[b].incl(a)
+
+for i in 1..N:
+  let l = g[i].toSeq.sorted()
+  echo (@[g[i].len] & l).join(" ")

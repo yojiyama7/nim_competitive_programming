@@ -47,3 +47,7 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let S = stdin.readLine
+
+echo S.replace("0", "z").replace("1", "0").replace("z", "1")

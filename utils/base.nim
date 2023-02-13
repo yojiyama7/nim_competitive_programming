@@ -41,9 +41,42 @@ macro toTuple[T](a: openArray[T], n: static[int]): untyped =
     ),
     t
   )
-  # echo result.treeRepr
 
-proc just[T, U](x: T, f: T -> U): U =
-  return x.f
+# 書き換えて使う想定
+const Modulo = 998244353
+type ModInt = distinct int
+
+proc toModInt(x: int): ModInt =
+  ModInt( ((x mod Modulo) + Modulo) mod Modulo )
+
+proc `$`(x: ModInt): string =
+  $(x.int)
+
+proc `+`(a, b: ModInt): ModInt =
+  (a.int + b.int).toModInt
+proc `+`(a: ModInt, b: int): ModInt =
+  (a.int + b).toModInt
+proc `+`(a: int, b: ModInt): ModInt =
+  (a + b.int).toModInt
+proc `-`(a, b: ModInt): ModInt =
+  (a.int - b.int).toModInt
+proc `-`(a: ModInt, b: int): ModInt =
+  (a.int - b).toModInt
+proc `-`(a: int, b: ModInt): ModInt =
+  (a - b.int).toModInt
+proc `*`(a, b: ModInt): ModInt =
+  (a.int * b.int).toModInt
+proc `*`(a: ModInt, b: int): ModInt =
+  (a.int * b).toModInt
+proc `*`(a: int, b: ModInt): ModInt =
+  (a * b.int).toModInt
+
+proc `+=`(a: var ModInt, b: int | ModInt): ModInt =
+  a = a + b
+proc `-=`(a: var ModInt, b: int | ModInt): ModInt =
+  a = a - b
+proc `*=`(a: var ModInt, b: int | ModInt): ModInt =
+  a = a * b
 
 ################################
+

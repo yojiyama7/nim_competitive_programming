@@ -11,6 +11,11 @@ NamingStyle = "camel"
 BaseCodeFileName = "baseCode.nim"
 ContestGroupsDirPath = "../"
 
+##  prepare base code
+baseCode = None
+with open(BaseCodeFileName, 'r', encoding="utf-8") as f:
+    baseCode = f.read()
+
 def mySplit(s: str, sep: set[str]) -> list[str]:
     res = []
     idx = 0
@@ -69,7 +74,7 @@ for pDict in allProblems:
         problemsByContest[cId] = []
     problemsByContest[cId].append(pDict)
 # pprint(problemsByContest)
-def tryRenameOrCreate(condFunc, filePath):
+def tryRenameOrCreate(condFunc, filePath, initText=""):
     dirPath = os.path.dirname(filePath)
     fileName = os.path.basename(filePath)
     if not os.path.isdir(dirPath):
@@ -84,8 +89,8 @@ def tryRenameOrCreate(condFunc, filePath):
             os.rename(beforePath, filePath)
             print(f"rename '{f}' to '{fileName}'")
             return
-    with open(filePath, 'w', encoding="utf-8"):
-        pass
+    with open(filePath, 'w', encoding="utf-8") as f:
+        f.write(initText)
     print(f"create '{fileName}'")
 
 def solve(url):
@@ -122,7 +127,8 @@ def solve(url):
             filePath = os.path.join(contestDirPath, fileName)
             tryRenameOrCreate(
                 lambda name: (name.startswith(pIdx) and name.endswith(DotExtention)),
-                filePath
+                filePath,
+                baseCode
             )
         print(f"init for real time contest.")
         return True
@@ -136,10 +142,6 @@ def solve(url):
         fileName = formatNamingStr(f"{pIdx} {name}") + DotExtention
         correctFileNames.append(fileName)
 
-    ##  prepare base code
-    baseCode = None
-    with open(BaseCodeFileName, 'r', encoding="utf-8") as f:
-        baseCode = f.read()
     ##
     for pDict, correctFileName in zip(contestProblems, correctFileNames):
         ## exist or rename or create
@@ -147,7 +149,8 @@ def solve(url):
         correctFilePath = os.path.join(contestDirPath, correctFileName)
         tryRenameOrCreate(
             lambda name: name.startswith(pIdx) and name.endswith(DotExtention),
-            correctFilePath
+            correctFilePath,
+            baseCode
         )
 
 def main():

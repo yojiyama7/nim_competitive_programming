@@ -80,3 +80,12 @@ proc `*=`(a: var ModInt, b: int | ModInt): ModInt =
 
 ################################
 
+let S = stdin.readLine
+
+var result = 0
+for c in S:
+  let n = c.int - 'A'.int + 1
+  result *= 26
+  result += n
+
+echo result

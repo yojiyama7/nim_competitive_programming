@@ -80,3 +80,18 @@ proc `*=`(a: var ModInt, b: int | ModInt): ModInt =
 
 ################################
 
+let
+  N = stdin.readLine.parseInt()
+  A = stdin.readLine.split.map(parseInt)
+
+var abc = A.sorted()[^3 ..< ^0]
+var result = 0
+while true:
+  let (a, b, c) = abc.mapIt( $it ).toTuple(3)
+  let score = (a & b & c).parseInt
+  result = max(result, score)
+  if not abc.nextPermutation():
+    break
+
+echo result
+

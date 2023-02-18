@@ -43,3 +43,27 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let pins = stdin.readLine.mapIt((it.int - '0'.int) == 1)
+
+const colIdxsList = @[@[6,], @[3,], @[7, 1], @[4, 0], @[8, 2], @[5,], @[9,]]
+
+proc solve(): string =
+  if pins[0] == true:
+    return "No"
+  var hasColPinList = newSeq[bool](colIdxsList.len)
+  for i, colIdxs in colIdxsList:
+    hasColPinList[i] = colIdxs.anyIt(pins[it] == true)
+
+  var reqSplit = @[true, false, true]
+  for hasColPin in hasColPinList:
+    if reqSplit.len == 0:
+      break
+    if hasColPin == reqSplit[^1]:
+      discard reqSplit.pop()
+  if reqSplit.len == 0:
+    return "Yes"
+  else:
+    return "No"
+
+echo solve()

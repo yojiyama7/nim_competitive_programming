@@ -43,3 +43,27 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  N = stdin.readLine.parseInt()
+  A = stdin.readLine.split.map(parseInt)
+
+var evens = newSeq[int]()
+var odds = newSeq[int]()
+for a in A:
+  if a mod 2 == 0:
+    evens.add(a)
+  else:
+    odds.add(a)
+
+if evens.len == 1 and odds.len == 1:
+  echo -1
+else:
+  evens.sort()
+  odds.sort()
+  var result = 0
+  if evens.len >= 2:
+    result = max(result, evens[^2] + evens[^1])
+  if odds.len >= 2:
+    result = max(result, evens[^2] + evens[^1])
+  echo result

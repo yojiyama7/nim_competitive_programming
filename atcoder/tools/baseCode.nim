@@ -78,5 +78,22 @@ proc `-=`(a: var ModInt, b: int | ModInt): ModInt =
 proc `*=`(a: var ModInt, b: int | ModInt): ModInt =
   a = a * b
 
+# since: (1, 5, 1)
+func ceilDiv*[T: SomeInteger](x, y: T): T {.inline.} =
+  when sizeof(T) == 8:
+    type UT = uint64
+  elif sizeof(T) == 4:
+    type UT = uint32
+  elif sizeof(T) == 2:
+    type UT = uint16
+  elif sizeof(T) == 1:
+    type UT = uint8
+  else:
+    {.fatal: "Unsupported int type".}
+  assert x >= 0 and y > 0
+  when T is SomeUnsignedInt:
+    assert x + y - 1 >= x
+  ((x.UT + (y.UT - 1.UT)) div y.UT).T
+
 ################################
 

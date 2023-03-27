@@ -47,3 +47,16 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  N = stdin.readLine.parseInt()
+  S = newSeqWith(N, stdin.readLine)
+
+var t = newTable[string, int]()
+for s in S:
+  if s notin t:
+    t[s] = 0
+    echo s
+  else:
+    t[s] += 1
+    echo &"{s}({t[s]})"

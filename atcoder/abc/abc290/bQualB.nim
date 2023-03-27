@@ -97,3 +97,17 @@ func ceilDiv*[T: SomeInteger](x, y: T): T {.inline.} =
 
 ################################
 
+let
+  (N, K) = stdin.readLine.split.map(parseInt).toTuple(2)
+  S = stdin.readLine
+
+proc solve(): string =
+  var cnt = 0
+  for i in 0..<N:
+    if S[i] == 'o':
+      cnt += 1
+    if cnt == K:
+      return S[0..i] & 'x'.repeat(N-i-1)
+  return S
+
+echo solve()

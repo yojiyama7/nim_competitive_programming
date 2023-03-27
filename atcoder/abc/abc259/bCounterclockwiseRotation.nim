@@ -47,3 +47,10 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let (A, B, D) = stdin.readLine.split.map(parseInt).toTuple(3)
+
+# [ 0 -1 ][ x ] 行列ってどう書くのがいいんだろうね
+# [ 1  0 ][ y ]
+# degree 0..<360 だった
+

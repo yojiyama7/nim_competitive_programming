@@ -97,3 +97,22 @@ func ceilDiv*[T: SomeInteger](x, y: T): T {.inline.} =
 
 ################################
 
+let
+  (N, Q) = stdin.readLine.split.map(parseInt).toTuple(2)
+  EVENT = newSeqWith(Q, stdin.readLine.split.map(parseInt).toTuple(2))
+
+var cnts = newSeq[int](N)
+for (t, x) in EVENT:
+  let x = x-1
+  case t:
+  of 1:
+    cnts[x] += 1
+  of 2:
+    cnts[x] += 2
+  of 3:
+    echo  if cnts[x] >= 2:
+            "Yes"
+          else:
+            "No"
+  else:
+    discard

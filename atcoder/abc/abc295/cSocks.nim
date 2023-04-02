@@ -97,3 +97,8 @@ func ceilDiv*[T: SomeInteger](x, y: T): T {.inline.} =
 
 ################################
 
+let
+  N = stdin.readLine.parseInt
+  A = stdin.readLine.split.map(parseInt)
+
+echo toSeq(A.toCountTable.values).mapIt(it div 2).sum()

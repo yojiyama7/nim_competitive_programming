@@ -97,3 +97,27 @@ func ceilDiv*[T: SomeInteger](x, y: T): T {.inline.} =
 
 ################################
 
+let
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+  A = stdin.readLine.split.map(parseInt)
+  B = stdin.readLine.split.map(parseInt)
+
+var C = newSeq[(int, char)]()
+for i, a in A:
+  C.add((a, 'a'))
+for i, b in B:
+  C.add((b, 'b'))
+C.sort()
+
+var
+  resA = newSeq[int]()
+  resB = newSeq[int]()
+
+for i, (n, t) in C:
+  if t == 'a':
+    resA.add(i+1)
+  else:
+    resB.add(i+1)
+
+echo resA.join(" ")
+echo resB.join(" ")

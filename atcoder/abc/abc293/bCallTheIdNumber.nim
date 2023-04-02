@@ -97,3 +97,17 @@ func ceilDiv*[T: SomeInteger](x, y: T): T {.inline.} =
 
 ################################
 
+let
+  N = stdin.readLine.parseInt()
+  A = stdin.readLine.split.map(parseInt)
+
+var isCalled = newSeq[bool](N)
+for i in 0..<N:
+  if not isCalled[i]:
+    isCalled[A[i]-1] = true
+
+echo isCalled.count(false)
+echo (0..<N).toSeq
+            .filterIt(isCalled[it] == false)
+            .mapIt(it + 1)
+            .join(" ")

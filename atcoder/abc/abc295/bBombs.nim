@@ -97,3 +97,27 @@ func ceilDiv*[T: SomeInteger](x, y: T): T {.inline.} =
 
 ################################
 
+let
+  (R, C) = stdin.readLine.split.map(parseInt).toTuple(2)
+var
+  B = newSeqWith(R, stdin.readLine)
+
+for cy in 0..<R:
+  for cx in 0..<C:
+    let c = B[cy][cx]
+    if not ('0' <= c and c <= '9'):
+      continue
+    let size = c.int - '0'.int
+    for y in 0..<R:
+      for x in 0..<C:
+        let dist = abs(cy-y) + abs(cx-x)
+        if dist <= size and B[y][x] == '#':
+          B[y][x] = '.'
+    B[cy][cx] = '.'
+
+for b in B:
+  echo b
+
+
+
+

@@ -76,28 +76,49 @@ iterator pairs*[A, B](t: TableRef[A, B]): (A, B) =
 ################################
 
 let
-  N = stdin.readLine.parseInt
+  N = stdin.readLine.parseInt()
   XY = newSeqWith(N, stdin.readLine.split.map(parseInt).toTuple(2))
   S = stdin.readLine
-echo N
-echo XY
-echo S
 
-let table = newTable[int, seq[(int, char)]]()
+proc solve(): string =
+  var t = initTable[int, seq[(int, char)]]()
+  for i, (x, y) in XY:
+    if y notin t:
+      t[y] = newSeq[(int, char)]()
+    t[y].add((x, S[i]))
 
-for i, (x, y) in XY.sorted():
-  if not table.hasKey(y):
-    table[y] = @[]
-  table[y].add((x, S[i]))
+  for ti in t.values():
+    if ti.sorted().mapIt(it[1]).join().contains("RL"):
+      return "Yes"
+  return "No"
 
-# for x in table.pairs:
-#   echo x
+echo solve()
 
-# if table.keys.toSeq.allIt(
-#   table[it]
-#     .mapIt(it[1])
-#     .isSorted
-# ):
-#   echo "No"
-# else:
-#   echo "Yes"
+################################
+
+# let
+#   N = stdin.readLine.parseInt
+#   XY = newSeqWith(N, stdin.readLine.split.map(parseInt).toTuple(2))
+#   S = stdin.readLine
+# echo N
+# echo XY
+# echo S
+
+# let table = newTable[int, seq[(int, char)]]()
+
+# for i, (x, y) in XY.sorted():
+#   if not table.hasKey(y):
+#     table[y] = @[]
+#   table[y].add((x, S[i]))
+
+# # for x in table.pairs:
+# #   echo x
+
+# # if table.keys.toSeq.allIt(
+# #   table[it]
+# #     .mapIt(it[1])
+# #     .isSorted
+# # ):
+# #   echo "No"
+# # else:
+# #   echo "Yes"

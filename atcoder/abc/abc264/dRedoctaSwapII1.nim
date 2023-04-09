@@ -43,3 +43,12 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let S = stdin.readLine
+
+let nums = S.mapIt("atcoder".find(it))
+var sumNum = 0
+for i, n in nums:
+  sumNum += nums[0..<i].countIt(it > n)
+
+echo sumNum

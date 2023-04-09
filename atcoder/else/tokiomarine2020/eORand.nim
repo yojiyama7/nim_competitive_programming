@@ -94,25 +94,6 @@ func ceilDiv*[T: SomeInteger](x, y: T): T {.inline.} =
   when T is SomeUnsignedInt:
     assert x + y - 1 >= x
   ((x.UT + (y.UT - 1.UT)) div y.UT).T
-# {.since: (1, 5, 1).}
-func euclMod[T: SomeNumber](x, y: T): T =
-  result = x mod y
-  if result < 0:
-    result += abs(y)
 
 ################################
 
-let
-  (N, Q) = stdin.readLine.split.map(parseInt).toTuple(2)
-  S = stdin.readLine
-  QUERY = newSeqWith(Q, stdin.readLine.split.map(parseInt).toTuple(2))
-
-var firstIdx = 0
-for (t, x) in QUERY:
-  if t == 1:
-    firstIdx -= x
-    firstIdx = firstIdx.euclMod(N)
-  else:
-    let idx = (firstIdx + x-1).euclMod(N)
-    echo S[idx]
-  # echo (t, x), firstIdx

@@ -97,3 +97,15 @@ func ceilDiv*[T: SomeInteger](x, y: T): T {.inline.} =
 
 ################################
 
+let
+  (N, X) = stdin.readLine.split.map(parseInt).toTuple(2)
+  A = stdin.readLine.split.map(parseInt)
+
+proc solve(): string =
+  let Aset = A.toHashSet()
+  for a in Aset:
+    if a + X in Aset:
+      return "Yes"
+  return "No"
+
+echo solve()

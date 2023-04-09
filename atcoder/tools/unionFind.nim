@@ -2,23 +2,43 @@ import sequtils, strutils, strformat, strscans, algorithm, math, sugar, hashes, 
 import complex, random, deques, heapqueue, sets, macros
 {. warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off .}
 
-template newSeqWith*(len: int, init: untyped): untyped =
-  var result = newSeq[typeof(init, typeOfProc)](len)
-  for i in 0 ..< len:
-    result[i] = init
-  move(result) # refs bug #7295
-
-# since (1, 1):
+# {.since: (1, 1).}
 template countIt*(s, pred: untyped): int =
   var result = 0
   for it {.inject.} in s:
     if pred: result += 1
   result
-# since (1, 1):
+# {.since: (1, 1).}:
 func maxIndex*[T](s: openArray[T]): int =
   for i in 1..high(s):
     if s[i] > s[result]: result = i
+# {.since: (1, 5, 1).}
+func ceilDiv*[T: SomeInteger](x, y: T): T {.inline.} =
+  when sizeof(T) == 8:
+    type UT = uint64
+  elif sizeof(T) == 4:
+    type UT = uint32
+  elif sizeof(T) == 2:
+    type UT = uint16
+  elif sizeof(T) == 1:
+    type UT = uint8
+  else:
+    {.fatal: "Unsupported int type".}
+  assert x >= 0 and y > 0
+  when T is SomeUnsignedInt:
+    assert x + y - 1 >= x
+  ((x.UT + (y.UT - 1.UT)) div y.UT).T
+# {.since: (1, 5, 1).}
+func euclMod[T: SomeNumber](x, y: T): T =
+  result = x mod y
+  if result < 0:
+    result += abs(y)
 
+template newSeqWith*(len: int, init: untyped): untyped =
+  var result = newSeq[typeof(init, typeOfProc)](len)
+  for i in 0 ..< len:
+    result[i] = init
+  move(result) # refs bug #7295
 macro toTuple[T](a: openArray[T], n: static[int]): untyped =
   ## かなり原始的に書いている
   ## より短くはできるが見てわかりやすいように
@@ -41,10 +61,6 @@ macro toTuple[T](a: openArray[T], n: static[int]): untyped =
     ),
     t
   )
-  # echo result.treeRepr
-
-proc just[T, U](x: T, f: T -> U): U =
-  return x.f
 
 ################################
 
@@ -81,19 +97,3 @@ proc getSize(uf: var UnionFind, x: int): int =
 
 proc isRoot(uf: var UnionFind, x: int): bool =
   uf.parent[x] == -1
-
-let
-  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
-  AB = newSeqWith(M, stdin.readLine.split.map(parseInt).toTuple(2))
-
-var uf = initUnionFind(N+1)
-
-for (a, b) in AB:
-  uf.unite(a, b)
-
-var edgeCnt = 0
-for n in 1..N:
-  if uf.isRoot(n):
-    edgeCnt += uf.getSize(n) - 1
-
-echo M - edgeCnt

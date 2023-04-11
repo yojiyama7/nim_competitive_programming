@@ -97,3 +97,30 @@ func ceilDiv*[T: SomeInteger](x, y: T): T {.inline.} =
 
 ################################
 
+const INF = 10^18
+
+let N = stdin.readLine.parseInt()
+
+var memo = newSeqWith[int](N+1, -1)
+proc solve(n: int): int =
+  var cnt = 0
+  if memo[n] == -1:
+    for i in 1..INF:
+      if i*i > n:
+        break
+      if n mod i == 0:
+        if n div i == i:
+          cnt += 1
+        else:
+          cnt += 2
+    memo[n] = cnt
+  return memo[n]
+
+var result = 0
+for ab in 0..N:
+  let cd = N-ab
+  let cnt = solve(ab) * solve(cd)
+  result += cnt
+  # echo (ab, cd, cnt)
+echo result
+

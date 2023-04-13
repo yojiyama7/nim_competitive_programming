@@ -63,3 +63,25 @@ macro toTuple[T](a: openArray[T], n: static[int]): untyped =
   )
 
 ################################
+
+let S = stdin.readLine
+
+proc solve(): string =
+  var
+    b = newSeq[int]()
+    r = newSeq[int]()
+    k = -1
+  for i, s in S:
+    if s == 'B':
+      b.add(i)
+    elif s == 'R':
+      r.add(i)
+    elif s == 'K':
+      k = i
+  if (b[0] mod 2) == (b[1] mod 2):
+    return "No"
+  if not (r[0] < k and k < r[1]):
+    return "No"
+  "Yes"
+
+echo solve()

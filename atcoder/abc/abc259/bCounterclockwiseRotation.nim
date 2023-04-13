@@ -48,9 +48,13 @@ proc just[T, U](x: T, f: T -> U): U =
 
 ################################
 
-let (A, B, D) = stdin.readLine.split.map(parseInt).toTuple(3)
+var (A, B, D) = stdin.readLine.split.map(parseInt).mapIt(it.float).toTuple(3)
 
-# [ 0 -1 ][ x ] 行列ってどう書くのがいいんだろうね
-# [ 1  0 ][ y ]
-# degree 0..<360 だった
+# 行列
+let
+  rad = degToRad(D)
+  (c, d, e, f) = (cos(rad), sin(rad), cos(rad+Pi/2), sin(rad+Pi/2))
+  x = A*c + B*e
+  y = A*d + B*f
 
+echo &"{x} {y}"

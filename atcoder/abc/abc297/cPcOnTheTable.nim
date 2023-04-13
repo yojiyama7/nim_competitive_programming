@@ -63,3 +63,16 @@ macro toTuple[T](a: openArray[T], n: static[int]): untyped =
   )
 
 ################################
+
+let
+  (H, W) = stdin.readLine.split.map(parseint).toTuple(2)
+var
+  S = newSeqWith(H, stdin.readLine)
+
+for i in 0..<H:
+  for j in 0..<W-1:
+    if S[i][j..j+1] == "TT":
+      S[i][j..j+1] = "PC"
+
+for s in S:
+  echo s

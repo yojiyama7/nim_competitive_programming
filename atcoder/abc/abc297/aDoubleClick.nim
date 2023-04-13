@@ -63,3 +63,15 @@ macro toTuple[T](a: openArray[T], n: static[int]): untyped =
   )
 
 ################################
+
+let
+  (N, D) = stdin.readLine.split.map(parseInt).toTuple(2)
+  T = stdin.readLine.split.map(parseInt)
+
+proc solve(): int =
+  for i in 0..<T.len-1:
+    if T[i+1]-T[i] <= D:
+      return T[i+1]
+  return -1
+
+echo solve()

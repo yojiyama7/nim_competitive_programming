@@ -15,4 +15,4 @@ iterator step(r: HSlice, s: int): int =
 
 echo (1..10).type
 echo toSeq((1..10).step(2))
-echo toSeq((10..1).step(-3))
+echo (10..1).step(-3).toSeq()

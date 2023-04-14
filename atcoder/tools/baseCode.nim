@@ -1,5 +1,4 @@
-import sequtils, strutils, strformat, strscans, algorithm, math, sugar, hashes, tables
-import complex, random, deques, heapqueue, sets, macros
+import std/[sequtils, strutils, strformat, strscans, algorithm, math, sugar, hashes, tables, complex, random, deques, heapqueue, sets, macros]
 {. warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off .}
 
 # {.since: (1, 1).}
@@ -8,7 +7,7 @@ template countIt*(s, pred: untyped): int =
   for it {.inject.} in s:
     if pred: result += 1
   result
-# {.since: (1, 1).}:
+# {.since: (1, 1).}
 func maxIndex*[T](s: openArray[T]): int =
   for i in 1..high(s):
     if s[i] > s[result]: result = i
@@ -39,27 +38,14 @@ template newSeqWith*(len: int, init: untyped): untyped =
   for i in 0 ..< len:
     result[i] = init
   move(result) # refs bug #7295
-macro toTuple[T](a: openArray[T], n: static[int]): untyped =
-  ## かなり原始的に書いている
-  ## より短くはできるが見てわかりやすいように
-  let tmp = genSym()
-  let t = newNimNode(nnkPar)
+macro toTuple(lArg: openArray, n: static[int]): untyped =
+  let l = genSym()
+  var t = newNimNode(nnkTupleConstr)
   for i in 0..<n:
-    t.add(
-      newNimNode(nnkBracketExpr).add(
-        tmp,
-        newLit(i)
-      )
-    )
-  result = newNimNode(nnkStmtListExpr).add(
-    newNimNode(nnkLetSection).add(
-      newNimNode(nnkIdentDefs).add(
-        tmp,
-        newNimNode(nnkEmpty),
-        a
-      )
-    ),
-    t
-  )
+    t.add quote do:
+      `l`[`i`]
+  quote do:
+    (let `l` = `lArg`; `t`)
 
 ################################
+

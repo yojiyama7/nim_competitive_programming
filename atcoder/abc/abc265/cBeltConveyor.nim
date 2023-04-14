@@ -47,3 +47,31 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  (H, W) = stdin.readLine.split.map(parseInt).toTuple(2)
+  G = newSeqWith(H, stdin.readLine)
+
+proc solve(): string =
+  var
+    (x, y) = (0, 0)
+    isVisited = initHashSet[(int, int)]()
+  isVisited.incl((0, 0))
+  while true:
+    let c = G[y][x]
+    if c == 'U' and y != 0:
+      y -= 1
+    elif c == 'D' and y != H-1:
+      y += 1
+    elif c == 'L' and x != 0:
+      x -= 1
+    elif c == 'R' and x != W-1:
+      x += 1
+    else:
+      break
+    if (x, y) in isVisited:
+      return "-1"
+    isVisited.incl((x, y))
+  return &"{y+1} {x+1}"
+
+echo solve()

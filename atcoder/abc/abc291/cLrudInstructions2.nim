@@ -97,3 +97,27 @@ func ceilDiv*[T: SomeInteger](x, y: T): T {.inline.} =
 
 ################################
 
+let
+  N = stdin.readLine.parseInt()
+  S = stdin.readLine
+
+proc solve(): string =
+  var
+    isVisited = initHashSet[(int, int)]()
+    (x, y) = (0, 0)
+  isVisited.incl((0, 0))
+  for s in S:
+    if s == 'R':
+      x += 1
+    elif s == 'L':
+      x -= 1
+    elif s == 'U':
+      y += 1
+    else:
+      y -= 1
+    if (x, y) in isVisited:
+      return "Yes"
+    isVisited.incl((x, y))
+  return "No"
+
+echo solve()

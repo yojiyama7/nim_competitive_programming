@@ -43,3 +43,26 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+{.checks:off.}
+
+let
+  (H, W) = stdin.readLine.split.map(parseInt).toTuple(2)
+  S = newSeqWith(H, stdin.readLine)
+  T = newSeqWith(H, stdin.readLine)
+# let
+#   (H, W) = (632, 632)
+#   S = (0..<H).mapIt(".".repeat(it) & "#".repeat(W-it))
+#   T = (0..<H).mapIt(".".repeat(it) & "#".repeat(W-it))
+
+var revS = newSeq[string]()
+for i in 0..<W:
+  revS.add(S.mapIt(it[i]).join())
+var revT = newSeq[string]()
+for i in 0..<W:
+  revT.add(T.mapIt(it[i]).join())
+
+if revS.toCountTable == revT.toCountTable:
+  echo "Yes"
+else:
+  echo "No"

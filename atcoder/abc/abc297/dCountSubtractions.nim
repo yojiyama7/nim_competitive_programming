@@ -63,3 +63,15 @@ macro toTuple[T](a: openArray[T], n: static[int]): untyped =
   )
 
 ################################
+
+var (A, B) = stdin.readLine.split.map(parseInt).toTuple(2)
+
+var result = 0
+while A != B:
+  if A < B:
+    (A, B) = (B, A)
+  let cnt = (A-1) div B
+  result += cnt
+  A -= cnt*B
+
+echo result

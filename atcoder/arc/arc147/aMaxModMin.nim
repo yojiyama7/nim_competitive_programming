@@ -77,6 +77,27 @@ proc `-=`(a: var ModInt, b: int | ModInt): ModInt =
   a = a - b
 proc `*=`(a: var ModInt, b: int | ModInt): ModInt =
   a = a * b
+# {.since: (1, 3).} and Edited by me
+proc toDeque*[T](x: openArray[T]): Deque[T] =
+  result = initDeque[T]()
+  for item in items(x):
+    result.addLast(item)
 
 ################################
 
+let
+  N = stdin.readLine.parseInt()
+  A = stdin.readLine.split.map(parseInt)
+
+var
+  result = 0
+  q = A.sorted.toDeque()
+# echo q
+while q.len > 1:
+  let (a, b) = (q[0], q.popLast())
+  if b mod a != 0:
+    q.addFirst(b mod a)
+  result += 1
+  # echo q
+
+echo result

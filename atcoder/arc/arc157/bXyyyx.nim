@@ -32,11 +32,6 @@ func euclMod[T: SomeNumber](x, y: T): T =
   result = x mod y
   if result < 0:
     result += abs(y)
-# {.since: (1, 3).} and Edited by me
-proc toDeque*[T](x: openArray[T]): Deque[T] =
-  result = initDeque()
-  for item in items(x):
-    result.addLast(item)
 
 template newSeqWith*(len: int, init: untyped): untyped =
   var result = newSeq[typeof(init, typeOfProc)](len)

@@ -32,11 +32,6 @@ func euclMod[T: SomeNumber](x, y: T): T =
   result = x mod y
   if result < 0:
     result += abs(y)
-# {.since: (1, 3).} and Edited by me
-proc toDeque*[T](x: openArray[T]): Deque[T] =
-  result = initDeque()
-  for item in items(x):
-    result.addLast(item)
 
 template newSeqWith*(len: int, init: untyped): untyped =
   var result = newSeq[typeof(init, typeOfProc)](len)
@@ -64,3 +59,15 @@ proc hash(x: int): Hash =
 
 ################################
 
+let (N, A, B, C, D) = stdin.readLine.split.map(parseInt).toTuple(5)
+
+if N <= 2:
+  echo "Yes"
+elif A == N-1 or D == N-1:
+  echo "Yes"
+elif (B, C) == (0, 0):
+  echo "No"
+elif abs(B - C) <= 1:
+  echo "Yes"
+else:
+  echo "No"

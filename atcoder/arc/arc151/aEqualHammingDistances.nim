@@ -80,3 +80,30 @@ proc `*=`(a: var ModInt, b: int | ModInt): ModInt =
 
 ################################
 
+let
+  N = stdin.readLine.parseInt()
+  S = stdin.readLine.mapIt(it.int - '0'.int)
+  T = stdin.readLine.mapIt(it.int - '0'.int)
+
+proc solve(): string =
+  let diffCnt = zip(S, T).countIt(it[0] != it[1])
+  if diffCnt mod 2 == 1:
+    return "-1"
+  var cntS, cntT = 0
+  for i, (s, t) in zip(S, T):
+    if s == t:
+      result &= '0'
+    elif s == 1 and cntS + 1 <= diffCnt div 2:
+      result &= '0'
+      cntS += 1
+    elif t == 1 and cntT + 1 <= diffCnt div 2:
+      result &= '0'
+      cntT += 1
+    else:
+      result &= '1'
+      if s == 0:
+        cntS += 1
+      elif t == 0:
+        cntT += 1
+    # echo (result, )
+echo solve()

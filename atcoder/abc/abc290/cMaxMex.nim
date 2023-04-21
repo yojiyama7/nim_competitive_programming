@@ -46,8 +46,19 @@ macro toTuple(lArg: openArray, n: static[int]): untyped =
       `l`[`i`]
   quote do:
     (let `l` = `lArg`; `t`)
+# 適当にコピペして来たHash https://github.com/nim-lang/Nim/issues/11764#issuecomment-611186437
+proc hiXorLo(a, b: uint64): uint64 {.inline.} =
+  {.emit: "__uint128_t r=a; r*=b; `result` = (r>>64)^r;".}
+proc hashWangYi1*(x: int64|uint64|Hash): Hash {.inline.} =
+  const P0 = 0xa0761d6478bd642f'u64
+  const P1 = 0xe7037ed1a0b428db'u64
+  const P5x8 = 0xeb44accab455d165'u64 xor 8'u64
+  Hash(hiXorLo(hiXorLo(P0, uint64(x) xor P1), P5x8))
+proc hash(x: int): Hash =
+  x.hashWangYi1()
 
 ################################
+
 
 let
   (N, K) = stdin.readLine.split.map(parseInt).toTuple(2)
@@ -70,19 +81,14 @@ proc solve(): int =
   # なぜfilterしないとTLEするのか?
   # hashsetが重いのか?
   # hashsetの拡張がボトルネック？
+  # hashsetの初期化でした
+  # というかhashが悪い なんで整数そのままなんや
 
-  let dedupA = A.filterIt(it < K).toHashSet.toSeq.sorted()
+  let dedupA = A.toHashSet.toSeq.sorted()
   let limit = min(dedupA.len, K)
   for i in 0..<limit:
     if i != dedupA[i]:
       return i
   return limit
-
-  # let dedupA = A.toHashSet.toSeq.sorted()
-  # let limit = min(dedupA.len, K)
-  # for i in 0..<limit:
-  #   if i != dedupA[i]:
-  #     return i
-  # return limit
 
 echo solve()

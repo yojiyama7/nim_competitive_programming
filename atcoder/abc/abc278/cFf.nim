@@ -47,3 +47,28 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  (N, Q) = stdin.readLine.split.map(parseInt).toTuple(2)
+  TAB = newSeqWith(Q):
+    let (t, a, b) = stdin.readLine.split.map(parseInt).toTuple(3)
+    (t, a-1, b-1)
+
+var followStates = initTable[int, HashSet[int]]()
+for (t, a, b) in TAB:
+  case t:
+  of 1:
+    if a notin followStates: followStates[a] = initHashSet[int]()
+    followStates[a].incl(b)
+  of 2:
+    if a notin followStates: followStates[a] = initHashSet[int]()
+    followStates[a].excl(b)
+  of 3:
+    if a notin followStates: followStates[a] = initHashSet[int]()
+    if b notin followStates: followStates[b] = initHashSet[int]()
+    if a in followStates[b] and b in followStates[a]:
+      echo "Yes"
+    else:
+      echo "No"
+  else:
+    discard

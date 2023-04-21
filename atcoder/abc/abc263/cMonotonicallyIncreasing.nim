@@ -47,3 +47,33 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+
+# https://docs.python.org/ja/3/library/itertools.html#itertools.combinations
+# ここからコピペして来てみたがなぜ動くのか
+# わかったかも
+# permutationsを実装してみてその後にやると理解しやすいかも
+iterator combinations(list: seq[int], n: int): seq[int] {.closure.} =
+  if n > list.len:
+    return
+  var indexes = (0..<n).toSeq
+  yield indexes.mapIt(list[it])
+  while true:
+    var x = -1
+    for i in (0..<n).toSeq.reversed():
+      if indexes[i] != (list.len - (n - i)):
+        x = i
+        break
+    if x == -1:
+      return
+    indexes[x] += 1
+    # 199 +1 = 200 で 99 が 00 になるみたいに
+    # (これ以上大きくなれない桁が最小になる)
+    # i桁目(indexes[i])における最小の値に戻るいめーじ？
+    for i in x..<n-1:
+      indexes[i+1] = indexes[i] + 1
+    yield indexes.mapIt(list[it])
+
+for p in combinations(toSeq(1..M), N):
+  echo p.join(" ")

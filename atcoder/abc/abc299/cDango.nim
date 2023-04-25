@@ -61,28 +61,34 @@ proc hashWangYi1*(x: int64|uint64|Hash): Hash {.inline.} =
   Hash(hiXorLo(hiXorLo(P0, uint64(x) xor P1), P5x8))
 proc hash(x: int): Hash =
   x.hashWangYi1()
+proc pow(x, n, m: int): int =
+  if n == 0:
+    return 1
+  if n mod 2 == 1:
+    result = x * pow(x, n-1, m)
+  else:
+    result = pow(x, n div 2, m)^2
+  result = result mod m
+proc `mod=`(x: var int, m: int): void =
+  x = x mod m
 
 ################################
 
 let
   N = stdin.readLine.parseInt()
-  A = stdin.readLine.split.map(parseInt)
+  S = stdin.readLine
 
 var
   result = 0
   cnt = 0
-for i0 in 0..<N:
-  let i1 = i0+1
-  if A[i0] == i1:
+for s in S:
+  if s == 'o':
     cnt += 1
-  else:
-    let
-      j1 = A[i0]
-      j0 = j1-1
-    if i1 == A[j0]:
-      result += 1
+  elif s == '-':
+    result = max(result, cnt)
+    cnt = 0
 
-# echo (cnt, )
-result += cnt * (cnt - 1)
-result = result div 2
-echo result
+if result == 0:
+  echo -1
+else:
+  echo result

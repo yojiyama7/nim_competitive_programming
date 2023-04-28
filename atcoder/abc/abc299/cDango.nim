@@ -78,17 +78,34 @@ let
   N = stdin.readLine.parseInt()
   S = stdin.readLine
 
-var
-  result = 0
-  cnt = 0
-for s in S:
-  if s == 'o':
-    cnt += 1
-  elif s == '-':
-    result = max(result, cnt)
-    cnt = 0
+proc solve(): int =
+  if "-" notin S:
+    return -1
+  result = S.split("-").mapIt(it.len).max()
+  if result == 0:
+    return -1
+  return result
 
-if result == 0:
-  echo -1
-else:
-  echo result
+echo solve()
+
+# var
+#   result = 0
+#   cnt = 0
+# for s in S:
+#   if s == 'o':
+#     cnt += 1
+#   elif s == '-':
+#     result = max(result, cnt)
+#     cnt = 0
+# cnt = 0
+# for s in S.reversed():
+#   if s == 'o':
+#     cnt += 1
+#   elif s == '-':
+#     result = max(result, cnt)
+#     cnt = 0
+
+# if result == 0:
+#   echo -1
+# else:
+#   echo result

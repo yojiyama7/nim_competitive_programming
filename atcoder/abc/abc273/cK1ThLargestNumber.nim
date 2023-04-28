@@ -44,3 +44,15 @@ proc just[T, U](x: T, f: T -> U): U =
 
 ################################
 
+let
+  N = stdin.readLine.parseInt()
+  A = stdin.readLine.split.map(parseInt)
+
+var result = newSeq[int]()
+for (k, v) in toSeq(A.toCountTable.pairs).sorted(order=Descending):
+  result.add(v)
+while result.len < N:
+  result.add(0)
+
+for x in result:
+  echo x

@@ -14,6 +14,10 @@ template countIt*(s, pred: untyped): int =
   for it {.inject.} in s:
     if pred: result += 1
   result
+# since (1, 1):
+func maxIndex*[T](s: openArray[T]): int =
+  for i in 1..high(s):
+    if s[i] > s[result]: result = i
 
 macro toTuple[T](a: openArray[T], n: static[int]): untyped =
   ## かなり原始的に書いている
@@ -37,9 +41,78 @@ macro toTuple[T](a: openArray[T], n: static[int]): untyped =
     ),
     t
   )
-  # echo result.treeRepr
 
-proc just[T, U](x: T, f: T -> U): U =
-  return x.f
+# 書き換えて使う想定
+const Modulo = 998244353
+type ModInt = distinct int
+
+proc toModInt(x: int): ModInt =
+  ModInt( ((x mod Modulo) + Modulo) mod Modulo )
+
+proc `$`(x: ModInt): string =
+  $(x.int)
+
+proc `+`(a, b: ModInt): ModInt =
+  (a.int + b.int).toModInt
+proc `+`(a: ModInt, b: int): ModInt =
+  (a.int + b).toModInt
+proc `+`(a: int, b: ModInt): ModInt =
+  (a + b.int).toModInt
+proc `-`(a, b: ModInt): ModInt =
+  (a.int - b.int).toModInt
+proc `-`(a: ModInt, b: int): ModInt =
+  (a.int - b).toModInt
+proc `-`(a: int, b: ModInt): ModInt =
+  (a - b.int).toModInt
+proc `*`(a, b: ModInt): ModInt =
+  (a.int * b.int).toModInt
+proc `*`(a: ModInt, b: int): ModInt =
+  (a.int * b).toModInt
+proc `*`(a: int, b: ModInt): ModInt =
+  (a * b.int).toModInt
+
+proc `+=`(a: var ModInt, b: int | ModInt): ModInt =
+  a = a + b
+proc `-=`(a: var ModInt, b: int | ModInt): ModInt =
+  a = a - b
+proc `*=`(a: var ModInt, b: int | ModInt): ModInt =
+  a = a * b
+
+# since: (1, 5, 1)
+func ceilDiv*[T: SomeInteger](x, y: T): T {.inline.} =
+  when sizeof(T) == 8:
+    type UT = uint64
+  elif sizeof(T) == 4:
+    type UT = uint32
+  elif sizeof(T) == 2:
+    type UT = uint16
+  elif sizeof(T) == 1:
+    type UT = uint8
+  else:
+    {.fatal: "Unsupported int type".}
+  assert x >= 0 and y > 0
+  when T is SomeUnsignedInt:
+    assert x + y - 1 >= x
+  ((x.UT + (y.UT - 1.UT)) div y.UT).T
+# {.since: (1, 5, 1).}
+func euclMod[T: SomeNumber](x, y: T): T =
+  result = x mod y
+  if result < 0:
+    result += abs(y)
 
 ################################
+
+let
+  (N, Q) = stdin.readLine.split.map(parseInt).toTuple(2)
+  S = stdin.readLine
+  QUERY = newSeqWith(Q, stdin.readLine.split.map(parseInt).toTuple(2))
+
+var firstIdx = 0
+for (t, x) in QUERY:
+  if t == 1:
+    firstIdx -= x
+    firstIdx = firstIdx.euclMod(N)
+  else:
+    let idx = (firstIdx + x-1).euclMod(N)
+    echo S[idx]
+  # echo (t, x), firstIdx

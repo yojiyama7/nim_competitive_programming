@@ -80,3 +80,19 @@ proc `*=`(a: var ModInt, b: int | ModInt): ModInt =
 
 ################################
 
+let
+  N = stdin.readLine.parseInt()
+  R = stdin.readLine.split.map(parseInt)
+  C = stdin.readLine.split.map(parseInt)
+  Q = stdin.readLine.parseInt()
+  queryRC = newSeqWith(Q, stdin.readLine.split.map(parseInt).toTuple(2))
+
+var result = ""
+for (qr, qc) in queryRC:
+  let ans = if R[qr-1] + C[qc-1] >= N + 1:
+              "#"
+            else:
+              "."
+  result &= ans
+
+echo result

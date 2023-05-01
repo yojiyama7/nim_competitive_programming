@@ -47,3 +47,14 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+var (A, B, D) = stdin.readLine.split.map(parseInt).mapIt(it.float).toTuple(3)
+
+# 行列
+let
+  rad = degToRad(D)
+  (c, d, e, f) = (cos(rad), sin(rad), cos(rad+Pi/2), sin(rad+Pi/2))
+  x = A*c + B*e
+  y = A*d + B*f
+
+echo &"{x} {y}"

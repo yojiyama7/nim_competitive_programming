@@ -47,3 +47,35 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  S = stdin.readLine
+  T = stdin.readLine
+
+proc groupBy(s: string): seq[(char, int)] =
+  result.add(('_', 0))
+  for c in s:
+    if not (result[^1][0] == c):
+      result.add((c, 0))
+    result[^1][1] += 1
+  return result[1..result.high]
+
+let
+  gS = groupBy(S)
+  gT = groupBy(T)
+
+proc solve(): string =
+  if gS.len != gT.len:
+    return "No"
+  for (a, b) in zip(gS, gT):
+    if a[0] != b[0]:
+      return "No"
+    if a[1] == 1:
+      if b[1] != 1:
+        return "No"
+    else:
+      if a[1] > b[1]:
+        return "No"
+  return "Yes"
+
+echo solve()

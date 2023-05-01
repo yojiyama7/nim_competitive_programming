@@ -47,3 +47,15 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  N = stdin.readLine.parseInt()
+  A = stdin.readLine.split.map(parseInt)
+
+var result = newSeq[int](2*N+2)
+for idx, a in A:
+  let i = idx+1
+  result[2*i] = result[a] + 1
+  result[2*i+1] = result[a] + 1
+
+echo result[1..^1].join(" ")

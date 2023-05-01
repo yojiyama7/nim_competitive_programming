@@ -42,41 +42,47 @@ macro toTuple[T](a: openArray[T], n: static[int]): untyped =
     t
   )
 
-# 書き換えて使う想定
-const Modulo = 998244353
-type ModInt = distinct int
 
-proc toModInt(x: int): ModInt =
-  ModInt( ((x mod Modulo) + Modulo) mod Modulo )
+proc pow(x, n, m: int): int =
+  if n == 0:
+    return 1
+  if n mod 2 == 1:
+    result = x * pow(x, n-1, m)
+  else:
+    result = pow(x, n div 2, m)^2
+  result = result mod m
 
-proc `$`(x: ModInt): string =
-  $(x.int)
-
-proc `+`(a, b: ModInt): ModInt =
-  (a.int + b.int).toModInt
-proc `+`(a: ModInt, b: int): ModInt =
-  (a.int + b).toModInt
-proc `+`(a: int, b: ModInt): ModInt =
-  (a + b.int).toModInt
-proc `-`(a, b: ModInt): ModInt =
-  (a.int - b.int).toModInt
-proc `-`(a: ModInt, b: int): ModInt =
-  (a.int - b).toModInt
-proc `-`(a: int, b: ModInt): ModInt =
-  (a - b.int).toModInt
-proc `*`(a, b: ModInt): ModInt =
-  (a.int * b.int).toModInt
-proc `*`(a: ModInt, b: int): ModInt =
-  (a.int * b).toModInt
-proc `*`(a: int, b: ModInt): ModInt =
-  (a * b.int).toModInt
-
-proc `+=`(a: var ModInt, b: int | ModInt): ModInt =
-  a = a + b
-proc `-=`(a: var ModInt, b: int | ModInt): ModInt =
-  a = a - b
-proc `*=`(a: var ModInt, b: int | ModInt): ModInt =
-  a = a * b
+proc `mod=`(x: var int, m: int): void =
+  x = x mod m
 
 ################################
 
+# 算数難しい
+# 値の異なる最上位の桁において数が大きい方をA, もう一方をBにして
+# Bに大きな数を揃えるのが大事
+
+const MOD = 998244353
+
+let
+  N = stdin.readLine.parseInt()
+var
+  A = stdin.readLine.toSeq.mapIt(it.int - '0'.int)
+  B = stdin.readLine.toSeq.mapIt(it.int - '0'.int)
+
+for i in 0..<N:
+  if A[i] > B[i]:
+    (A[i], B[i]) = (B[i], A[i])
+
+var
+  resultA, resultB = 0
+for i, a in A.reversed():
+  resultA += a * pow(10, i, MOD)
+  resultA.mod= MOD
+for i, b in B.reversed():
+  resultB += b * pow(10, i, MOD)
+  resultB.mod= MOD
+
+var result = resultA * resultB
+result.mod= MOD
+
+echo result

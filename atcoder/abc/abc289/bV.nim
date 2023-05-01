@@ -47,3 +47,24 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+  # split だと "" => @[""] が返って来ちゃう
+  # splitWhitespace は 内部で oldSplit が呼ばれているため @[] が返る
+  # 一貫性のための仕様であることは理解したが不便
+  # 競プロではどうするのが良い？ splitWhitespace をつかう かな
+  # https://github.com/nim-lang/Nim/pull/4361#issuecomment-321972846
+  # とのことらしい 確かに
+  A = stdin.readLine.splitWhitespace.map(parseInt)
+
+var result = newSeq[int]()
+var i = 1
+while i <= N:
+  var start = i
+  while i <= N and (i in A):
+    i.inc()
+  for x in countdown(i, start):
+    result.add(x)
+  i.inc()
+echo result.join(" ")

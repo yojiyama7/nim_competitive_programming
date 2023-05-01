@@ -80,3 +80,21 @@ proc `*=`(a: var ModInt, b: int | ModInt): ModInt =
 
 ################################
 
+let
+  N = stdin.readLine.parseInt()
+  A = stdin.readLine.split.map(parseInt)
+
+var groups = newSeq[tuple[n: int, cnt: int]]()
+for a in A:
+  if groups.len == 0 or groups[^1].n != a:
+    groups.add((a, 0))
+  groups[^1].cnt += 1
+
+var n = -1
+for i in 0..<groups.len-1:
+  if groups[i].n > groups[i+1].n:
+    n = groups[i].n
+    break
+if n == -1:
+  n = groups[^1].n
+echo A.filterIt(it != n).join(" ")

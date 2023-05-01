@@ -43,3 +43,17 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let N = stdin.readLine.parseInt()
+
+var gaps = newSeq[int]()
+for i in 0..<60:
+  if ((N shr i) and 1) == 1:
+    gaps.add(i)
+
+for i in 0..<(1 shl gaps.len):
+  var x = 0
+  for j in 0..<gaps.len:
+    if ((i shr j) and 1) == 1:
+      x = x or (1 shl gaps[j])
+  echo x

@@ -43,3 +43,20 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  N = stdin.readLine.parseInt()
+  ST = newSeqWith(N):
+    let l = stdin.readLine.split
+    (l[0], l[1].parseInt())
+
+var points = initTable[string, (int, int)]()
+for i, (s, t) in ST:
+  if points.hasKey(s):
+    continue
+  points[s] = (t, -i)
+
+# max に key を与える方法ありますか
+echo:
+  let (t, iNeg) = toSeq(points.values).max()
+  -iNeg + 1

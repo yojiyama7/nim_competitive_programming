@@ -43,3 +43,50 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+type
+  UnionFind = object
+    parent: seq[int]
+    size: seq[int]
+
+proc initUnionFind(n: int): UnionFind =
+  result.parent = newSeqWith[int](n, -1)
+  result.size = newSeqWith[int](n, 1)
+
+proc findRoot(uf: var UnionFind, x: int): int =
+  if uf.parent[x] == -1:
+    return x
+  else:
+    let root = uf.findRoot(uf.parent[x])
+    uf.parent[x] = root
+    return root
+
+proc unite(uf: var UnionFind, x: int, y: int) =
+  var xRoot = uf.findRoot(x)
+  var yRoot = uf.findRoot(y)
+  if xRoot == yRoot:
+    return
+  if uf.size[xRoot] < uf.size[yRoot]:
+    swap(xRoot, yRoot)
+
+  uf.parent[yRoot] = xRoot
+  uf.size[xRoot] += uf.size[yRoot]
+
+proc getSize(uf: var UnionFind, x: int): int =
+  uf.size[uf.findRoot(x)]
+
+proc isRoot(uf: var UnionFind, x: int): bool =
+  uf.parent[x] == -1
+
+################################
+
+let
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+  UV = newSeqWith(M, stdin.readLine.split.map(parseInt).toTuple(2))
+
+var uf = initUnionFind(N)
+for (u, v) in UV:
+  uf.unite(u-1, v-1)
+
+echo (0..<N).countIt(uf.isRoot(it))
+

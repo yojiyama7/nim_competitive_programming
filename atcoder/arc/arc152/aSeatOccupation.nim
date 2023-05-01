@@ -80,3 +80,38 @@ proc `*=`(a: var ModInt, b: int | ModInt): ModInt =
 
 ################################
 
+let
+  (N, L) = stdin.readLine.split.map(parseInt).toTuple(2)
+  A = stdin.readLine.split.map(parseInt)
+
+var seats = newSeq[bool](A.sum())
+var i = 0
+var nextIdx = 1
+while i < N and nextIdx < seats.len:
+  let a = A[i]
+  if a == 1 and nextIdx < seats.len:
+    seats[nextIdx] = true
+    nextIdx += 2
+  elif a == 2 and nextIdx+1 < seats.len:
+    seats[nextIdx] = true
+    seats[nextIdx+1] = true
+    nextIdx += 3
+  elif a == 2 and nextIdx < seats.len:
+    seats[nextIdx-1] = true
+    seats[nextIdx] = true
+    nextIdx += 2
+  else:
+    break
+  i.inc
+
+# echo seats.mapIt(
+#     if it:
+#       '#'
+#     else:
+#       '.'
+#   ).join()
+# echo (i, A[i..^1])
+if A[i..^1].contains(2):
+  echo "No"
+else:
+  echo "Yes"

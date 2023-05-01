@@ -43,3 +43,40 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  (N, W) = stdin.readLine.split.map(parseInt).toTuple(2)
+  A = stdin.readLine.split.map(parseInt)
+
+var flags = newSeqWith(W+1, false)
+for i in 0..<N:
+  let a = A[i]
+  if a > W: continue
+  flags[a] = true
+  for j in i+1..<N:
+    let b = A[j]
+    if a + b > W: continue
+    flags[a + b] = true
+    for k in j+1..<N:
+      let c = A[k]
+      if a + b + c > W: continue
+      flags[a + b + c] = true
+
+echo flags.countIt(it)
+
+# var dp = newSeqWith(N+1, newSeqWith(W+1, newSeqWith(4, false)))
+# dp[0][0][0..3] = [true, true, true, true]
+
+# for i in 1..N:
+#   for j in 0..W:
+#     for k in 0..3:
+#       if k >= 1 and j-A[i-1] >= 0:
+#         dp[i][j][k] = dp[i-1][j][k] or dp[i-1][j-A[i-1]][k-1]
+#       else:
+#         dp[i][j][k] = dp[i-1][j][k]
+
+# # for i, dpi in dp:
+# #   for j, dpij in dpi:
+# #     echo (i, j), dpij.mapIt(($it)[0]).join()
+
+# echo dp[N][1..W].countIt(true in it)

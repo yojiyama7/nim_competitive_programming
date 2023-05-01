@@ -43,3 +43,32 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let S = stdin.readLine
+# let n = 300000
+# let S = '('.repeat(n div 2) & ')'.repeat(n div 2)
+
+proc solve(): string =
+  var
+    (l, r) = (0, S.len)
+  var chars = initHashSet[char]()
+  while r - l > 0:
+    chars.clear()
+    while r - l > 0 and S[l].isAlphaAscii():
+      if S[l] in chars:
+        # echo (S[l], chars)
+        return "No"
+      chars.incl(S[l])
+      l += 1
+    while r - l > 0 and S[r-1].isAlphaAscii():
+      if S[r-1] in chars:
+        # echo (S[r-1], chars)
+        return "No"
+      chars.incl(S[r-1])
+      r -= 1
+    l += 1
+    r -= 1
+  return "Yes"
+
+echo solve()
+

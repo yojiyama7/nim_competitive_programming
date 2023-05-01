@@ -79,4 +79,3 @@ proc `*=`(a: var ModInt, b: int | ModInt): ModInt =
   a = a * b
 
 ################################
-

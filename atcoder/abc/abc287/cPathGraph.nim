@@ -43,3 +43,30 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+  UV = newSeqWith(M, stdin.readLine.split.map(parseInt).toTuple(2))
+
+proc solve(): string =
+  var g = initTable[int, HashSet[int]]()
+  for (u, v) in UV:
+    if u notin g:
+      g[u] = initHashSet[int]()
+    if v notin g:
+      g[v] = initHashSet[int]()
+    g[u].incl(v)
+    g[v].incl(u)
+
+  let ct = (g.values).toSeq.mapIt(it.len).toCountTable()
+  # echo ct
+  if not(1 in ct and ct[1] == 2):
+    return "No"
+  elif not(2 in ct):
+    return "No"
+  elif ct.len > 2:
+    return "No"
+  return "Yes"
+
+echo solve()
+

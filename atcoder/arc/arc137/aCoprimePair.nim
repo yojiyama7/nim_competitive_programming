@@ -80,3 +80,15 @@ proc `*=`(a: var ModInt, b: int | ModInt): ModInt =
 
 ################################
 
+let (L, R) = stdin.readLine.split.map(parseInt).toTuple(2)
+
+# 解説より、結構早く終わることが証明できるらしい
+proc solve(): int =
+  for score in countdown(R-L, 1):
+    var i = L
+    while i+score <= R:
+      if gcd(i, i+score) == 1:
+        return score
+      i.inc
+
+echo solve()

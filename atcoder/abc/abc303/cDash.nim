@@ -75,28 +75,32 @@ proc `mod=`(x: var int, m: int): void =
 ################################
 
 let
-  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
-  UV = newSeqWith(M, stdin.readLine.split.map(parseInt).toTuple(2))
+  (N, M, H, K) = stdin.readLine.split.map(parseInt).toTuple(4)
+  S = stdin.readLine
+  XY = newSeqWith(M, stdin.readLine.split.map(parseInt).toTuple(2))
 
-var g = newSeq[HashSet[int]](N)
-for (u, v) in UV:
-  g[u-1].incl(v-1)
-  g[v-1].incl(u-1)
+proc solve(): string =
+  var
+    potions = XY.toHashSet()
+    health = H
+    cx, cy = 0
+  for c in S:
+    case c:
+    of 'R':
+      cx += 1
+    of 'L':
+      cx -= 1
+    of 'U':
+      cy += 1
+    of 'D':
+      cy -= 1
+    else: discard
+    health -= 1
+    if health < 0:
+      return "No"
+    if (cx, cy) in potions and health < K:
+      potions.excl((cx, cy))
+      health = K
+  return "Yes"
 
-proc isConnected(g: seq[HashSet[int]]): bool =
-  var isVisiteds = newSeq[bool](N)
-  var q = @[0]
-  while q.len > 0:
-    let t = q.pop()
-    isVisiteds[t] = true
-    for c in g[t]:
-      if isVisiteds[c]:
-        continue
-      q.add(c)
-  return isVisiteds.allIt(it)
-
-let counts = (0..<N).mapIt(g[it].len).toHashSet()
-if isConnected(g) and (1 in counts) and (counts - [1, 2].toHashSet()).len == 0:
-  echo "Yes"
-else:
-  echo "No"
+echo solve()

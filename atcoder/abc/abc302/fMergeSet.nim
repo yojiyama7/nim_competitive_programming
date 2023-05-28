@@ -74,29 +74,3 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
-let
-  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
-  UV = newSeqWith(M, stdin.readLine.split.map(parseInt).toTuple(2))
-
-var g = newSeq[HashSet[int]](N)
-for (u, v) in UV:
-  g[u-1].incl(v-1)
-  g[v-1].incl(u-1)
-
-proc isConnected(g: seq[HashSet[int]]): bool =
-  var isVisiteds = newSeq[bool](N)
-  var q = @[0]
-  while q.len > 0:
-    let t = q.pop()
-    isVisiteds[t] = true
-    for c in g[t]:
-      if isVisiteds[c]:
-        continue
-      q.add(c)
-  return isVisiteds.allIt(it)
-
-let counts = (0..<N).mapIt(g[it].len).toHashSet()
-if isConnected(g) and (1 in counts) and (counts - [1, 2].toHashSet()).len == 0:
-  echo "Yes"
-else:
-  echo "No"

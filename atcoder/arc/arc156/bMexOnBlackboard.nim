@@ -74,22 +74,3 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
-let
-  N = stdin.readLine.parseInt()
-  A = newSeqWith(N, stdin.readLine.mapIt(it.int - '0'.int))
-
-var result = 0
-for sy in 0..<N:
-  for sx in 0..<N:
-    for dy in -1..1:
-      for dx in -1..1:
-        if dx == 0 and dy == 0:
-          continue
-        var nums = newSeq[int]()
-        for i in 0..<N:
-          let x = (sx + dx*i).euclMod(N)
-          let y = (sy + dy*i).euclMod(N)
-          nums.add(A[y][x])
-        result = max(result, nums.join.parseInt())
-
-echo result

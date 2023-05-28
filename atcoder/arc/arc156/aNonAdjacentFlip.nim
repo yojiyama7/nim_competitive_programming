@@ -74,22 +74,34 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
-let
-  N = stdin.readLine.parseInt()
-  A = newSeqWith(N, stdin.readLine.mapIt(it.int - '0'.int))
+let T = stdin.readLine.parseInt()
 
-var result = 0
-for sy in 0..<N:
-  for sx in 0..<N:
-    for dy in -1..1:
-      for dx in -1..1:
-        if dx == 0 and dy == 0:
-          continue
-        var nums = newSeq[int]()
-        for i in 0..<N:
-          let x = (sx + dx*i).euclMod(N)
-          let y = (sy + dy*i).euclMod(N)
-          nums.add(A[y][x])
-        result = max(result, nums.join.parseInt())
+# 長くなってもいいから賢くない丁寧な場合分けをする
+proc solve(): int =
+  let
+    N = stdin.readLine.parseInt()
+    S = stdin.readLine
+  let coins = S.mapIt(it.int - '0'.int)
+  let coinsSum = coins.sum()
+  if coinsSum mod 2 == 1:
+    return -1
+  elif N == 3:
+    if coins[1] == 1:
+      return -1
+    else:
+      return coinsSum div 2
+  elif N == 4:
+    if coins == @[0, 1, 1, 0]:
+      return 3
+    elif coins == @[1, 1, 0, 0] or coins == @[0, 0, 1, 1]:
+      return 2
+    else:
+      return coinsSum div 2
+  else:
+    if coinsSum == 2 and (0..<N-1).anyIt(coins[it..it+1] == @[1, 1]):
+      return 2
+    else:
+      return coinsSum div 2
 
-echo result
+for _ in 0..<T:
+  echo solve()

@@ -1,6 +1,10 @@
 import sequtils, strutils, strformat, strscans, algorithm, math, sugar, hashes, tables
 import complex, random, deques, heapqueue, sets, macros
-{. warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off .}
+{.
+  warning[UnusedImport]: off,
+  hint[XDeclaredButNotUsed]: off,
+  hint[Name]: off
+.}
 
 template newSeqWith*(len: int, init: untyped): untyped =
   var result = newSeq[typeof(init, typeOfProc)](len)

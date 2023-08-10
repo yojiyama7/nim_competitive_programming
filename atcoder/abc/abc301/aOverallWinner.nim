@@ -77,13 +77,20 @@ proc `mod=`(x: var int, m: int): void =
 let
   N = stdin.readLine.parseInt()
   S = stdin.readLine
-  T = stdin.readLine
 
 proc solve(): string =
-  for (s, t) in zip(S, T):
-    if s == t or [s, t].toHashSet() in [['l', '1'].toHashSet(), ['0', 'o'].toHashSet()]:
-      continue
-    return "No"
-  return "Yes"
+  let t = S.count('T')
+  let a = N - t
+
+  if t == a:
+    if S[^1] == 'A':
+      return "T"
+    else:
+      return "A"
+  elif t > a:
+    return "T"
+  else:
+    return "A"
 
 echo solve()
+

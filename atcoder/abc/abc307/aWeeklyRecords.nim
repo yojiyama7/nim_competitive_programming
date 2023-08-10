@@ -76,14 +76,10 @@ proc `mod=`(x: var int, m: int): void =
 
 let
   N = stdin.readLine.parseInt()
-  S = stdin.readLine
-  T = stdin.readLine
+  A = stdin.readLine.split.map(parseInt)
 
-proc solve(): string =
-  for (s, t) in zip(S, T):
-    if s == t or [s, t].toHashSet() in [['l', '1'].toHashSet(), ['0', 'o'].toHashSet()]:
-      continue
-    return "No"
-  return "Yes"
+var result = newSeq[int]()
+for i in 0..<N:
+  result.add(sum(A[7*i ..< 7*i+7]))
 
-echo solve()
+echo result.join(" ")

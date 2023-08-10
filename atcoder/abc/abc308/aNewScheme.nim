@@ -74,15 +74,14 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
-let
-  N = stdin.readLine.parseInt()
-  S = stdin.readLine
-  T = stdin.readLine
+let S = stdin.readLine.split.map(parseInt)
 
 proc solve(): string =
-  for (s, t) in zip(S, T):
-    if s == t or [s, t].toHashSet() in [['l', '1'].toHashSet(), ['0', 'o'].toHashSet()]:
-      continue
+  if not (0..<len(S)-1).allIt(S[it] <= S[it+1]):
+    return "No"
+  if not S.allIt(1 <= it and it <= 675):
+    return "No"
+  if not S.allIt(it mod 25 == 0):
     return "No"
   return "Yes"
 

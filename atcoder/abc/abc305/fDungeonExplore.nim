@@ -74,16 +74,3 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
-let
-  N = stdin.readLine.parseInt()
-  S = stdin.readLine
-  T = stdin.readLine
-
-proc solve(): string =
-  for (s, t) in zip(S, T):
-    if s == t or [s, t].toHashSet() in [['l', '1'].toHashSet(), ['0', 'o'].toHashSet()]:
-      continue
-    return "No"
-  return "Yes"
-
-echo solve()

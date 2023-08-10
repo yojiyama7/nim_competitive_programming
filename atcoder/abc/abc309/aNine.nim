@@ -74,16 +74,15 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
-let
-  N = stdin.readLine.parseInt()
-  S = stdin.readLine
-  T = stdin.readLine
+let (A, B) = stdin.readLine.split.map(parseInt).toTuple(2)
 
-proc solve(): string =
-  for (s, t) in zip(S, T):
-    if s == t or [s, t].toHashSet() in [['l', '1'].toHashSet(), ['0', 'o'].toHashSet()]:
-      continue
-    return "No"
-  return "Yes"
+var cands = newSeq[int]()
+if A mod 3 != 1:
+  cands.add(A-1)
+if A mod 3 != 0:
+  cands.add(A+1)
 
-echo solve()
+if B in cands:
+  echo "Yes"
+else:
+  echo "No"

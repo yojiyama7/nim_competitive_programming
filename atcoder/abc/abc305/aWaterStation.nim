@@ -74,16 +74,12 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
-let
-  N = stdin.readLine.parseInt()
-  S = stdin.readLine
-  T = stdin.readLine
+let N = stdin.readLine.parseInt()
 
-proc solve(): string =
-  for (s, t) in zip(S, T):
-    if s == t or [s, t].toHashSet() in [['l', '1'].toHashSet(), ['0', 'o'].toHashSet()]:
-      continue
-    return "No"
-  return "Yes"
+let before = (N div 5) * 5
+let after = N.ceilDiv(5) * 5
 
-echo solve()
+if abs(N-before) < abs(N-after):
+  echo before
+else:
+  echo after

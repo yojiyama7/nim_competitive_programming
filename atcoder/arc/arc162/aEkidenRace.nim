@@ -74,3 +74,10 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
+let T = stdin.readLine.parseInt()
+
+for _ in 0..<T:
+  let
+    N = stdin.readLine.parseInt()
+    P = stdin.readLine.split.map(parseInt)
+

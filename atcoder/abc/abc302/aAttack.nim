@@ -74,3 +74,6 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
+let (A, B) = stdin.readLine.split.map(parseInt).toTuple(2)
+
+echo A.ceilDiv(B)

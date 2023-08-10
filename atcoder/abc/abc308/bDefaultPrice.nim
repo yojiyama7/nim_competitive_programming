@@ -75,15 +75,18 @@ proc `mod=`(x: var int, m: int): void =
 ################################
 
 let
-  N = stdin.readLine.parseInt()
-  S = stdin.readLine
-  T = stdin.readLine
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+  C = stdin.readLine.split
+  D = stdin.readLine.split
+  P = stdin.readLine.split.map(parseInt)
 
-proc solve(): string =
-  for (s, t) in zip(S, T):
-    if s == t or [s, t].toHashSet() in [['l', '1'].toHashSet(), ['0', 'o'].toHashSet()]:
-      continue
-    return "No"
-  return "Yes"
+let t = zip(D, P[1..P.high]).toTable()
 
-echo solve()
+var result = 0
+for c in C:
+  if c in t:
+    result += t[c]
+  else:
+    result += P[0]
+
+echo result

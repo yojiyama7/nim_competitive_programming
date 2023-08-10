@@ -75,15 +75,7 @@ proc `mod=`(x: var int, m: int): void =
 ################################
 
 let
-  N = stdin.readLine.parseInt()
-  S = stdin.readLine
-  T = stdin.readLine
+  (N, P, Q) = stdin.readLine.split.map(parseInt).toTuple(3)
+  D = stdin.readLine.split.map(parseInt)
 
-proc solve(): string =
-  for (s, t) in zip(S, T):
-    if s == t or [s, t].toHashSet() in [['l', '1'].toHashSet(), ['0', 'o'].toHashSet()]:
-      continue
-    return "No"
-  return "Yes"
-
-echo solve()
+echo min(D.min() + Q, P)

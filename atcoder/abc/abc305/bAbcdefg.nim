@@ -74,16 +74,12 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
-let
-  N = stdin.readLine.parseInt()
-  S = stdin.readLine
-  T = stdin.readLine
+const
+  dists = [3, 1, 4, 1 ,5, 9]
+  a = "ABCDEFG"
 
-proc solve(): string =
-  for (s, t) in zip(S, T):
-    if s == t or [s, t].toHashSet() in [['l', '1'].toHashSet(), ['0', 'o'].toHashSet()]:
-      continue
-    return "No"
-  return "Yes"
+var (p, q) = stdin.readLine.split.toTuple(2)
+if p > q:
+  (p, q) = (q, p)
 
-echo solve()
+echo dists[a.find(p) ..< a.find(q)].sum()

@@ -48,3 +48,8 @@ proc just[T, U](x: T, f: T -> U): U =
 
 ################################
 
+let
+  (A, B, C, D) = newSeqWith(4, stdin.readLine.split.map(parseInt).toTuple(2)).toTuple(4)
+
+proc calcAngle(p1, p2, p3: (int, int)): float =
+  discard

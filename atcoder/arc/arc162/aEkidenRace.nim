@@ -81,3 +81,13 @@ for _ in 0..<T:
     N = stdin.readLine.parseInt()
     P = stdin.readLine.split.map(parseInt)
 
+  var result = 0
+  for i in 0..<N:
+    var shortestable = true
+    for j in i+1..<N:
+      if P[j] < P[i]:
+        shortestable = false
+        break
+    if shortestable:
+      result += 1
+  echo result

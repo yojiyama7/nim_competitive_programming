@@ -74,18 +74,7 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
-let
-  M = stdin.readLine.parseInt()
-  D = stdin.readLine.split.map(parseInt)
+const piStr = "3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679"
+let N = stdin.readLine.parseInt()
 
-let dayPerYear = D.sum()
-# 0-indexed
-let half = dayPerYear div 2
-
-var remain = half
-for i in 0..<M:
-  if remain < D[i]:
-    echo fmt"{i+1} {remain+1}"
-    break
-  else:
-    remain -= D[i]
+echo piStr[0..1+N]

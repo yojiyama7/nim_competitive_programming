@@ -75,17 +75,23 @@ proc `mod=`(x: var int, m: int): void =
 ################################
 
 let
-  M = stdin.readLine.parseInt()
-  D = stdin.readLine.split.map(parseInt)
+  N = stdin.readLine.parseInt()
+  A = @[-1] & stdin.readLine.split.map(parseInt)
 
-let dayPerYear = D.sum()
-# 0-indexed
-let half = dayPerYear div 2
+var
+  visited = newSeq[bool](N+1)
+  cur = 1
+while not visited[cur]:
+  visited[cur] = true
+  cur = A[cur]
 
-var remain = half
-for i in 0..<M:
-  if remain < D[i]:
-    echo fmt"{i+1} {remain+1}"
-    break
-  else:
-    remain -= D[i]
+var result = newSeq[int]()
+let start = cur
+result.add(cur)
+cur = A[cur]
+while cur != start:
+  result.add(cur)
+  cur = A[cur]
+
+echo result.len()
+echo result.join(" ")

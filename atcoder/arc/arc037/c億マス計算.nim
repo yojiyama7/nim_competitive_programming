@@ -80,3 +80,42 @@ proc `*=`(a: var ModInt, b: int | ModInt): ModInt =
 
 ################################
 
+# ある数Xあり、X以下のcellNumがK個以上のときok(このうち最小のものが答え)
+
+let
+  (N, K) = stdin.readLine.split.map(parseInt).toTuple(2)
+var
+  A = stdin.readLine.split.map(parseInt)
+  B = stdin.readLine.split.map(parseInt)
+
+A.sort()
+B.sort()
+B.add(10^18+1)
+
+proc countCellNumLessThanEqual(x: int): int =
+  for a in A:
+    let bLimit = x div a
+    if bLimit == 0:
+      continue
+    # echo (a, bLimit)
+    var (ok, ng) = (0, N+1)
+    while abs(ok-ng) > 1:
+      let mid = (ok+ng) div 2
+      if B[mid-1] <= bLimit: # ここのややこしさ(-1をしないといけないとこ)についての議論が欲しい
+        ok = mid
+      else:
+        ng = mid
+    # echo (a, bLimit, ok)
+    result += ok
+  # echo result
+
+var (ng, ok) = (0, 10^18)
+while abs(ok-ng) > 1:
+  let mid = (ok+ng) div 2
+  if countCellNumLessThanEqual(mid) >= K:
+    ok = mid
+    # echo "ok."
+  else:
+    ng = mid
+    # echo "ng"
+echo ok

@@ -74,14 +74,11 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
-let N = stdin.readline.parseInt()
+let S = stdin.readLine
 
-var result = newString(N+1)
-for i in 0..N:
-  block aaa:
-    for j in 1..9:
-      if (N mod j == 0) and (i mod (N div j) == 0):
-        result[i] = (j + '0'.int).char
-        break aaa
-    result[i] = '-'
+var result = 0
+for i in 0..<S.len:
+  for j in i..<S.len:
+    if S[i..j] == S[i..j].reversed():
+      result = max(result, j-i+1)
 echo result

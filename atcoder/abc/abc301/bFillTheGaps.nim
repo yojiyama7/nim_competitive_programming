@@ -74,3 +74,15 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
+let
+  N = stdin.readLine.parseInt()
+  A = stdin.readLine.split.map(parseInt)
+
+var result = @[A[0]]
+for a in A[1..<N]:
+  if result[^1] < a:
+    result &= countup(result[^1]+1, a).toSeq()
+  else:
+    result &= countdown(result[^1]-1, a).toSeq()
+
+echo result.join(" ")

@@ -74,14 +74,3 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
-let N = stdin.readline.parseInt()
-
-var result = newString(N+1)
-for i in 0..N:
-  block aaa:
-    for j in 1..9:
-      if (N mod j == 0) and (i mod (N div j) == 0):
-        result[i] = (j + '0'.int).char
-        break aaa
-    result[i] = '-'
-echo result

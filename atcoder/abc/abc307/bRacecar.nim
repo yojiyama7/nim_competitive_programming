@@ -74,3 +74,16 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
+let 
+  N = stdin.readLine.parseInt()
+  S = newSeqWith(N, stdin.readLine)
+
+block solve:
+  for i, s in S:
+    for j, t in S:
+      if i == j:
+        continue
+      if s&t == (s&t).reversed():
+        echo "Yes"
+        break solve
+  echo "No"

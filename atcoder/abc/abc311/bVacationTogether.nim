@@ -74,3 +74,26 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
+let
+  (N, D) = stdin.readLine.split.map(parseInt).toTuple(2)
+  S = newSeqWith(N, stdin.readLine)
+
+var l = newSeqWith(D, false)
+for j in 0..<D:
+  block aaa:
+    for i in 0..<N:
+      if S[i][j] == 'x':
+        break aaa
+    l[j] = true
+
+var
+  result = 0
+  t = 0
+for li in l:
+  if li:
+    t += 1
+  else:
+    result = max(result, t)
+    t = 0
+result = max(result, t)
+echo result

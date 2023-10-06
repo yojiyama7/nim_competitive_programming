@@ -74,14 +74,19 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
-let N = stdin.readline.parseInt()
+let 
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+  S = stdin.readLine
+  T = stdin.readLine
 
-var result = newString(N+1)
-for i in 0..N:
-  block aaa:
-    for j in 1..9:
-      if (N mod j == 0) and (i mod (N div j) == 0):
-        result[i] = (j + '0'.int).char
-        break aaa
-    result[i] = '-'
-echo result
+let
+  isHead = (T[0..<N] == S)
+  isTail = (T[^N ..< ^0] == S)
+if isHead and isTail:
+  echo 0
+elif isHead and not isTail:
+  echo 1
+elif not isHead and isTail:
+  echo 2
+else:
+  echo 3

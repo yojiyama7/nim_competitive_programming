@@ -74,3 +74,14 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
+let
+  N = stdin.readLine.parseInt()
+  ABCD = newSeqWith(N, stdin.readLine.split.map(parseInt).toTuple(4))
+
+var m = newSeqWith(101, newSeqWith(101, 0))
+for (a, b, c, d) in ABCD:
+  for i in a..<b:
+    for j in c..<d:
+      m[i][j] = 1
+
+echo m.mapIt(it.sum()).sum()

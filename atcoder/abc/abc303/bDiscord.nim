@@ -74,3 +74,18 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
+let 
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+  A = newSeqWith(M, stdin.readLine.split.map(parseInt))
+
+var maybeNotClose = newSeqWith(N, newSeqWith(N, true))
+for a in A:
+  for j in 0..<N-1:
+    let (x, y) = (a[j]-1, a[j+1]-1)
+    # echo (x, y)
+    maybeNotClose[x][y] = false
+    maybeNotClose[y][x] = false
+
+# echo maybeNotClose
+
+echo maybeNotClose.mapIt(it.count(true) - 1).sum() div 2

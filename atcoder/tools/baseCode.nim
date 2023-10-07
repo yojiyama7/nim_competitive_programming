@@ -17,6 +17,8 @@ proc pow(x, n, m: int): int =
   else:
     result = pow(x, n div 2, m)^2
   result = result mod m
+proc parseInt(c: char): int =
+  c.int - '0'.int
 
 ################################
 

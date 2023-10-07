@@ -122,7 +122,7 @@ def solve(url):
     if contestId not in problemsByContest:
         if not os.path.isdir(contestDirPath):
             os.mkdir(contestDirPath)
-        for pIdx in "abcdefgh":
+        for pIdx in "abcdefg":
             fileName = pIdx + DotExtention
             filePath = os.path.join(contestDirPath, fileName)
             tryRenameOrCreate(

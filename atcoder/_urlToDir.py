@@ -12,4 +12,4 @@ if pf == 'Windows':
 if pf == 'Darwin':
   	subprocess.run("cd tools ; python urlToDir.py", shell=True)
 if pf == 'Linux':
-	print('this do not support Linux. sorry.')
+	  subprocess.run("cd tools ; python3 urlToDir.py", shell=True)

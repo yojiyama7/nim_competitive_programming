@@ -5,6 +5,7 @@ def cdHere():
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
 cdHere()
 
+
 DotExtention = ".nim"
 # NamingStyle = "snake"
 NamingStyle = "camel"

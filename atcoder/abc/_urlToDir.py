@@ -7,4 +7,4 @@ if pf == 'Windows':
 if pf == 'Darwin':
   	subprocess.run("cd ../tools; python urlToDir.py", shell=True)
 if pf == 'Linux':
-	print('on Linux')
+    subprocess.run("cd ../tools; python3 urlToDir.py", shell=True)

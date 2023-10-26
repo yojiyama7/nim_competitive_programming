@@ -21,23 +21,6 @@ proc pow(x, n, m: int): int =
 ################################
 
 let 
-  N = stdin.readLine.parseInt()
-  CA = newSeqWith(N, (
-    stdin.readLine.parseInt(),
-    stdin.readLine.split.map(parseInt).toHashSet()
-  ))
-  X = stdin.readLine.parseInt()
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+  A = stdin.readLine.split.map(parseInt)
 
-var l: seq[(int, HashSet[int], int)] = @[]
-for i, (c, a) in CA:
-  l.add((c, a, i))
-l = l.filterIt(X in it[1])
-if l.len == 0:
-  echo 0
-  echo ""
-  quit()
-let cMin = l.min()[0]
-l = l.filterIt(it[1].len == cMin)
-let result = l.mapIt(it[2] + 1)
-echo result.len
-echo result.join(" ")

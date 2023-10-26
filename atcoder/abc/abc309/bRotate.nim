@@ -74,3 +74,26 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
+let
+  N = stdin.readLine.parseInt()
+  A = newSeqWith(N, stdin.readLine)
+
+var B = A
+
+B[0][1..<N] = A[0][0..<N-1]
+# echo B
+
+for i in 0..<N-1:
+  B[i+1][N-1] = A[i][N-1]
+# echo B
+
+B[N-1][0..<N-1] = A[N-1][1..<N]
+# echo B
+
+for i in 0..<N-1:
+  B[i][0] = A[i+1][0]
+# echo B
+
+# echo B
+for b in B:
+  echo b

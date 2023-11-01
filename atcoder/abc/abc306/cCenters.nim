@@ -22,20 +22,18 @@ proc parseInt(c: char): int =
 
 ################################
 
-let 
-  (H, W) = stdin.readLine.split.map(parseInt).toTuple(2)
-  S = newSeqWith(H, stdin.readLine)
+let
+  N = stdin.readLine.parseInt()
+  A = stdin.readLine.split.map(parseInt)
 
-var (a, b, c, d) = (H, -1, W, -1)
-for y, s in S:
-  for x, tile in s:
-    if tile == '#':
-      a = min(a, y)
-      b = max(b, y)
-      c = min(c, x)
-      d = max(d, x)
+var
+  counter = newSeqWith(N, 0)
+  result = newSeqWith(0, 0)
 
-for y in a..b:
-  for x in c..d:
-    if S[y][x] == '.':
-      echo &"{y+1} {x+1}"
+for i in 0..<3*N:
+  let a = A[i]-1
+  counter[a] += 1
+  if counter[a] == 2:
+    result.add(a)
+
+echo result.mapIt(it+1).join(" ")

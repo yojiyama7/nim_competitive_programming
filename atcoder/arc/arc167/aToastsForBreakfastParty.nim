@@ -31,4 +31,5 @@ for i in 0..<M:
   dishes[i] = A[i]
 for i in M..<N:
   dishes[^(i-M + 1)] += A[i]
+
 echo dishes.mapIt(it^2).sum()

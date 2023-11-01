@@ -20,7 +20,16 @@ proc pow(x, n, m: int): int =
 
 ################################
 
-let 
+let
   (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+var
   A = stdin.readLine.split.map(parseInt)
 
+var dishes = newSeqWith(M, 0)
+A.sort()
+for i in 0..<M:
+  dishes[i] = A[i]
+for i in M..<N:
+  dishes[^(i-M + 1)] += A[i]
+
+echo dishes.mapIt(it^2).sum()

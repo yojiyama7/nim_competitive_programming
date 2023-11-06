@@ -74,3 +74,39 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
+let
+  (H, W) = stdin.readLine.split.map(parseInt).toTuple(2)
+  S = newSeqWith(H, stdin.readLine)
+
+var
+  isVisited = newSeqWith(H, newSeqWith(W, false))
+  result = 0
+for cy in 0..<H:
+  for cx in 0..<W:
+    if S[cy][cx] == '.':
+      continue
+    if isVisited[cy][cx]:
+      continue
+    var stack = newSeqWith(0, (0, 0))
+    stack.add((cx, cy))
+    while stack.len > 0:
+      let
+        t = stack.pop()
+        (tx, ty) = t
+      isVisited[ty][tx] = true
+      for dy in -1..1:
+        for dx in -1..1:
+          if dx == 0 and dy == 0:
+            continue
+          let (x, y) = (tx+dx, ty+dy)
+          if not (x in 0..<W and y in 0..<H):
+            continue
+          if S[y][x] != '#':
+            continue
+          if isVisited[y][x]:
+            continue
+          isVisited[y][x] = true
+          stack.add((x, y))
+    result += 1
+
+echo result

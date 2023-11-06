@@ -74,3 +74,16 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
+let
+  N = stdin.readLine.parseInt()
+  WX = newSeqWith(N, stdin.readLine.split.map(parseInt).toTuple(2))
+
+var result = 0
+for i in 0..<24:
+  var score = 0
+  for (w, x) in WX:
+    if 9 <= ((x+i) mod 24) and ((x+i) mod 24) <= 18-1:
+      score += w
+  result = max(result, score)
+
+echo result

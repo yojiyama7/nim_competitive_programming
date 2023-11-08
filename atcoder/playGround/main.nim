@@ -1,28 +1,40 @@
-import strutils, sequtils, macros
-{. warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off .}
+## 20231109
+import os
 
-macro toTuple(lArg: openArray, n: static[int]): untyped =
-  let l = genSym()
-  var t = newNimNode(nnkTupleConstr)
-  for i in 0..<n:
-    t.add quote do:
-      `l`[`i`]
-  quote do:
-    (let `l` = `lArg`; `t`)
+echo os.fileExists("test.txt")
+# create file
+let f = open("test.txt", mode=fmReadWrite)
+echo f.readAll()
+f.write("abc\n")
+f.write("abc\n")
 
 ################################
 
-let
-  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
-  A = stdin.readLine.split.map(parseInt)
+# import strutils, sequtils, macros
+# {. warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off .}
 
-var result = newSeq[int]()
-var i = 1
-while i <= N:
-  var start = i
-  while i <= N and (i in A):
-    i.inc()
-  for x in countdown(i, start):
-    result.add(x)
-  i.inc()
-echo result.join(" ")
+# macro toTuple(lArg: openArray, n: static[int]): untyped =
+#   let l = genSym()
+#   var t = newNimNode(nnkTupleConstr)
+#   for i in 0..<n:
+#     t.add quote do:
+#       `l`[`i`]
+#   quote do:
+#     (let `l` = `lArg`; `t`)
+
+# ################################
+
+# let
+#   (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+#   A = stdin.readLine.split.map(parseInt)
+
+# var result = newSeq[int]()
+# var i = 1
+# while i <= N:
+#   var start = i
+#   while i <= N and (i in A):
+#     i.inc()
+#   for x in countdown(i, start):
+#     result.add(x)
+#   i.inc()
+# echo result.join(" ")

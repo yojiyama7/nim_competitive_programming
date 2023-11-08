@@ -74,3 +74,14 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
+let 
+  (N, D, P) = stdin.readLine.split.map(parseInt).toTuple(3)
+  F = stdin.readLine.split.map(parseInt)
+
+var result = 0
+let costs = newSeqWith(D - N.euclMod(-D), 0) & F.sorted()
+for i in 0..<(costs.len div D):
+  # echo costs[i*D..<i*D+D]
+  result += min(P, costs[i*D..<i*D+D].sum())
+
+echo result

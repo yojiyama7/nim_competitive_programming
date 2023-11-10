@@ -74,3 +74,16 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
+let 
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+  AB = newSeqWith(M, stdin.readLine.split.map(parseInt).toTuple(2))
+
+var moreThanSelf = newSeqWith(N, -1)
+for (Ai, Bi) in AB:
+  let (a, b) = (Ai-1, Bi-1)
+  moreThanSelf[b] = a
+if moreThanSelf.count(-1) == 1:
+  echo moreThanSelf.find(-1) + 1
+else:
+  echo -1
+

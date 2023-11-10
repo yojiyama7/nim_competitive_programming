@@ -22,3 +22,11 @@ proc parseInt(c: char): int =
 
 ################################
 
+let B = stdin.readLine.parseInt()
+
+block solve:
+  for i in 1..15:
+    if i^i == B:
+      echo i
+      break solve
+  echo -1

@@ -22,3 +22,26 @@ proc parseInt(c: char): int =
 
 ################################
 
+let A = newSeqWith(9, stdin.readLine.split.map(parseInt))
+
+block solve:
+  for i in 0..<9:
+    if A[i].toHashSet().len != 9:
+      echo "No"
+      break solve
+  for j in 0..<9:
+    if (0..<9).mapIt(A[it][j]).toHashSet().len != 9:
+      echo "No"
+      break solve
+  for bi in 0..<9:
+    let
+      (by, bx) = (bi div 3, bi mod 3)
+      (y, x) = (by*3, bx*3)
+    var nums = newSeqWith(0, 0).toHashSet()
+    for cy in y..<y+3:
+      for cx in x..<x+3:
+        nums.incl(A[cy][cx])
+    if nums.len != 9:
+      echo "No"
+      break solve
+  echo "Yes"

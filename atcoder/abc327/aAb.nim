@@ -22,3 +22,11 @@ proc parseInt(c: char): int =
 
 ################################
 
+let
+  N = stdin.readLine.parseInt()
+  S = stdin.readLine
+
+if "ab" in S or "ba" in S:
+  echo "Yes"
+else:
+  echo "No"

@@ -53,7 +53,7 @@ proc mySplit(s: string, chars: HashSet[char]): seq[string] =
 proc replaceToEmpty(s: string, chars: HashSet[char]): string =
   s.multiReplace(chars.mapIt(($it, "")))
 proc formatToValidName(s: string, isCapitalize=false): string =
-  let words = s.replaceToEmpty("\\/:*?\"<>|".toHashSet).mySplit([' '].toHashSet())
+  let words = s.replaceToEmpty("\\/:*?\"<>|^_".toHashSet).mySplit([' '].toHashSet())
   result = words.map(capitalizeAscii).join()
   if result.len > 0 and (isCapitalize == false):
     result[0] = result[0].toLowerAscii()
@@ -104,6 +104,6 @@ for p in problemsInContest:
     f.write(basecodeText)
     echo &"{filePath} is created."
 
-discard execShellCmd(&"code -r {contestDir}") 
+discard execShellCmd(&"code -r {contestDir}")
 var f = open("tmp__makeContestDir__", mode=fmReadWrite)
 f.write(contestDir)

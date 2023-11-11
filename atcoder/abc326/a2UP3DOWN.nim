@@ -17,26 +17,18 @@ proc pow(x, n, m: int): int =
   else:
     result = pow(x, n div 2, m)^2
   result = result mod m
+proc parseInt(c: char): int =
+  c.int - '0'.int
+iterator skipBy(r: HSlice, step: int): int =
+  for i in countup(r.a, r.b, step):
+    yield i
 
 ################################
 
-let
-  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
-var
-  A = stdin.readLine.split.map(parseInt)
 
-A.sort()
-# echo A
+let (X, Y) = stdin.readLine.split.map(parseInt).toTuple(2)
 
-var
-  lIdx = 0
-  rIdx = 0
-  maxScore = 0
-while lIdx < N:
-  while rIdx < N and A[rIdx] - A[lIdx] < M:
-    # echo (lIdx, rIdx), (A[lIdx], A[rIdx])
-    rIdx += 1
-  maxScore = max(maxScore, rIdx - lIdx)
-  lIdx += 1
-
-echo maxScore
+if (X < Y and abs(X-Y) <= 2) or (X > Y and abs(X-Y) <= 3):
+  echo "Yes"
+else:
+  echo "No"

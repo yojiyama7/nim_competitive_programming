@@ -74,3 +74,18 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
+let 
+  (N, X) = stdin.readLine.split.map(parseInt).toTuple(2)
+var
+  A = stdin.readLine.split.map(parseInt)
+
+A.sort()
+let score = A[1 ..< ^1].sum()
+let req = max(0, X - score)
+if req <= A[0]:
+  echo 0
+elif A[0] < req and req <= A[^1]:
+  echo req
+else:
+  echo -1
+

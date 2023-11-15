@@ -1,4 +1,4 @@
-import std/[sequtils, strutils, strformat, strscans, algorithm, math, sugar, hashes, tables, complex, random, deques, heapqueue, sets, macros, bitops]
+import std/[sequtils, strutils, strformat, strscans, algorithm, math, sugar, hashes, tables, complex, random, deques, heapqueue, sets, macros]
 {. warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off .}
 
 macro toTuple(lArg: openArray, n: static[int]): untyped =
@@ -25,19 +25,22 @@ iterator skipBy(r: HSlice, step: int): int =
 
 ################################
 
-
 let
-  (N, K) = stdin.readLine.split.map(parseInt).toTuple(2)
-  S = newSeqWith(N, stdin.readLine)
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+  A = stdin.readLine.split.map(parseInt)
 
-var result = 0
-for i in 0..<(1 shl N):
-  var charCnts = newSeqWith(26, 0)
-  for j in 0..<N:
-    if i.testBit(j):
-      for c in S[j]:
-        charCnts[c.int - 'a'.int] += 1
-  let score = charCnts.count(K)
+var
+  accA = newSeqWith(N+1, 0)
+for i, a in A:
+  accA[i+1] = accA[i] + a
+var score = 0
+for i in 0..<M:
+  score += (i+1) * A[i]
+var result = score
+for i in 1..<(N-M+1):
+  let (l, r) = (i-1, i-1 + M)
+  score -= accA[r] - accA[l]
+  score += A[r] * M
   result = max(result, score)
 
 echo result

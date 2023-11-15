@@ -1,4 +1,4 @@
-import std/[sequtils, strutils, strformat, strscans, algorithm, math, sugar, hashes, tables, complex, random, deques, heapqueue, sets, macros]
+import std/[sequtils, strutils, strformat, strscans, algorithm, math, sugar, hashes, tables, complex, random, deques, heapqueue, sets, macros, bitops]
 {. warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off .}
 
 macro toTuple(lArg: openArray, n: static[int]): untyped =

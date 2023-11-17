@@ -74,3 +74,35 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
+let 
+  (H, W) = stdin.readLine.split.map(parseInt).toTuple(2)
+  C = newSeqWith(H, stdin.readLine)
+
+var result = newSeqWith(min(H, W)+1, 0)
+for cy in 0..<H:
+  for cx in 0..<W:
+    block solveCell:
+      if C[cy][cx] != '#':
+        break solveCell
+      for dy in [1, -1]:
+        for dx in [1, -1]:
+          let (x, y) = (cx+dx, cy+dy)
+          if x notin 0..<W or y notin 0..<H:
+            break solveCell
+          if C[y][x] != '#':
+            break solveCell
+      # echo (cy, cx)
+      var size = 101
+      for dy in [1, -1]:
+        for dx in [1, -1]:
+          var score = -1
+          for i in 1..<int.high:
+            let (x, y) = (cx + dx*i, cy + dy*i)
+            if x notin 0..<W or y notin 0..<H or C[y][x] != '#':
+              score = i-1
+              break
+          size = min(size, score)
+      # echo size
+      result[size] += 1
+
+echo result[1 ..< ^0].join(" ")

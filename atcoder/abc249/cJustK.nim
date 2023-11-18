@@ -25,7 +25,6 @@ iterator skipBy(r: HSlice, step: int): int =
 
 ################################
 
-
 let
   (N, K) = stdin.readLine.split.map(parseInt).toTuple(2)
   S = newSeqWith(N, stdin.readLine)

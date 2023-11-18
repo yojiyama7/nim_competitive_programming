@@ -47,3 +47,32 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let 
+  Q = stdin.readLine.parseInt()
+  QUERY = newSeqWith(Q, stdin.readLine.split.map(parseInt))
+
+var
+  minHeap = initHeapQueue[int]()
+  maxHeap = initHeapQueue[int]()
+  countTable = initTable[int, int]()
+for q in QUERY:
+  case q[0]
+  of 1:
+    minHeap.push(q[1])
+    maxHeap.push(-q[1])
+    if q[1] notin countTable:
+      countTable[q[1]] = 0
+    countTable[q[1]] += 1
+  of 2:
+    if q[1] notin countTable:
+      continue
+    countTable[q[1]] = max(0, countTable[q[1]]-q[2])
+  of 3:
+    while countTable[minHeap[0]] == 0:
+      discard minHeap.pop()
+    while countTable[-maxHeap[0]] == 0:
+      discard maxHeap.pop()
+    echo -maxHeap[0] - minHeap[0]
+  else: discard
+  # echo (minHeap, maxHeap, countTable)

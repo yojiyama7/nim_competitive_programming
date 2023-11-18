@@ -19,9 +19,14 @@ proc pow(x, n, m: int): int =
   result = result mod m
 proc parseInt(c: char): int =
   c.int - '0'.int
-iterator skipBy(r: HSlice, step: int): int =
-  for i in countup(r.a, r.b, step):
-    yield i
 
 ################################
 
+let N = stdin.readLine.parseInt()
+
+var likeNumbers = newSeqWith(0, 0)
+for i in 100..919:
+  let (a, b, c) = ($i).map(parseInt).toTuple(3)
+  if a * b == c:
+    likeNumbers.add(i)
+echo likeNumbers[likeNumbers.lowerBound(N)]

@@ -47,3 +47,20 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let 
+  N = stdin.readLine.parseInt()
+  A = stdin.readLine.split.map(parseInt)
+  M = stdin.readLine.parseInt()
+  B = stdin.readLine.split.map(parseInt).toHashSet()
+  X = stdin.readLine.parseInt()
+
+var reachable = newSeqWith(X+1, false)
+reachable[0] = true
+for i in 1..X:
+  for a in A:
+    if i-a >= 0 and reachable[i-a] and (i-a notin B):
+      reachable[i] = true
+      break
+
+echo if reachable[X]: "Yes" else: "No"

@@ -22,28 +22,6 @@ proc parseInt(c: char): int =
 iterator skipBy(r: HSlice, step: int): int =
   for i in countup(r.a, r.b, step):
     yield i
-proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let
-  N = stdin.readLine.parseInt()
-var
-  LR = newSeqWith(N, stdin.readLine.split.map(parseInt).toTuple(2))
-
-LR.sort()
-var 
-  ranges = newSeq[(int, int)]()
-  lEnd = int.low
-  rEnd = int.low
-for (l, r) in LR:
-  if l <= rEnd:
-    rEnd = max(rEnd, r)
-  else:
-    ranges.add((lEnd, rEnd))
-    lEnd = l
-    rEnd = r
-ranges.add((lEnd, rEnd))
-
-for (l, r) in ranges[1..^1]:
-  echo &"{l} {r}"

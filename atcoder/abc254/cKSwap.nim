@@ -43,3 +43,21 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let 
+  (N, K) = stdin.readLine.split.map(parseInt).toTuple(2)
+  A = stdin.readLine.split.map(parseInt)
+
+var numsList = newSeqWith(K, newSeq[int]())
+for i, a in A:
+  numsList[i mod K].add(a)
+for i in 0..<K:
+  numsList[i].sort(order=Descending)
+var l = newSeq[int]()
+for i in 0..<N:
+  l.add(numsList[i mod K].pop())
+if l.isSorted():
+  echo "Yes"
+else:
+  echo "No"
+

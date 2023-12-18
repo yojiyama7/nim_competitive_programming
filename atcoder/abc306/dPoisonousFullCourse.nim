@@ -22,3 +22,27 @@ proc parseInt(c: char): int =
 
 ################################
 
+proc maxv(a: var int, b: int): void =
+  if a < b:
+    a = b
+
+let
+  N = stdin.readLine.parseInt()
+  XY = newseqwith(N, stdin.readLine.split.map(parseInt).toTuple(2))
+
+# dp[i][j]: i番目(1idx)までで腹の状態jでの最大スコア
+var dp = newSeqWith(N+1, newSeqWith(2, 0))
+for i in 0..<N: #配る
+  let (x, y) = XY[i]
+  # 食べない
+  dp[i+1][0].maxv(dp[i][0])
+  dp[i+1][1].maxv(dp[i][1])
+  if x == 0:
+    # 解毒
+    dp[i+1][0].maxv(dp[i][0] + y)
+    dp[i+1][0].maxv(dp[i][1] + y)
+  else:
+    # 毒
+    dp[i+1][1].maxv(dp[i][0] + y)
+
+echo dp[N].max()

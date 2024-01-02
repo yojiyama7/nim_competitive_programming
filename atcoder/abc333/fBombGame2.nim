@@ -26,8 +26,3 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let
-  N = stdin.readLine.parseInt()
-  A = stdin.readLine.split.map(parseInt)
-
-echo A.toHashSet.toSeq.sorted()[^2]

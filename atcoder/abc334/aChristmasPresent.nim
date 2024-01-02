@@ -26,8 +26,9 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let
-  N = stdin.readLine.parseInt()
-  A = stdin.readLine.split.map(parseInt)
+let (B, G) = stdin.readLine.split.map(parseInt).toTuple(2)
 
-echo A.toHashSet.toSeq.sorted()[^2]
+if B > G:
+  echo "Bat"
+else:
+  echo "Glove"

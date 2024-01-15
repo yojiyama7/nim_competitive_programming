@@ -47,3 +47,25 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let 
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+  X = stdin.readLine.split.map(parseInt)
+  CY = newSeqWith(M, stdin.readLine.split.map(parseInt).toTuple(2))
+
+let bonus = CY.toTable()
+# dp[i][j]: i回目のトスでカウンタがjである時の最大スコア
+var dp = newSeqWith(N+1, newSeqWith(N+1, 0))
+dp[0][0] = 0
+for i in 0..<N:
+  for j in 0..i:
+    dp[i+1][j+1] = max(
+      dp[i+1][j+1],
+      dp[i][j] + X[i] + (if j+1 in bonus: bonus[j+1] else: 0)
+    )
+    dp[i+1][0] = max(
+      dp[i+1][0],
+      dp[i][j]
+    )
+# for dpi in dp: echo dpi
+echo dp[N].max()

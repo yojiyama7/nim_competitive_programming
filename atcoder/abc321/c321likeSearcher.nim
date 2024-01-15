@@ -1,4 +1,4 @@
-import std/[sequtils, strutils, strformat, strscans, algorithm, math, sugar, hashes, tables, complex, random, deques, heapqueue, sets, macros]
+import std/[sequtils, strutils, strformat, strscans, algorithm, math, sugar, hashes, tables, complex, random, deques, heapqueue, sets, macros, bitops]
 {. warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off .}
 
 macro toTuple(lArg: openArray, n: static[int]): untyped =
@@ -22,3 +22,19 @@ proc parseInt(c: char): int =
 
 ################################
 
+let K = stdin.readLine.parseInt()
+
+
+var nums = newSeq[int]()
+for i in 2..<(1 shl 10):
+  var x = 0
+  var d = 0
+  for j in 0..<10:
+    if i.testBit(j):
+      x += 10^d * j
+      d += 1
+  nums.add(x)
+nums.sort()
+
+# echo nums[0..<K]
+echo nums[K-1]

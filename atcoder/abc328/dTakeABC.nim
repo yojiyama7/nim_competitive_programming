@@ -25,3 +25,27 @@ iterator skipBy(r: HSlice, step: int): int =
 
 ################################
 
+let S = stdin.readLine
+
+# ABC #
+# A BC ()
+# AB C [] 
+
+# ABC, AB, BC, A, C       <#else#>
+# #    [   )   (  ]       .
+
+# B A ABC BC C ABC A C
+# . ( #   )  ] #   ( ]
+# ()](]
+# ](]
+
+var 
+  stack = ""
+  i = 0
+while i < S.len:
+  stack &= S[i]
+  while stack.endsWith("ABC"):
+    stack.removeSuffix("ABC")
+  i += 1
+
+echo stack

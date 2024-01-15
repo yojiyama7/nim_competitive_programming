@@ -80,3 +80,38 @@ proc `*=`(a: var ModInt, b: int | ModInt): ModInt =
 
 ################################
 
+let 
+  (N, K) = stdin.readLine.split.map(parseInt).toTuple(2)
+
+let 
+  strK = $K
+  dashK = strK.reversed.join().parseInt()
+
+if K mod 10 == 0:
+  if K in 1..N and (not dashK < K):
+    echo 1
+  else:
+    echo 0
+  quit()
+
+if dashK < K:
+  echo 0
+  quit()
+
+# K <= dashK and strK[^1] != '0'
+
+var nums = initHashSet[int]()
+for i in 0..<int.high:
+  let x = K*10^i
+  if x in 1..N:
+    nums.incl(x)
+  else:
+    break
+for i in 0..<int.high:
+  let x = dashK*10^i
+  if x in 1..N:
+    nums.incl(x)
+  else:
+    break
+
+echo nums.len

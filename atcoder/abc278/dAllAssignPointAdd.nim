@@ -47,3 +47,36 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let 
+  N = stdin.readLine.parseInt()
+var
+  A = stdin.readLine.split.map(parseInt)
+let 
+  Q = stdin.readLine.parseInt()
+  QUERY = newSeqWith(Q, stdin.readLine.split.map(parseInt))
+
+var
+  resetCnt = 0
+  lastResetNum = -1
+  resetedIdxs = newSeqWith(N, 0)
+
+for query in QUERY:
+  case query[0]:
+  of 1:
+    let x = query[1]
+    resetCnt += 1
+    lastResetNum = x
+  of 2:
+    let (i, x) = (query[1]-1, query[2])
+    if resetedIdxs[i] != resetCnt:
+      A[i] = lastResetNum
+      resetedIdxs[i] = resetCnt
+    A[i] += x
+  of 3:
+    let i = query[1]-1
+    if resetedIdxs[i] != resetCnt:
+      A[i] = lastResetNum
+      resetedIdxs[i] = resetCnt
+    echo A[i]
+  else: discard

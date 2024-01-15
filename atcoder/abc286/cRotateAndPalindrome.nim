@@ -47,3 +47,18 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let  
+  (N, A, B) = stdin.readLine.split.map(parseInt).toTuple(3)
+var
+  S = stdin.readLine
+
+var result = int.high
+for i in 0..<N:
+  let
+    changeCnt = zip(S, S.reversed).countIt(it[0] != it[1]) div 2
+    score = A*i + B*changeCnt
+  result = min(result, score)
+  S.rotateLeft(1)
+
+echo result

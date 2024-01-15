@@ -47,3 +47,32 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let 
+  (H, W, C, Q) = stdin.readLine.split.map(parseInt).toTuple(4)
+  TNC = newSeqWith(Q, stdin.readLine.split.map(parseInt).toTuple(3))
+
+var
+  rCnt = 0
+  cCnt = 0
+  rows = initHashSet[int]()
+  cols = initHashSet[int]()
+  cntsByColor = newSeqWith(C, 0)
+for (t, n1, c1) in TNC.reversed:
+  let (n, c) = (n1-1, c1-1)
+  case t:
+  of 1:
+    if n in rows:
+      continue
+    cntsByColor[c] += W - cCnt
+    rows.incl(n)
+    rCnt += 1
+  of 2:
+    if n in cols:
+      continue
+    cntsByColor[c] += H - rCnt
+    cols.incl(n)
+    cCnt += 1
+  else: discard
+
+echo cntsByColor.join(" ")

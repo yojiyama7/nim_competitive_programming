@@ -26,9 +26,12 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (A, M, L, R) = stdin.readLine.split.map(parseInt).toTuple(4)
+let
+  (N, X1, Y1) = stdin.readLine.split.map(parseInt).toTuple(3)
+  U1V1 = newSeqWith(N-1, stdin.readLine.split.map(parseInt).toTuple(2))
 
-let (l, r) = (L-A, R-A+1)
-
-
-
+var g = newSeqWith(N, initHashSet[int]())
+for (u1, v1) in U1V1:
+  g[u1-1].incl(v1-1)
+  g[v1-1].incl(u1-1)
+let a = newSeqWith(N, false)

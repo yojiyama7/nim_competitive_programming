@@ -26,9 +26,3 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (A, M, L, R) = stdin.readLine.split.map(parseInt).toTuple(4)
-
-let (l, r) = (L-A, R-A+1)
-
-
-

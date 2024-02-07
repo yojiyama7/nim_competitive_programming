@@ -26,3 +26,24 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let
+  (N, Q) = stdin.readLine.split.map(parseInt).toTuple(2)
+  QUERY = newSeqWith(Q, stdin.readLine.split.toTuple(2))
+
+var parts = newSeq[(int, int)](N)
+for i in 0..<N:
+  parts[i] = (i+1, 0)
+var head = 0
+for q in QUERY:
+  case q[0].parseInt():
+  of 1:
+    let c = q[1]
+    let (dx, dy) = [(1, 0), (-1, 0), (0, 1), (0, -1)]["RLUD".find(c)]
+    let (x, y) = parts[head]
+    head = (head - 1).euclMod(N)
+    parts[head] = (x+dx, y+dy)
+  of 2:
+    let p1 = q[1].parseInt()
+    let (x, y) = parts[(head + p1-1).euclMod(N)]
+    echo &"{x} {y}"
+  else: discard

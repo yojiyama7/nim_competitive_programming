@@ -26,9 +26,16 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (A, M, L, R) = stdin.readLine.split.map(parseInt).toTuple(4)
+let
+  N = stdin.readLine.parseInt()
+  XY = newSeqWith(N, stdin.readLine.split.map(parseInt).toTuple(2))
 
-let (l, r) = (L-A, R-A+1)
-
-
+let (X, Y) = XY.unzip()
+let (sumOfX, sumOfY) = (X.sum(), Y.sum())
+if sumOfX > sumOfY:
+  echo "Takahashi"
+elif sumOfX < sumOfY:
+  echo "Aoki"
+else:
+  echo "Draw"
 

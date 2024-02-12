@@ -1,0 +1,67 @@
+import std/[sequtils, strutils, strformat, strscans, algorithm, math, sugar, hashes, tables, complex, random, deques, heapqueue, sets, macros, bitops]
+{. warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off .}
+
+macro toTuple(lArg: openArray, n: static[int]): untyped =
+  let l = genSym()
+  var t = newNimNode(nnkTupleConstr)
+  for i in 0..<n:
+    t.add quote do:
+      `l`[`i`]
+  quote do:
+    (let `l` = `lArg`; `t`)
+proc pow(x, n, m: int): int =
+  if n == 0:
+    return 1
+  if n mod 2 == 1:
+    result = x * pow(x, n-1, m)
+  else:
+    result = pow(x, n div 2, m)^2
+  result = result mod m
+proc parseInt(c: char): int =
+  c.int - '0'.int
+iterator skipBy(r: HSlice, step: int): int =
+  for i in countup(r.a, r.b, step):
+    yield i
+proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
+
+################################
+
+let 
+  N = stdin.readLine.parseInt()
+var
+  S = stdin.readLine
+let 
+  Q = stdin.readLine.parseInt()
+  TXC = newSeqWith(Q, stdin.readLine.split.toTuple(3))
+
+var
+  lastChangeByChars = newSeqWith(N, -1)
+  lastAllUpper = -2
+  lastAllLower = -2
+for i, (tStr, xStr1, cStr) in TXC:
+  let
+    t = tStr.parseInt()
+    x = xStr1.parseInt()-1
+    c = cStr[0]
+  case t
+  of 1:
+    S[x] = c
+    lastChangeByChars[x] = i
+  of 2:
+    lastAllLower = i
+  of 3:
+    lastAllUpper = i
+  else: discard
+
+var result = ""
+for i in 0..<N:
+  let lastIdx = max([lastChangeByChars[i], lastAllLower, lastAllUpper])
+  if lastChangeByChars[i] == lastIdx:
+    result &= S[i]
+  elif lastAllLower == lastIdx:
+    result &= S[i].toLowerAscii()
+  elif lastAllUpper == lastIdx:
+    result &= S[i].toUpperAscii()
+  else: discard
+
+echo result

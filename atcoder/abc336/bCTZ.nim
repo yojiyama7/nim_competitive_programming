@@ -26,3 +26,11 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let N = stdin.readLine.parseInt()
+
+var result = 0
+var x = N
+while x mod 2 == 0:
+  x = x div 2
+  result += 1
+echo result

@@ -26,3 +26,18 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let (N, S, M, L) = stdin.readLine.split.map(parseInt).toTuple(4)
+
+let costOf48 = min([S*8, M*6, L*4])
+
+var minCost = 1 shl 60
+for si in 0..<8:
+  for mi in 0..<6:
+    for li in 0..<4:
+      let num = si*6 + mi*8 + li*12
+      let subCost = si*S + mi*M + li*L
+      let mainCost = max(N-num, 0).ceilDiv(48) * costOf48
+      let cost = mainCost + subCost
+      if cost < minCost:
+        minCost = cost
+echo minCost

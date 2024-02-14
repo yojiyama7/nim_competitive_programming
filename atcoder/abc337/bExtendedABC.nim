@@ -26,3 +26,13 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let S = stdin.readLine
+
+var i = 0
+for c in "ABC":
+  while i < S.len and S[i] == c:
+    i += 1
+if S.len == i:
+  echo "Yes"
+else:
+  echo "No"

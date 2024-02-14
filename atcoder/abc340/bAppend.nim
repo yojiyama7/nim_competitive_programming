@@ -27,16 +27,12 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 ################################
 
 let
-  (N, L, R) = stdin.readLine.split.map(parseInt).toTuple(3)
-  A = stdin.readLine.split.map(parseInt)
+  Q = stdin.readLine.parseInt()
+  QUERY = newSeqWith(Q, stdin.readLine.split.map(parseInt).toTuple(2))
 
-var result = newSeq[int]()
-for a in A:
-  if L <= a and a <= R:
-    result.add(a)
-  elif a < L:
-    result.add(L)
-  else:
-    result.add(R)
-  
-echo result.join(" ")
+var l = newSeq[int]()
+for query in QUERY:
+  if query[0] == 1:
+    l.add(query[1])
+  elif query[0] == 2:
+    echo l[^query[1]]

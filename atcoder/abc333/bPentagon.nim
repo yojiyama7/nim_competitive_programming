@@ -26,3 +26,15 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let 
+  (S1, S2) = stdin.readLine.toTuple(2)
+  (T1, T2) = stdin.readLine.toTuple(2)
+
+proc isAdjacent(a, b: char): bool =
+  var (n, m) = ("ABCDE".find(a), "ABCDE".find(b))
+  return (n + 1) mod 5 == m or (m + 1) mod 5 == n
+
+if isAdjacent(S1, S2) == isAdjacent(T1, T2):
+  echo "Yes"
+else:
+  echo "No"

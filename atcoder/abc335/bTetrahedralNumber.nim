@@ -26,3 +26,9 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let N = stdin.readLine.parseInt()
+
+for x in 0..N:
+  for y in 0..N-x:
+    for z in 0..N-x-y:
+      echo &"{x} {y} {z}"

@@ -26,17 +26,10 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let
-  (N, L, R) = stdin.readLine.split.map(parseInt).toTuple(3)
-  A = stdin.readLine.split.map(parseInt)
+let S = stdin.readLine
 
-var result = newSeq[int]()
-for a in A:
-  if L <= a and a <= R:
-    result.add(a)
-  elif a < L:
-    result.add(L)
-  else:
-    result.add(R)
-  
-echo result.join(" ")
+let counter = S.toCountTable()
+let maxScore = counter.values.toSeq.max()
+let result = counter.keys.toSeq.filterIt(counter[it] == maxScore).min()
+
+echo result

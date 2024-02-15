@@ -26,3 +26,26 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let (H, W, N) = stdin.readLine.split.map(parseInt).toTuple(3)
+
+var
+  m = newSeqWith(H, '.'.repeat(W))
+  d = 0
+  (cx, cy) = (0, 0)
+proc forward() =
+  let (dx, dy) = [(0, -1), (1, 0), (0, 1), (-1, 0)][d]
+  (cx, cy) = (cx+dx, cy+dy)
+  cx = cx.euclMod(W)
+  cy = cy.euclMod(H)
+for i in 0..<N:
+  if m[cy][cx] == '.':
+    m[cy][cx] = '#'
+    d = (d + 1).euclMod(4)
+    forward()
+  else:
+    m[cy][cx] = '.'
+    d = (d - 1).euclMod(4)
+    forward()
+
+for mi in m:
+  echo mi

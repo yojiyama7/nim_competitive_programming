@@ -25,3 +25,18 @@ iterator skipBy(r: HSlice, step: int): int =
 
 ################################
 
+let
+  (N, Q) = stdin.readLine.split.map(parseInt).toTuple(2)
+  S = stdin.readLine
+  LR = newSeqWith(Q, stdin.readLine.split.map(parseInt).toTuple(2))
+
+var scoreSumsFromFirst = @[0]
+for i in 0..<S.len-1:
+  let score = if S[i] == S[i+1]:
+                1
+              else:
+                0
+  scoreSumsFromFirst.add(scoreSumsFromFirst[^1] + score)
+
+for (l1, r1) in LR:
+  echo scoreSumsFromFirst[r1-1] - scoreSumsFromFirst[l1-1]

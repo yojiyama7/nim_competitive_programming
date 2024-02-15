@@ -26,3 +26,21 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let
+  N = stdin.readLine.parseInt()
+  S = stdin.readLine
+
+var scoresByAlphabet = initTable[char, int]()
+for c in 'a'..'z':
+  scoresByAlphabet[c] = 0
+var before = '.'
+var repeatCnt = 0
+for c in S:
+  if before == c:
+    repeatCnt += 1
+  else:
+    repeatCnt = 1
+  scoresByAlphabet[c] = max(scoresByAlphabet[c], repeatCnt)
+  before = c
+
+echo scoresByAlphabet.values.toSeq.sum()

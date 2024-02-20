@@ -26,15 +26,3 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let 
-  N = stdin.readline.parseInt()
-  A = stdin.readLine.split.map(parseInt)
-
-let ct = A.toCountTable()
-var t = initTable[int, int]()
-var x = 0
-for k in ct.keys.toSeq.sorted(Descending):
-  t[k] = x
-  x += k * ct[k]
-
-echo A.mapIt(t[it]).join(" ")

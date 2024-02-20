@@ -26,3 +26,22 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let 
+  N = stdin.readLine.parseInt()
+  A1 = stdin.readLine.split.map(parseInt)
+
+# 矢印を逆向きにして　次の人を参照できるようにする
+var l = newSeqWith(N, -1)
+var idx = -1
+for i, a1 in A1:
+  if a1 == -1: # 先頭の人を記録
+    idx = i
+    continue
+  l[a1-1] = i
+
+var result = newSeq[int]()
+while idx != -1:
+  result.add(idx+1)
+  idx = l[idx]
+
+echo result.join(" ")

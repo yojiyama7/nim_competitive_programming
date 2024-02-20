@@ -26,15 +26,30 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let 
-  N = stdin.readline.parseInt()
-  A = stdin.readLine.split.map(parseInt)
+let T = stdin.readline.parseInt()
 
-let ct = A.toCountTable()
-var t = initTable[int, int]()
-var x = 0
-for k in ct.keys.toSeq.sorted(Descending):
-  t[k] = x
-  x += k * ct[k]
+proc doPrimeFactorization(n: int): CountTable[int] =
+  var x = n
+  for i in 2..n:
+    if i^2 >= n:
+      break
+    while x mod i == 0:
+      x = x div i
+      result.inc(i)
+    if x mod i != 0:
+      continue
+    let a = x div i
+    while x mod a == 0:
+      x = x div a
+      result.inc(a)
+  if x > 1:
+    result.inc(x)
 
-echo A.mapIt(t[it]).join(" ")
+for _ in 0..<T:
+  let N = stdin.readLine.parseInt()
+  let ct = N.doPrimeFactorization()
+  
+  if ct.len >= 2:
+    echo "Yes"
+  else:
+    echo "No"

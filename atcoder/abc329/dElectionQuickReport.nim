@@ -26,3 +26,21 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let 
+  (N, M) = stdin.readline.split.map(parseInt).toTuple(2)
+  A1 = stdin.readLine.split.map(parseInt)
+
+var
+  votes = newSeqWith(N, 0)
+  maxVote = 0
+  maxVoteIdx = -1
+for i, a1 in A1:
+  let a = a1-1
+  votes[a] += 1
+  if votes[a] > maxVote:
+    maxVote = votes[a]
+    maxVoteIdx = a
+  elif votes[a] == maxVote and a < maxVoteIdx:
+    maxVoteIdx = a
+  # echo votes
+  echo maxVoteIdx+1

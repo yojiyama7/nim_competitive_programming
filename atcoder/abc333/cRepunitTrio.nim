@@ -26,3 +26,24 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let INF = 1 shl 62
+
+let N = stdin.readLine.parseInt()
+
+var a = 1
+var b = 1
+var c = 1
+for i in 0..<N-1:
+  c += 1
+  if c > b:
+    b += 1
+    c = 1
+  if b > a:
+    a += 1
+    b = 1
+    c = 1
+var s = ""
+s &= '1'.repeat(a-b)
+s &= '2'.repeat(b-c)
+s &= '3'.repeat(c)
+echo s.parseInt()

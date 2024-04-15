@@ -74,3 +74,30 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
+let 
+  (N, M, P) = stdin.readLine.split.map(parseInt).toTuple(3)
+  A = stdin.readLine.split.map(parseInt)
+var
+  B = stdin.readLine.split.map(parseInt)
+B.sort()
+var accB = newSeq[int](M+1)
+for i, bi in B:
+  accB[i+1] = accB[i] + bi
+
+var result = 0
+for a in A:
+  # a + b[mid] < P を満たす最大
+  var (ok, ng) = (-1, M)
+  while abs(ok-ng) > 1:
+    let mid = (ok + ng) div 2
+    # echo (a, mid, B[mid], P)
+    if a + B[mid] < P:
+      ok = mid
+    else:
+      ng = mid
+  let border = ok+1
+  let score = a*border + accB[border] + P*(M-border)
+  # echo (ok, score, B[0..<border], accB[border])
+  result += score
+
+echo result

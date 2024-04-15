@@ -27,22 +27,25 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 ################################
 
 let 
-  (H, W, N) = stdin.readLine.split.map(parseInt).toTuple(3)
-  T = stdin.readLine
-  S = newSeqWith(H, stdin.readLine)
+  S = stdin.readLine
+  N = stdin.readLine.parseInt()
+  T = newSeqWith(N, stdin.readLine)
 
-var result = 0
-for sy in 0..<H:
-  for sx in 0..<W:
-    block searchingCell:
-      var (x, y) = (sx, sy)
-      if S[y][x] == '#':
-        continue
-      for t in T:
-        let (dx, dy) = [(-1, 0), (1, 0), (0, -1), (0, 1)]["LRUD".find(t)]
-        x += dx
-        y += dy
-        if S[y][x] == '#':
-          break searchingCell
-      result += 1
-echo result
+proc isMatch(s, t: string): bool =
+  if s.len != t.len:
+    return false
+  for (si, ti) in zip(s, t):
+    if ti == '*':
+      continue
+    if si != ti:
+      return false
+  return true
+
+var l = newSeq[string]()
+for w in S.split(" "):
+  let x = if T.anyIt(isMatch(w, it)):
+            "*".repeat(w.len)
+          else:
+            w
+  l.add(x)
+echo l.join(" ")

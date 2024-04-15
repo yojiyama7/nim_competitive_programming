@@ -26,43 +26,67 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-var
+let
   (N, C) = stdin.readLine.split.map(parseInt).toTuple(2)
   A = stdin.readLine.split.map(parseInt)
 
-################################
+#@# これって抽象化行えませんか？
 
-# var
-#   (N, C) = stdin.readLine.split.map(parseInt).toTuple(2)
-#   A = stdin.readLine.split.map(parseInt)
+if C > 0:
+  var accA = newSeq[int](N+1)
+  for i in 0..<N:
+    accA[i+1] = accA[i] + A[i]
+  var rightRangeMin = newSeq[int](N+1)
+  var rightRangeMinIdx = newSeq[int](N+1)
+  rightRangeMinIdx[N] = N
+  for i in countdown(N-1, 0):
+    let score = accA[N] - accA[i]
+    if score < rightRangeMin[i+1]:
+      rightRangeMin[i] = score
+      rightRangeMinIdx[i] = i
+    else:
+      rightRangeMin[i] = rightRangeMin[i+1]
+      rightRangeMinIdx[i] = rightRangeMinIdx[i+1]
 
-# if C < 0:
-#   C = abs(C)
-#   A = A.mapIt(abs(it))
+  var 
+    maxScore = 0
+    maxScoreRange = (0, 0)
+  for l in 0..<N:
+    let r = rightRangeMinIdx[l]
+    let score = accA[r] - accA[l]
+    if score >= maxScore:
+      maxScore = score
+      maxScoreRange = (l, r)
+  
+  let (l, r) = maxScoreRange
+  let result = accA[l] + (accA[r] - accA[l])*C + (accA[N] - accA[r])
+  echo result
+else:
+  var accA = newSeq[int](N+1)
+  for i in 0..<N:
+    accA[i+1] = accA[i] + A[i]
+  var rightRangeMax = newSeq[int](N+1)
+  var rightRangeMaxIdx = newSeq[int](N+1)
+  rightRangeMaxIdx[N] = N
+  for i in countdown(N-1, 0):
+    let score = accA[N] - accA[i]
+    if score > rightRangeMax[i+1]:
+      rightRangeMax[i] = score
+      rightRangeMaxIdx[i] = i
+    else:
+      rightRangeMax[i] = rightRangeMax[i+1]
+      rightRangeMaxIdx[i] = rightRangeMaxIdx[i+1]
 
-# var accAFromRight = newSeq[int](N+1)
-# for i in countdown(N-1, 0):
-#   accAFromRight[i] = A[i] + accAFromRight[i+1]
-# var accAFromRightMin = newSeq[int](N+1)
-# var accAFromRightMinIdx = newSeq[int](N+1)
-# accAFromRightMinIdx[N] = N
-# for i in countdown(N-1, 0):
-#   if accAFromRight[i] < accAFromRightMin[i+1]:
-#     accAFromRightMin[i] = accAFromRight[i]
-#     accAFromRightMinIdx[i] = i
-#   else:
-#     accAFromRightMin[i] = accAFromRightMin[i+1]
-#     accAFromRightMinIdx[i] = accAFromRightMinIdx[i+1]
-
-# var accA = newSeq[int](N+1)
-# for i1 in 1..N:
-#   accA[i1] = accA[i1-1] + A[i1-1]
-
-# var result = 0
-# for i in 0..<N:
-#   # i以降であるjでj..<N番目の要素の和が最小であるようなj
-#   let j = accAFromRightMinIdx[i]
-#   let score = (accA[j] - accA[i]) * C
-#   result = max(result, score)
-
-# echo result
+  var 
+    minScore = 0
+    minScoreRange = (0, 0)
+  for l in 0..<N:
+    let r = rightRangeMaxIdx[l]
+    let score = accA[r] - accA[l]
+    if score <= minScore:
+      minScore = score
+      minScoreRange = (l, r)
+  
+  let (l, r) = minScoreRange
+  let result = accA[l] + (accA[r] - accA[l])*C + (accA[N] - accA[r])
+  echo result

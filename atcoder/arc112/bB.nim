@@ -80,3 +80,49 @@ proc `*=`(a: var ModInt, b: int | ModInt): ModInt =
 
 ################################
 
+proc isOverrapped(a, b: (int, int)): bool =
+  let (al, ar) = a
+  return (b[0] in al..ar) or (b[1] in al..ar)
+    
+proc mergedRange(ranges: seq[(int, int)], v: (int, int)): seq[(int, int)] =
+  var overrappedRanges = newSeq[(int, int)]()
+  for r in ranges:
+    if r.isOverrapped(v):
+      overrappedRanges.add(r)
+    else:
+      result.add(r)
+  var nums = newSeq[int]()
+  if overrappedRanges.len > 0:
+    overrappedRanges.add(v)
+    for (l, r) in overrappedRanges:
+      nums.add(l)
+      nums.add(r)
+    result.add((nums.min(), nums.max()))
+  else:
+    result.add(v)
+let (B, C) = stdin.readLine.split.map(parseInt).toTuple(2)
+
+# 引くだけ
+var (al, ar) = (B - (C div 2), B)
+if al > ar: swap(al, ar)
+# 最初に*-1
+var (bl, br) = (-B, -B - ((C-1) div 2))
+if bl > br: swap(bl, br)
+# 最後に*-1
+var (cl, cr) = (-B, -(B - ((C-1) div 2)))
+if cl > cr: swap(cl, cr)
+# 最初と最後に*-1
+var (dl, dr) = (B, -(-B - ((C-2) div 2)))
+if dl > dr: swap(dl, dr)
+
+var rangeList = newSeq[(int, int)]()
+for r in [(al, ar), (bl, br), (cl, cr), (dl, dr)]:
+  rangeList = rangeList.mergedRange(r)
+
+# echo [(al, ar), (bl, br), (cl, cr), (dl, dr)]
+# echo rangeList
+
+var result = 0
+for (l, r) in rangeList:
+  result += (r-l)+1
+echo result

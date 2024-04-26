@@ -26,24 +26,3 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let
-  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
-  AB = newSeqWith(M, stdin.readLine.split.map(parseInt).toTuple(2))
-  Q = stdin.readLine.parseInt()
-  XK = newSeqWith(Q, stdin.readLine.split.map(parseInt).toTuple(2))
-
-var g = newSeqWith(N, initHashSet[int]())
-for (a1, b1) in AB:
-  g[a1-1].incl(b1-1)
-  g[b1-1].incl(a1-1)
-
-for (x1, k) in XK:
-  let x = x1-1
-  var nodes = [x].toHashSet()
-  for i in 0..<k:
-    var nextNodes = initHashSet[int]()
-    for n in nodes:
-      nextNodes = nextNodes.union(g[n])
-    nodes = nodes.union(nextNodes)
-  # echo nodes
-  echo nodes.mapIt(it+1).sum()

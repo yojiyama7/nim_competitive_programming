@@ -43,3 +43,26 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let 
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+  A = stdin.readLine.split.map(parseInt)
+  C = stdin.readLine.split.map(parseInt)
+
+var B = newSeq[int](M+1)
+for i in 0..M:
+  let w = min([i, N, M])
+  # (d, e) == 畳み込みの図において重なる部分の配列
+  # (A, B)に対応
+  let dl = max(0, N-i)
+  let dr = min(N, dl+i)
+  let d = A[dl..dr].reversed()
+  let e = B[M-i..M]
+  # 
+  let zz = zip(d[1 ..< ^0], e[1 ..< ^0])
+  # echo zz
+  let s = zz.mapIt(it[0]*it[1]).sum()
+  let bb = (C[N+M-i] - s) div A[N]
+  B[M-i] = bb
+
+echo B.join(" ")

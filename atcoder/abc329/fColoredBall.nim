@@ -26,3 +26,24 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let
+  (N, Q) = stdin.readLine.split.map(parseInt).toTuple(2)
+  C = stdin.readLine.split.map(parseInt)
+  QUERY = newSeqWith(Q, stdin.readLine.split.map(parseInt).toTuple(2))
+
+var boxes = C.mapIt([it].toHashSet())
+var ownBoxes = (0..<N).toSeq
+for (a1, b1) in QUERY:
+  var (a, b) = (a1-1, b1-1)
+  var (aa, bb) = (ownBoxes[a], ownBoxes[b])
+  if boxes[aa].len < boxes[bb].len:
+    for aax in boxes[aa]:
+      boxes[bb].incl(aax)
+    boxes[aa].clear()
+  else:
+    for bbx in boxes[bb]:
+      boxes[aa].incl(bbx)
+    boxes[bb].clear()
+    swap(ownBoxes[a], ownBoxes[b])
+    (aa, bb) = (ownBoxes[a], ownBoxes[b])
+  echo boxes[bb].len()

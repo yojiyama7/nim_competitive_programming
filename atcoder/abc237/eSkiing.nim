@@ -80,3 +80,38 @@ proc `*=`(a: var ModInt, b: int | ModInt): ModInt =
 
 ################################
 
+let 
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+  H = stdin.readLine.split.map(parseInt)
+  UV = newSeqWith(M, stdin.readLine.split.map(parseInt).toTuple(2))
+
+var g = newSeq[HashSet[(int, int)]](N)
+for (u1, v1) in UV:
+  var (u, v) = (u1-1, v1-1)
+  if H[u] > H[v]:
+    swap(u, v)
+  g[u].incl((v, H[v]-H[u]))
+  g[v].incl((u, 0))
+
+# (cost, idx)
+const INF = 2^60
+var h = [(0, 0)].toHeapQueue()
+var dist = newSeqWith[int](N, INF)
+dist[0] = 0
+while h.len > 0:
+  let (tcost, tidx) = h.pop()
+  for (cidx, ccost) in g[tidx]:
+    if dist[cidx] <= dist[tidx] + ccost:
+      continue
+    dist[cidx] = dist[tidx] + ccost
+    h.push((dist[cidx], cidx))
+# echo dist
+
+var result = 0
+for i in 0..<N:
+  let diff = (H[0] - H[i])
+  let score = diff - dist[i]
+  # echo (i, diff, dist[i])
+  result = max(result, score)
+
+echo result

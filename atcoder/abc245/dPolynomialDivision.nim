@@ -44,11 +44,16 @@ proc just[T, U](x: T, f: T -> U): U =
 
 ################################
 
+<<<<<<< HEAD
 let 
+=======
+let
+>>>>>>> c45928c6e371c2336e2de5e7e5ce54b785ed2739
   (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
   A = stdin.readLine.split.map(parseInt)
   C = stdin.readLine.split.map(parseInt)
 
+<<<<<<< HEAD
 var B = newSeq[int](M+1)
 for i in 0..M:
   let w = min([i, N, M])
@@ -66,3 +71,5 @@ for i in 0..M:
   B[M-i] = bb
 
 echo B.join(" ")
+=======
+>>>>>>> c45928c6e371c2336e2de5e7e5ce54b785ed2739

@@ -26,3 +26,19 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let (N, M, K) = stdin.readLine.split.map(parseInt).toTuple(3)
+
+let lcmNM = lcm([N, M])
+let cntPerChunk = (lcmNM div N) + (lcmNM div M) - 2
+
+var (ng, ok) = (0, lcmNM * (K.ceilDiv(cntPerChunk))+1)
+while abs(ok - ng) > 1:
+  let mid = (ok + ng) div 2
+  # echo (mid, (mid div N), (mid div M), (mid div lcmNM))
+  if (mid div N) + (mid div M) - (mid div lcmNM)*2 < K:
+    ng = mid
+  else:
+    ok = mid
+  # echo (ng, ok)
+
+echo ok

@@ -47,3 +47,37 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let 
+  N = stdin.readLine.parseInt()
+  XYP = newSeqWith(N, stdin.readLine.split.map(parseInt).toTuple(3))
+
+proc isValid(sss: int): bool =
+  for si, start in XYP:
+    var isVisited = newSeqWith(N, false)
+    isVisited[si] = true
+    var posList = @[start]
+    while posList.len > 0:
+      # echo (posList, isVisited)
+      let (tx, ty, tp) = posList.pop()
+      for i, (x, y, p) in XYP:
+        if isVisited[i]:
+          continue
+        if abs(x-tx) + abs(y-ty) > tp*sss:
+          continue
+        isVisited[i] = true
+        posList.add((x, y, p))
+    # echo isVisited
+    if isVisited.allIt(it):
+      return true
+  return false
+
+var (ng, ok) = (-1, 4*10^9)
+while abs(ok-ng) > 1:
+  let mid = (ok + ng) div 2
+  if isValid(mid):
+    ok = mid
+  else:
+    ng = mid
+
+echo ok

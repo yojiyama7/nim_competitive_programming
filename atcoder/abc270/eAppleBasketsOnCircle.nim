@@ -47,3 +47,27 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let 
+  (N, K) = stdin.readLine.split.map(parseInt).toTuple(2)
+  A = stdin.readLine.split.map(parseInt)
+
+# x周した瞬間にリンゴを食べすぎていない(K以下である)
+var (ok, ng) = (0, K+1)
+while abs(ok-ng) > 1:
+  let mid = (ok+ng) div 2
+  if A.mapIt(min(it, mid)).sum() <= K:
+    ok = mid
+  else:
+    ng = mid
+
+var remain = K - A.mapIt(min(it, ok)).sum()
+var apples = A.mapIt(max(0, it - ok))
+var i = 0
+while remain > 0:
+  if apples[i] > 0:
+    apples[i] -= 1
+    remain -= 1
+  i += 1
+
+echo apples.join(" ")

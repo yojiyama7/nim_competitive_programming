@@ -57,24 +57,12 @@ proc add(self: FenwickTree, eidx: int, v: int) =
     self.l[x] += v
     x += lsb(x)
 
-let 
-  (N, Q) = stdin.readLine.split.map(parseInt).toTuple(2)
-  S = stdin.readLine()
-  QUERY = newSeqWith(Q, stdin.readLine.split.map(parseInt))
+when isMainModule:
+  var ft = initFenwickTree(10)
 
-var ft = initFenwickTree(N+1)
-for i in 1..<N-2:
-  if S[i-1] != S[i]:
-    ft.add(i, 1)
-
-for query in QUERY:
-  if query[0] == 1:
-    # 1-idx 閉区間
-    let (l, r) = (query[1], query[2])
-    ft.sumOf(l..)
-  else:
-    let (l, r) = (query[1]-1, query[2])
-    if ft.sumOf(l..<r-1) == r-l-1:
-      echo "Yes"
-    else:
-      echo "No"
+  for i in 0..<10:
+    ft.add(i, i+1)
+  for i in 0..10:
+    echo ft.sumFromOneTo(i)
+  for i in 0..10-2:
+    echo ft.sumOf(i..<i+2)

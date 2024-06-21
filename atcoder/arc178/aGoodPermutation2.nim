@@ -26,3 +26,26 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+# N以上のAiがあるときは-1
+# >>> Aiが全てN未満であるとする
+# Aiが1だと？ -> 1が存在するので不可能
+# >>> 1 < Ai < N であるとする
+# 1は最初におきたいし、最初における
+# 前から貪欲で良さげ？
+
+let 
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+  A = stdin.readLine.split.map(parseInt)
+
+if not (1 < A.min() and A.max() < N):
+  echo -1
+  quit()
+
+let setA = A.toHashSet()
+
+var result = (1..N).toSeq()
+for i1 in 1..N:
+  if i1 in setA:
+    swap(result[i1-1], result[i1])
+
+echo result.join(" ")

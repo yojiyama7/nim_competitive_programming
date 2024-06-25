@@ -26,3 +26,20 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let 
+  N = stdin.readLine.parseInt()
+  S = stdin.readLine
+  Q = stdin.readLine.parseInt()
+  CD = newSeqWith(Q, stdin.readLine.split.mapIt(it[0]).toTuple(2))
+
+var conversion = ('a'..'z').toSeq.join()
+for (c, d) in CD:
+  for j in 0..<26:
+    if conversion[j] == c: conversion[j] = d
+
+var result = newString(N)
+for i, s in S:
+  let chidx = (s.int - 'a'.int)
+  result[i] = conversion[chidx]
+
+echo result

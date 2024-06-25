@@ -26,17 +26,3 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (A, M, L, R) = stdin.readLine.split.map(parseInt).toTuple(4)
-
-# 閉区間
-var (l, r) = (L-A, R-A)
-# 左は切り上げ
-let leftTree =  if l.euclMod(M) == 0:
-                  l
-                else:
-                  l.euclDiv(M)*M + M
-# 右は切り捨て
-let rightTree = r.euclDiv(M)*M
-let width = rightTree - leftTree
-let result = width div M + 1
-echo result

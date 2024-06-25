@@ -97,3 +97,51 @@ func ceilDiv*[T: SomeInteger](x, y: T): T {.inline.} =
 
 ################################
 
+let 
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+  ABCD = newSeqWith(M, stdin.readLine.split.toTuple(4))
+
+var ropeEdges = newSeqWith(N*2, -1)
+for (a1Str, b, c1Str, d) in ABCD:
+  let (a, c) = (a1Str.parseInt-1, c1Str.parseInt-1)
+  let x = a * 2 + (b == "R").int
+  let y = c * 2 + (d == "R").int
+  ropeEdges[x] = y
+  ropeEdges[y] = x
+
+proc anotherEdge(x: int): int =
+  if x == -1:
+    return -1
+  if x mod 2 == 0:
+    return x + 1
+  else:
+    return x - 1
+
+var isVisited = newSeqWith(N, false)
+proc solve(i: int): string =
+  if isVisited[i]:
+    return ""
+  # echo (i, isVisited)
+  for edge in 0..1:
+    var x = 2*i + edge
+    while true:
+      if ropeEdges[x] == -1:
+        break
+      x = ropeEdges[x].anotherEdge()
+      isVisited[x div 2] = true
+      if x div 2 == i:
+        return "loop"
+  return "nonLoop"
+
+var loopCnt = 0
+var nonLoopCnt = 0
+for i in 0..<N:
+  let res = solve(i)
+  if res == "loop":
+    loopCnt += 1
+  elif res == "nonLoop":
+    nonLoopCnt += 1
+  # echo res
+
+# echo (ropeEdges, isVisited)
+echo &"{loopCnt} {nonLoopCnt}"

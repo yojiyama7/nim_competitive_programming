@@ -26,3 +26,29 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let INF = 1 shl 60
+let
+  N = stdin.readLine.parseInt()
+  Q = stdin.readLine.split.map(parseInt)
+  A = stdin.readLine.split.map(parseInt)
+  B = stdin.readLine.split.map(parseInt)
+
+# 料理Aを何個作るかを全探索
+var result = 0
+block solve:
+  for i in 0..<INF:
+    var remains = newSeq[int](N)
+    for j in 0..<N:
+      remains[j] = Q[j] - A[j]*i
+      if remains[j] < 0:
+        break solve
+    let bScore = (0..<N).toSeq.mapIt(
+      if B[it] == 0:
+        INF
+      else:
+        remains[it] div B[it]
+      ).min()
+    let score = i + bScore
+    result = max(result, score)
+
+echo result

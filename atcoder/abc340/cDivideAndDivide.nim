@@ -26,3 +26,15 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let N = stdin.readLine.parseInt()
+
+var memo = initTable[int, int]()
+proc solve(x: int): int =
+  if x == 1: return 0
+  if memo.hasKey(x): return memo[x]
+  # echo (N, x div 2, (x div 2) + (x mod 2))
+  memo[x] = x + solve(x div 2) + solve((x div 2) + (x mod 2))
+  return memo[x]
+
+echo solve(N)
+# echo memo

@@ -26,14 +26,3 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let
-  (N, Q) = stdin.readLine.split.map(parseInt).toTuple(2)
-var
-  R = stdin.readLine.split.map(parseInt)
-  QUERY = newSeqWith(Q, stdin.readLine.parseInt())
-
-R.sort()
-let accR = R.cumsummed()
-# echo accR
-for x in QUERY:
-  echo accR.upperBound(x)

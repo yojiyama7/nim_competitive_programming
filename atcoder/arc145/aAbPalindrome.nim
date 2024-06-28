@@ -80,3 +80,19 @@ proc `*=`(a: var ModInt, b: int | ModInt): ModInt =
 
 ################################
 
+let 
+  N = stdin.readLine.parseInt()
+  S = stdin.readLine
+
+if S.len == 2:
+  if S in ["AA", "BB"]:
+    echo "Yes"
+  else:
+    echo "No"
+  quit()
+
+if S[0] & S[^1] == "AB":
+  echo "No"
+else:
+  echo "Yes"
+

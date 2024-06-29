@@ -80,3 +80,28 @@ proc `*=`(a: var ModInt, b: int | ModInt): ModInt =
 
 ################################
 
+const MOD = 998244353
+let 
+  (H, W) = stdin.readLine.split.map(parseInt).toTuple(2)
+  S = newSeqWith(H, stdin.readLine)
+
+proc solve(): int =
+  result = 1
+  for t in 0..H+W-2:
+    var y = min(t, H-1)
+    var x = t - y
+    var colors = ""
+    while x in 0..<W and y in 0..<H:
+      colors &= S[y][x]
+      x += 1
+      y -= 1
+    let ct = colors.toCountTable()
+    if ct.hasKey('R') and ct.hasKey('B'):
+      return 0
+    if ct.hasKey('R') or ct.hasKey('B'):
+      discard
+    else:
+      result *= 2
+      result = result mod MOD
+
+echo solve()

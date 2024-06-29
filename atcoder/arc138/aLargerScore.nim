@@ -80,3 +80,77 @@ proc `*=`(a: var ModInt, b: int | ModInt): ModInt =
 
 ################################
 
+# これどっちもヒープで良くね？()
+
+type FenwickTree[T] = object 
+  l*: seq[T]
+proc len(ft: var FenwickTree): int =
+  return ft.l.len-1
+proc extractLowestBit(x: int): int = x and -x
+proc initFenwickTree*[T](): FenwickTree[T] =
+  FenwickTree[T](l: newSeq[T](1))
+proc push*[T](self: var FenwickTree[T], xRaw: T) =
+  let n = self.l.len
+  let k = extractLowestBit(n)
+  var x = xRaw
+  var d = 1
+  while d != k:
+    x += self.l[n - d]
+    d *= 2
+  self.l.add(x)
+proc sumFromOneTo[T](self: var FenwickTree[T], bi: int): T =
+  var rbidx = bi
+  while rbidx != 0:
+    result += self.l[rbidx]
+    rbidx -= extractLowestBit(rbidx)
+proc sumOf[T](self: var FenwickTree[T], lr: Slice[int]): T =
+  let (l, r) = (lr.a, lr.b+1)
+  return self.sumFromOneTo(r) - self.sumFromOneTo(l)
+proc add[T](self: var FenwickTree[T], ei: int, v: T) =
+  var bi = ei+1
+  while bi < self.l.len:
+    self.l[bi] += v
+    bi += extractLowestBit(bi)
+const INF = 1 shl 60
+
+let 
+  (N, K) = stdin.readLine.split.map(parseInt).toTuple(2)
+  A = stdin.readLine.split.map(parseInt)
+
+proc mostLeftMoreThanZero(ft: var FenwickTree[int]): int =
+  if ft.sumFromOneTo(ft.len) == 0:
+    return -1
+  var (ng, ok) = (0, ft.len)
+  while abs(ok - ng) > 1:
+    let mid = (ok + ng) div 2
+    if ft.sumFromOneTo(mid) >= 1:
+      ok = mid
+    else:
+      ng = mid
+  return ok
+
+var ft = initFenwickTree[int]()
+for i in 0..<N:
+  ft.push(0)
+var hNeg = initHeapQueue[tuple[vNeg: int, idx: int]]()
+for i in K..<N:
+  hNeg.push((-A[i], i))
+var currentMin = INF
+var result = INF
+for l in (0..<K).toSeq.reversed:
+  if A[l] >= currentMin:
+    continue
+  currentMin = A[l]
+  while hNeg.len > 0 and -(hNeg[0].vNeg) > A[l]:
+    ft.add(hNeg.pop().idx, 1)
+  let rbidx = ft.mostLeftMoreThanZero()
+  if rbidx == -1:
+    continue
+  # echo ((l, rbidx-1), (0..<N).mapIt(ft.sumOf(it..it)), hNeg[0])
+  let score = rbidx-1-l
+  result = min(result, score)
+
+if result == INF:
+  echo -1
+else:
+  echo result

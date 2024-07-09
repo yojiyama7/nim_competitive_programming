@@ -26,10 +26,9 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (N, L, R) = stdin.readLine.split.map(parseInt).toTuple(3)
+let S = stdin.readLine
 
-let (l, r) = (L-1, R)
-let s = (1..N).toSeq
-let result = s[0..<l] & s[l..<r].reversed() & s[r..<N]
-
-echo result.join(" ")
+if S.find('R') < S.find('M'):
+  echo "Yes"
+else:
+  echo "No"

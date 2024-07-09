@@ -26,10 +26,10 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (N, L, R) = stdin.readLine.split.map(parseInt).toTuple(3)
+let S = stdin.readLine
 
-let (l, r) = (L-1, R)
-let s = (1..N).toSeq
-let result = s[0..<l] & s[l..<r].reversed() & s[r..<N]
-
-echo result.join(" ")
+let a = S.find("|")
+let b = S.rfind("|")+1
+let result = S[0..<a] & S[b..<S.len]
+if result.len > 0:
+  echo result

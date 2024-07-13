@@ -26,9 +26,12 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (A, B) = stdin.readLine.split.map(parseInt).toTuple(2)
+let
+  N = stdin.readLine.parseInt()
+  A = newSeqWith(N, stdin.readLine)
+  B = newSeqWith(N, stdin.readLine)
 
-var s = (0..9).toSeq.toHashSet()
-s.excl(A+B)
-echo s.pop()
-
+for i in 0..<N:
+  for j in 0..<N:
+    if A[i][j] != B[i][j]:
+      echo [i+1, j+1].join(" ")

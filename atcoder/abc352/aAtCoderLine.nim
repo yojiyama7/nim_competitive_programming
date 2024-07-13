@@ -26,9 +26,9 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (A, B) = stdin.readLine.split.map(parseInt).toTuple(2)
+let (N, X, Y, Z) = stdin.readLine.split.map(parseInt).toTuple(4)
 
-var s = (0..9).toSeq.toHashSet()
-s.excl(A+B)
-echo s.pop()
-
+echo  if (Z in X..Y or Z in Y..X):
+        "Yes"
+      else:
+        "No"

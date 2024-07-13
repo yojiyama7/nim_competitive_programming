@@ -26,9 +26,8 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (A, B) = stdin.readLine.split.map(parseInt).toTuple(2)
+let
+  N = stdin.readLine.parseInt()
+  S = newSeqWith(N, stdin.readLine)
 
-var s = (0..9).toSeq.toHashSet()
-s.excl(A+B)
-echo s.pop()
-
+echo S.count("Takahashi")

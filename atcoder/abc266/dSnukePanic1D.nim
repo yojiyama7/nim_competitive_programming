@@ -26,9 +26,27 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (A, B) = stdin.readLine.split.map(parseInt).toTuple(2)
+const INF = 1 shl 60
+let
+  N = stdin.readLine.parseInt()
+  TXA = newSeqWith(N, stdin.readLine.split.map(parseInt).toTuple(3))
 
-var s = (0..9).toSeq.toHashSet()
-s.excl(A+B)
-echo s.pop()
+var timeTable = initTable[(int, int), int]()
+for (t, x, a) in TXA:
+  timeTable[(t, x)] = a
+# dp: 時刻iでに座標jにいてとれる最大スコア
+let lastTime = TXA[^1][0]
+var dp = newSeqWith(lastTime+1, newSeqWith(5, -INF))
+dp[0][0] = 0
+for i in 1..lastTime:
+  for j in 0..<5:
+    var validBefores = [j-1, j, j+1].filterIt(it in 0..<5)
+    # echo validBefores
+    for b in validBefores:
+      dp[i][j] = max(dp[i][j], dp[i-1][b])
+    if timeTable.hasKey((i, j)):
+      let size = timeTable[(i, j)]
+      dp[i][j] += size
 
+# echo dp
+echo dp[lastTime].max()

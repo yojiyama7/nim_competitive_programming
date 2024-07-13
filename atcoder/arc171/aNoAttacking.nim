@@ -26,9 +26,27 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (A, B) = stdin.readLine.split.map(parseInt).toTuple(2)
+# NxN盤面においてA>Nの時、無理
+# A==N の時 ギリギリ行けるが B==0を要求する
+# A<Nの時いくつか空きマスがある上のほうから1行おきに開けるとよい
 
-var s = (0..9).toSeq.toHashSet()
-s.excl(A+B)
-echo s.pop()
+let T = stdin.readLine.parseInt()
 
+for _ in 0..<T:
+  let (N, A, B) = stdin.readLine.split.map(parseInt).toTuple(3)
+  if A > N:
+    echo "No"
+    continue 
+  if A == N:
+    if B == 0:
+      echo "Yes"
+    else:
+      echo "No"
+    continue 
+  # A < N
+  let rw = N - A
+  let rh = min(N - A, N.ceilDiv(2))
+  if B <= rw*rh:
+    echo "Yes"
+  else:
+    echo "No"

@@ -43,3 +43,14 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let N = stdin.readLine.parseInt()
+
+var memo = initTable[int, int]()
+proc solve(x: int): int =
+  if x == 0: return 1
+  if memo.hasKey(x): return memo[x]
+  memo[x] = solve(x div 2) + solve(x div 3)
+  return memo[x]
+
+echo solve(N)

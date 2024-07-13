@@ -43,3 +43,20 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let N = stdin.readLine.parseInt()
+
+proc solve(x: int): float =
+  if x == 1: return 3.5
+  let b = solve(x-1)
+  let q = 6 - b.ceil().toInt() + 1
+  # echo (x, q)
+  let ok = q/6 * ([1, 2, 3, 4, 5, 6][^q..^1].sum() / q)
+  let ng = (6-q)/6*b
+  # echo (x, (ok, ng), b)
+  return ok + ng
+
+echo solve(N)
+
+# https://atcoder.jp/contests/abc266/editorial/4662
+# こういうふうに書いていいわけね、、なるほどな気持ち

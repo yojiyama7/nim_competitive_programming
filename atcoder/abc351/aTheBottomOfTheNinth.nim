@@ -26,3 +26,11 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+<<<<<<< HEAD
+=======
+let 
+  A = stdin.readLine.split.map(parseInt)
+  B = stdin.readLine.split.map(parseInt)
+
+echo max(0, A.sum()-B.sum()+1)
+>>>>>>> bfce5766e054c7c7d7b0171e5c41d219ff97d82a

@@ -26,6 +26,7 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+<<<<<<< HEAD
 let
   N = stdin.readLine.parseInt()
   A = newSeqWith(N, stdin.readLine)
@@ -35,3 +36,5 @@ for i in 0..<N:
   for j in 0..<N:
     if A[i][j] != B[i][j]:
       echo [i+1, j+1].join(" ")
+=======
+>>>>>>> bfce5766e054c7c7d7b0171e5c41d219ff97d82a

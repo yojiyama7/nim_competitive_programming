@@ -26,10 +26,32 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+const INF = 1 shl 60
 let 
-  N = stdin.readLine.parseInt()
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
   A = stdin.readLine.split.map(parseInt)
+  UVB = newSeqWith(M, stdin.readLine.split.map(parseInt).toTuple(3))
 
-# A.sum() + res = 0
-# - A.sum() = res
-echo -A.sum()
+var g = newSeqWith(N, initTable[int, int]())
+for (u1, v1, b) in UVB:
+  let (u, v) = (u1-1, v1-1)
+  g[u][v] = b
+  g[v][u] = b
+
+# (dist, idx)
+var q = initHeapQueue[(int, int)]()
+q.push((A[0], 0))
+var dist = newSeqWith(N, INF)
+dist[0] = A[0]
+while q.len > 0:
+  let (td, t) = q.pop()
+  if dist[t] != td:
+    continue
+  for c in g[t].keys():
+    let cd = g[t][c] + A[c]
+    if dist[c] <= dist[t] + cd:
+      continue
+    dist[c] = dist[t] + cd
+    q.push((dist[c], c))
+
+echo dist[1..^1].join(" ")

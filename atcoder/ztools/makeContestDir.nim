@@ -75,6 +75,9 @@ if contestID notin problemsByContest:
       f.write(basecodeText)
       echo &"{filePath} is created."
   echo "create template for realtime contest."
+  discard execShellCmd(&"code -r {contestDir}")
+  var f = open("tmp__makeContestDir__", mode=fmReadWrite)
+  f.write(contestDir)
   quit()
 let problemsInContest = problemsByContest[contestID]
 

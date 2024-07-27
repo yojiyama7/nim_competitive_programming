@@ -26,3 +26,15 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let 
+  N = stdin.readLine.parseInt()
+  A1 = stdin.readLine.split.map(parseInt)
+  W = stdin.readLine.split.map(parseInt)
+
+var boxes = newSeqWith(N, newSeq[int]())
+for i in 0..<N:
+  let a = A1[i]-1
+  boxes[a].add(W[i])
+let byBox = boxes.mapIt(if it.len >= 1: sum(it) - max(it) else: 0)
+let result = byBox.sum()
+echo result

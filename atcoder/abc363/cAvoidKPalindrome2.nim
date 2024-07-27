@@ -26,10 +26,3 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let 
-  N = stdin.readLine.parseInt()
-  A = stdin.readLine.split.map(parseInt)
-
-# A.sum() + res = 0
-# - A.sum() = res
-echo -A.sum()

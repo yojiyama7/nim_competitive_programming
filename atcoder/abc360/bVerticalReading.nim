@@ -26,3 +26,16 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let (S, T) = stdin.readLine.split.toTuple(2)
+
+for w in 1..<S.len:
+  for c in 0..<w:
+    var t = ""
+    var i = c
+    while i < S.len:
+      t &= S[i]
+      i += w
+    if t == T:
+      echo "Yes"
+      quit()
+echo "No"

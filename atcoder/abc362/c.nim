@@ -28,8 +28,21 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 let 
   N = stdin.readLine.parseInt()
-  A = stdin.readLine.split.map(parseInt)
+  LR = newSeqWith(N, stdin.readLine.split.map(parseInt).toTuple(2))
 
-# A.sum() + res = 0
-# - A.sum() = res
-echo -A.sum()
+let (L, R) = unzip(LR)
+let (sumL, sumR) = (sum(L), sum(R))
+if 0 notin sumL..sumR:
+  echo "No"
+  quit()
+
+var remain = 0 - sumL
+var result = newSeqWith(N, 0)
+for i in 0..<N:
+  let (l, r) = LR[i]
+  let w = r-l
+  let margin = min(remain, w)
+  result[i] = l + margin
+  remain -= margin
+echo "Yes"
+echo result.join(" ")

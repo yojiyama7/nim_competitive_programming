@@ -26,3 +26,31 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+const INF = (1 shl 60)
+
+let T = stdin.readLine.parseInt()
+
+proc solve(N: int, P: seq[int]): int = 
+  if P.isSorted():
+    return 0
+  var cmin = INF
+  var cmax = -INF
+  for i, p in P:
+    let i1 = i+1
+    if i1 == 1 and p == 1:
+      return 1
+    if cmin == 1 and cmax == i1 - 1 and p == i1:
+      return 1
+    cmin = min(cmin, p)
+    cmax = max(cmax, p)
+  # この辺、地味にムズイ
+  if P[0] == N and P[^1] == 1:
+    return 3
+  return 2
+
+for _ in 0..<T:
+  let
+    N = stdin.readLine.parseInt()
+    P = stdin.readLine.split.map(parseInt)
+  
+  echo solve(N, P)

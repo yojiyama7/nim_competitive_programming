@@ -26,9 +26,19 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (A, B) = stdin.readLine.split.map(parseInt).toTuple(2)
+let
+  (XA, YA) = stdin.readLine.split.map(parseInt).toTuple(2)
+  (XB, YB) = stdin.readLine.split.map(parseInt).toTuple(2)
+  (XC, YC) = stdin.readLine.split.map(parseInt).toTuple(2)
 
-var s = (0..9).toSeq.toHashSet()
-s.excl(A+B)
-echo s.pop()
-
+var abc = @[
+  (XA-XB)^2 + (YA-YB)^2,
+  (XB-XC)^2 + (YB-YC)^2,
+  (XC-XA)^2 + (YC-YA)^2,
+]
+abc.sort()
+let (a, b, c) = abc.toTuple(3)
+if a + b == c:
+  echo "Yes"
+else:
+  echo "No"

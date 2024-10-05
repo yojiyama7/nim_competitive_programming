@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 import std/[sequtils, strutils, strformat, strscans, algorithm, math, sugar,
     hashes, tables, complex, random, deques, heapqueue, sets, macros, bitops]
 {.warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off.}
+=======
+import std/[sequtils, strutils, strformat, strscans, algorithm, math, sugar, hashes, tables, complex, random, deques, heapqueue, sets, macros, bitops]
+{. warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off .}
+>>>>>>> 9f416570f18a255d2ae92e106ccbca93a32ea945
 
 macro toTuple(lArg: openArray, n: static[int]): untyped =
   let l = genSym()
@@ -27,8 +32,12 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+<<<<<<< HEAD
 let R = stdin.readline.parseInt()
 
 let curCnt = R div 100
 let targetScore = (curCnt + 1) * 100
 echo targetScore - R
+=======
+let R = stdin.readLine.split.map(parseInt)
+>>>>>>> 9f416570f18a255d2ae92e106ccbca93a32ea945

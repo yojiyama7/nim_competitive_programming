@@ -26,9 +26,11 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (A, B) = stdin.readLine.split.map(parseInt).toTuple(2)
+let (N, M, D) = stdin.readLine.split.map(parseInt).toTuple(3)
 
-var s = (0..9).toSeq.toHashSet()
-s.excl(A+B)
-echo s.pop()
-
+# (N-D)*2 * N^(M-2) * (M-1)  /  N^M
+# echo ((N-D)*2, N^(M-2), (M-1), N^M)
+if D == 0:
+  echo (N / N^2) * (M-1).float
+else:
+  echo ((N-D)*2 / N^2) * (M-1).float

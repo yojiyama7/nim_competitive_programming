@@ -26,3 +26,11 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+<<<<<<< HEAD
+=======
+let
+  N = stdin.readLine.parseInt()
+  S = newSeqWith(N, stdin.readLine)
+
+echo S.count("Takahashi")
+>>>>>>> 9f416570f18a255d2ae92e106ccbca93a32ea945

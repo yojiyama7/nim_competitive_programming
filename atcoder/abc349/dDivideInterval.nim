@@ -26,9 +26,26 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (A, B) = stdin.readLine.split.map(parseInt).toTuple(2)
+let (L, R) = stdin.readLine.split.map(parseInt).toTuple(2)
 
-var s = (0..9).toSeq.toHashSet()
-s.excl(A+B)
-echo s.pop()
+# setされているbitのうち最下位のbitのみが立っている数を返す -> ある数の素因数の2のみを取り出すイメージ
+proc lsb(x: int): int = 1 shl (x.firstSetBit - 1)
 
+var (l, r) = (L, R)
+
+var resultTailRev = newSeq[(int, int)]()
+while 0 < r and l <= r - r.lsb: 
+  resultTailRev.add (r-r.lsb, r)
+  # echo ((l, r), r+r.lsb, r)
+  r -= r.lsb
+
+var resultHead = newSeq[(int, int)]()
+while 0 < l and l + l.lsb <= r: 
+  resultHead.add (l, l+l.lsb)
+  # echo ((l, r), l, l+l.lsb)
+  l += l.lsb
+
+let result = resultHead & resultTailRev.reversed()
+echo result.len
+for (x, y) in result:
+  echo &"{x} {y}"

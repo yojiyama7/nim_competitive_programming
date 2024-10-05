@@ -43,3 +43,34 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let 
+  N = stdin.readLine.parseInt()
+  XY = newSeqWith(N, stdin.readLine.split.map(parseInt).toTuple(2))
+
+proc calcNeighbor(p: (int, int)): seq[(int, int)] =
+  let (x, y) = p
+  for (dx, dy) in [(-1, -1), (-1, 0), (0, -1), (0, 1), (1, 0), (1, 1)]:
+    result.add((x+dx, y+dy))
+
+let setXY = XY.toHashSet()
+
+var result = 0
+var visited = initHashSet[(int, int)]()
+for p in XY:
+  if p in visited:
+    continue 
+  visited.incl(p)
+  var s = @[p]
+  while s.len > 0:
+    let t = s.pop()
+    for c in calcNeighbor(t):
+      if c notin setXY:
+        continue
+      if c in visited:
+        continue
+      visited.incl(c)
+      s.add(c)
+  result += 1
+
+echo result

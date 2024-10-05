@@ -26,9 +26,23 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (A, B) = stdin.readLine.split.map(parseInt).toTuple(2)
+let 
+  N = stdin.readLine.parseInt()
+  LR = newSeqWith(N, stdin.readLine.split.map(parseInt).toTuple(2))
 
-var s = (0..9).toSeq.toHashSet()
-s.excl(A+B)
-echo s.pop()
+let (L, R) = unzip(LR)
+let (sumL, sumR) = (sum(L), sum(R))
+if 0 notin sumL..sumR:
+  echo "No"
+  quit()
 
+var remain = 0 - sumL
+var result = newSeqWith(N, 0)
+for i in 0..<N:
+  let (l, r) = LR[i]
+  let w = r-l
+  let margin = min(remain, w)
+  result[i] = l + margin
+  remain -= margin
+echo "Yes"
+echo result.join(" ")

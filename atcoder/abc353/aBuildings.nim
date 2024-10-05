@@ -26,3 +26,13 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let 
+  N = stdin.readLine.parseInt()
+  H = stdin.readLine.split.map(parseInt)
+
+let first = H[0]
+for i in 1..<N:
+  if first < H[i]:
+    echo i+1
+    quit()
+echo -1

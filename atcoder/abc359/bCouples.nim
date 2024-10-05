@@ -26,6 +26,7 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+<<<<<<< HEAD
 let N = stdin.readLine.parseInt()
 let A = stdin.readLine.split.map(parseInt)
 
@@ -35,3 +36,5 @@ for i in 0..<2*N-2:
     result += 1
 
 echo result
+=======
+>>>>>>> 9f416570f18a255d2ae92e106ccbca93a32ea945

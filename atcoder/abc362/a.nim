@@ -26,9 +26,14 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (A, B) = stdin.readLine.split.map(parseInt).toTuple(2)
+let 
+  (R, G, B) = stdin.readLine.split.map(parseInt).toTuple(3)
+  C = stdin.readLine
 
-var s = (0..9).toSeq.toHashSet()
-s.excl(A+B)
-echo s.pop()
-
+let result =  if C == "Red":
+                min(G, B)
+              elif C == "Blue":
+                min(R, G)
+              else:
+                min(R, B)
+echo result

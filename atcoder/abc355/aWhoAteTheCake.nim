@@ -28,7 +28,10 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 let (A, B) = stdin.readLine.split.map(parseInt).toTuple(2)
 
-var s = (0..9).toSeq.toHashSet()
-s.excl(A+B)
-echo s.pop()
-
+var a = [1, 2, 3].toHashSet()
+a.excl(A)
+a.excl(B)
+if a.len == 1:
+  echo a.pop()
+else:
+  echo -1

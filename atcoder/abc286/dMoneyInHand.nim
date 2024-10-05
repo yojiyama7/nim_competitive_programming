@@ -47,3 +47,26 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+let 
+  (N, X) = stdin.readLine.split.map(parseInt).toTuple(2)
+  AB = newSeqWith(N, stdin.readLine.split.map(parseInt).toTuple(2))
+
+# dp: i種類目(1)までの硬貨をつかって、j円が払えるかどうか(bool)
+var dp = newSeqWith(N+1, newSeqWith(X+1, false))
+dp[0][0] = true
+for i1 in 1..N:
+  let (a, b) = AB[i1-1]
+  for j in 0..X:
+    if j == 0: dp[i1][0] = true; continue
+    for cnt in 0..b:
+      let remain = j - a*cnt
+      if remain >= 0 and dp[i1 - 1][remain]:
+        dp[i1][j] = true
+
+# echo dp
+
+if dp[N][X]:
+  echo "Yes"
+else:
+  echo "No"

@@ -26,9 +26,11 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (A, B) = stdin.readLine.split.map(parseInt).toTuple(2)
+let (L, R) = stdin.readLine.split.map(parseInt).toTuple(2)
 
-var s = (0..9).toSeq.toHashSet()
-s.excl(A+B)
-echo s.pop()
-
+if L == R:
+  echo "Invalid"
+elif L == 1:
+  echo "Yes"
+else:
+  echo "No"

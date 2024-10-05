@@ -74,3 +74,36 @@ proc `mod=`(x: var int, m: int): void =
 
 ################################
 
+let 
+  (H, W) = stdin.readLine.split.map(parseInt).toTuple(2)
+  S = newSeqWith(H, stdin.readLine)
+
+const SNUKE = "snuke"
+if S[0][0] != 's':
+  echo "No"
+  quit()
+var isSeen = newSeqWith(H, newSeqWith(W, false))
+isSeen[0][0] = true
+var s = @[(0, 0)]
+while s.len > 0:
+  let (tx, ty) = s.pop()
+  let tChar = S[ty][tx]
+  let nextChar = SNUKE[(SNUKE.find(tChar)+1) mod 5]
+  # echo ((tx, ty), tChar, nextChar)
+  for (dx, dy) in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+    let (x, y) = (tx+dx, ty+dy)
+    if not (x in 0..<W and y in 0..<H):
+      continue 
+    if S[y][x] != nextChar:
+      continue
+    if isSeen[y][x]:
+      continue
+    isSeen[y][x] = true
+    s.add((x, y))
+
+# echo isSeen
+
+if isSeen[H-1][W-1]:
+  echo "Yes"
+else:
+  echo "No"

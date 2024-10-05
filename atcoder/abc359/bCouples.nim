@@ -26,11 +26,12 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let S = stdin.readLine
+let N = stdin.readLine.parseInt()
+let A = stdin.readLine.split.map(parseInt)
 
-let smallCnt = S.countIt(it in 'a'..'z')
-let bigCnt = S.countIt(it in 'A'..'Z')
-if smallCnt < bigCnt:
-  echo S.toUpper()
-else:
-  echo S.toLower()
+var result = 0
+for i in 0..<2*N-2:
+  if A[i] == A[i+2]:
+    result += 1
+
+echo result

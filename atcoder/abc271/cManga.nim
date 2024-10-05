@@ -47,3 +47,37 @@ proc just[T, U](x: T, f: T -> U): U =
   return x.f
 
 ################################
+
+const INF = 1 shl 60
+let 
+  N = stdin.readLine.parseInt()
+  A = stdin.readLine.split.map(parseInt)
+
+var ct = A.toCountTable()
+var uniqueMangas = newSeq[int]()
+var remain = 0
+for k in ct.keys.toSeq.sorted():
+  uniqueMangas.add(k)
+  let r = ct[k]-1
+  remain += r
+  ct.inc(k, -r)
+# ct[k]は0か1
+# remainには交換用の本の数
+# uniqueMangasはct[k]==1となるkが昇順で並んでる
+
+for i in 1..INF:
+  if ct.hasKey(i) and ct[i] >= 1:
+    ct.inc(i, -1)
+    continue
+  if remain >= 2:
+    remain -= 2
+    continue
+  while remain < 2:
+    if uniqueMangas.len == 0:
+      echo i-1; quit()
+    let t = uniqueMangas.pop()
+    if ct[t] == 0:
+      echo i-1; quit()
+    ct.inc(t, -1)
+    remain += 1
+  remain -= 2

@@ -80,3 +80,21 @@ proc `*=`(a: var ModInt, b: int | ModInt): ModInt =
 
 ################################
 
+const MOD = 998244353
+let X = stdin.readLine.parseInt()
+
+var memo = initTable[int, int]()
+proc solve(x: int): int =
+  if memo.hasKey(x): return memo[x]
+  let 
+    a = (x div 2)
+    b = x - a
+  if x < 100 and a*b <= x:
+    memo[x] = x
+  else:
+    result = solve(a) * solve(b)
+    result = result mod MOD
+    memo[x] = result
+  return memo[x]
+
+echo solve(X)

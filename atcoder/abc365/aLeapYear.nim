@@ -1,5 +1,6 @@
-import std/[sequtils, strutils, strformat, strscans, algorithm, math, sugar, hashes, tables, complex, random, deques, heapqueue, sets, macros, bitops]
-{. warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off .}
+import std/[sequtils, strutils, strformat, strscans, algorithm, math, sugar,
+    hashes, tables, complex, random, deques, heapqueue, sets, macros, bitops]
+{.warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off.}
 
 macro toTuple(lArg: openArray, n: static[int]): untyped =
   let l = genSym()
@@ -26,11 +27,13 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let S = stdin.readLine
+let Y = stdin.readLine.parseInt()
 
-let smallCnt = S.countIt(it in 'a'..'z')
-let bigCnt = S.countIt(it in 'A'..'Z')
-if smallCnt < bigCnt:
-  echo S.toUpper()
+if Y mod 4 != 0:
+  echo 365
+elif Y mod 100 != 0:
+  echo 366
+elif Y mod 400 != 0:
+  echo 365
 else:
-  echo S.toLower()
+  echo 366

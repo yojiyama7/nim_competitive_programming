@@ -26,47 +26,53 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-type
-  MyList = object
-    l: seq[int]
-  MyListRef = ref MyList
-  MyListElement = object
-    ml: MyListRef
-    idx: int
-  MyListElementRef = ref MyListElement
-  MyListElementRange = object
-    ml: MyListRef
-    slice: HSlice[int, int]
-  MyListElementRangeRef = ref MyListElementRange
+# const MOD = 10^9 + 7
+# const INF = 10 shl 60
+# echo (INF.euclMOD(MOD) * INF.euclMod(MOD)).euclMOD(MOD)
 
-proc initMyList(): MyList =
-  MyList(l: newSeq[int]())
-proc newMyList(): MyListRef =
-  MyListRef(l: newSeq[int]())
-proc push(self: MyListRef, v: int) =
-  self.l.add((v div 2) * 2)
+################################
 
-# +=などのために、elementの参照を返す
-proc `[]`(self: MyListRef, idx: int): MyListElementRef =
-  MyListElementRef(ml: self, idx: idx)
-proc `[]`(self: MyListRef, slice: HSlice[int, int]): MyListElementRangeRef =
-  MyListElementRangeRef(ml: self, slice: slice)
-# 直接編集する
-proc `[]=`(self: MyListRef, idx: int, v: int) =
-  self.l[idx] = (v div 2) * 2
-# elementの参照に対して+=などを定義する
-proc `+=`(e: MyListElementRef, v: int) =
-  echo "element adding"
-  e.ml.l[e.idx] += (v div 2) * 2
+# type
+#   MyList = object
+#     l: seq[int]
+#   MyListRef = ref MyList
+#   MyListElement = object
+#     ml: MyListRef
+#     idx: int
+#   MyListElementRef = ref MyListElement
+#   MyListElementRange = object
+#     ml: MyListRef
+#     slice: HSlice[int, int]
+#   MyListElementRangeRef = ref MyListElementRange
 
-var ml = newMyList()
-for i in 0..<10:
-  ml.push(i)
-ml[0] += 3
-ml[1] = 15
-# ml[0..<10]
-echo ml.l
+# proc initMyList(): MyList =
+#   MyList(l: newSeq[int]())
+# proc newMyList(): MyListRef =
+#   MyListRef(l: newSeq[int]())
+# proc push(self: MyListRef, v: int) =
+#   self.l.add((v div 2) * 2)
 
-var a = @[1, 4, 5, 6, 7, 3]
-a[0..<3] = @[1]
-echo a
+# # +=などのために、elementの参照を返す
+# proc `[]`(self: MyListRef, idx: int): MyListElementRef =
+#   MyListElementRef(ml: self, idx: idx)
+# proc `[]`(self: MyListRef, slice: HSlice[int, int]): MyListElementRangeRef =
+#   MyListElementRangeRef(ml: self, slice: slice)
+# # 直接編集する
+# proc `[]=`(self: MyListRef, idx: int, v: int) =
+#   self.l[idx] = (v div 2) * 2
+# # elementの参照に対して+=などを定義する
+# proc `+=`(e: MyListElementRef, v: int) =
+#   echo "element adding"
+#   e.ml.l[e.idx] += (v div 2) * 2
+
+# var ml = newMyList()
+# for i in 0..<10:
+#   ml.push(i)
+# ml[0] += 3
+# ml[1] = 15
+# # ml[0..<10]
+# echo ml.l
+
+# var a = @[1, 4, 5, 6, 7, 3]
+# a[0..<3] = @[1]
+# echo a

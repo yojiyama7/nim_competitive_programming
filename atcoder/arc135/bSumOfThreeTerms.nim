@@ -80,3 +80,42 @@ proc `*=`(a: var ModInt, b: int | ModInt): ModInt =
 
 ################################
 
+# A[0], A[1] が決まると全部決まる
+
+# S[i] - A[i] + A[i+3] = S[i+1]
+# A[i+3] - A[i] = S[i+1] - S[i] = diff
+# A[0], A[1]をできるだけ小さくして、かつ0未満にならないようにする
+# A[2]がは自動的に決まって、これで条件を満たせるかどうかがそのまま問題
+
+let 
+  N = stdin.readLine.parseInt()
+  S = stdin.readLine.split.map(parseInt)
+
+var zeroScore = 0 # A[0]が0スタートなら
+var zeroMin = 0
+var oneScore = 0 # A[1]が0スタートなら
+var oneMin = 0
+var twoScore = 0 # A[2]が0スタートなら
+var twoMin = 0
+for i in 0..<N-1:
+  let diff = S[i+1] - S[i]
+  if i mod 3 == 0:
+    zeroScore += diff
+    zeroMin = min(zeroMin, zeroScore)
+  elif i mod 3 == 1:
+    oneScore += diff
+    oneMin = min(oneMin, oneScore)
+  else:
+    twoScore += diff
+    twoMin = min(twoMin, twoScore)
+
+let req = -zeroMin + -oneMin + -twoMin
+if req <= S[0]:
+  echo "Yes"
+  var result = @[-zeroMin, -oneMin]
+  for i in 0..<N:
+    let result_iPlus2 = S[i]-result[i]-result[i+1]
+    result.add(result_iPlus2)
+  echo result.join(" ")
+else:
+  echo "No"

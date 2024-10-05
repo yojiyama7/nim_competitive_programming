@@ -1,5 +1,6 @@
-import std/[sequtils, strutils, strformat, strscans, algorithm, math, sugar, hashes, tables, complex, random, deques, heapqueue, sets, macros, bitops]
-{. warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off .}
+import std/[sequtils, strutils, strformat, strscans, algorithm, math, sugar,
+    hashes, tables, complex, random, deques, heapqueue, sets, macros, bitops]
+{.warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off.}
 
 macro toTuple(lArg: openArray, n: static[int]): untyped =
   let l = genSym()
@@ -26,11 +27,6 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let S = stdin.readLine
-
-let smallCnt = S.countIt(it in 'a'..'z')
-let bigCnt = S.countIt(it in 'A'..'Z')
-if smallCnt < bigCnt:
-  echo S.toUpper()
-else:
-  echo S.toLower()
+let
+  (N, D) = stdin.readLine.split.map(parseInt).toTuple(2)
+  XY = newSeqWith(N, stdin.readLine.split.map(parseInt).toTuple(2))

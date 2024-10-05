@@ -26,3 +26,34 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+const MOD = 998244353
+let 
+  N = stdin.readLine.parseInt()
+  A = stdin.readLine.split.map(parseInt)
+
+proc calcDigitNum(x: int): int =
+  ($x).len
+
+var accByDegitNum = newSeqWith(11, newSeqWith(N+1, 0))
+for i1 in 1..N:
+  let degitNum = calcDigitNum(A[i1-1])
+  for x in 1..10:
+    accByDegitNum[x][i1] = accByDegitNum[x][i1 - 1]
+    if x == degitNum:
+      accByDegitNum[x][i1] += 1
+var accA = newSeq[int](N+1)
+for i in 0..<N:
+  accA[i+1] = (accA[i] + A[i]).euclMod MOD
+
+var result = 0
+for i, a in A:
+  let (l, r) = (i+1, N)
+  var score = 0
+  for x in 1..10:
+    let s = ((a.euclMod(MOD) * (10^x).euclMod(MOD)).euclMod(MOD) * (accByDegitNum[x][r] - accByDegitNum[x][l])).euclMod(MOD)
+    score = score + s.euclMod(MOD)
+  let s = accA[r] - accA[l]
+  score = (score + s).euclMod MOD
+  result = (result + score).euclMod MOD
+
+echo result

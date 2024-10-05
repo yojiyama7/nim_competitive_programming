@@ -1,5 +1,6 @@
-import std/[sequtils, strutils, strformat, strscans, algorithm, math, sugar, hashes, tables, complex, random, deques, heapqueue, sets, macros, bitops]
-{. warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off .}
+import std/[sequtils, strutils, strformat, strscans, algorithm, math, sugar,
+    hashes, tables, complex, random, deques, heapqueue, sets, macros, bitops]
+{.warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off.}
 
 macro toTuple(lArg: openArray, n: static[int]): untyped =
   let l = genSym()
@@ -26,11 +27,25 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let S = stdin.readLine
+let
+  Q = stdin.readLine.parseInt()
+  QUERY = newSeqWith(Q, stdin.readLine.split.map(parseInt))
 
-let smallCnt = S.countIt(it in 'a'..'z')
-let bigCnt = S.countIt(it in 'A'..'Z')
-if smallCnt < bigCnt:
-  echo S.toUpper()
-else:
-  echo S.toLower()
+var t = initTable[int, int]()
+for query in QUERY:
+  case query[0]
+  of 1:
+    let x = query[1]
+    if not t.hasKey(x):
+      t[x] = 0
+    t[x] += 1
+  of 2:
+    let x = query[1]
+    t[x] -= 1
+    if t[x] == 0:
+      t.del(x)
+  of 3:
+    # echo t
+    echo t.len()
+  else: discard
+

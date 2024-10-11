@@ -27,10 +27,17 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+const INF = 1 shl 60
+
 let
   N = stdin.readLine.parseInt()
-var
-  A = stdin.readLine.split.map(parseInt)
+  S = newSeqWith(N, stdin.readLine)
 
-let res = (0..<N).toSeq.mapIt((A[it], it)).sorted()[^2][1] + 1
-echo res
+for i in 0..<INF:
+  if i+2 >= N:
+    break
+  if S[i] == "sweet" and S[i+1] == "sweet":
+    echo "No"
+    quit()
+
+echo "Yes"

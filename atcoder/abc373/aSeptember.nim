@@ -28,9 +28,11 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 ################################
 
 let
-  N = stdin.readLine.parseInt()
-var
-  A = stdin.readLine.split.map(parseInt)
+  S = newSeqWith(12, stdin.readLine)
 
-let res = (0..<N).toSeq.mapIt((A[it], it)).sorted()[^2][1] + 1
-echo res
+var cnt = 0
+for i in 0..<12:
+  if i+1 == S[i].len:
+    cnt += 1
+
+echo cnt

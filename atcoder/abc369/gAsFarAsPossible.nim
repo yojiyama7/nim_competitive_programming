@@ -1,6 +1,5 @@
-import std/[sequtils, strutils, strformat, strscans, algorithm, math, sugar,
-    hashes, tables, complex, random, deques, heapqueue, sets, macros, bitops]
-{.warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off.}
+import std/[sequtils, strutils, strformat, strscans, algorithm, math, sugar, hashes, tables, complex, random, deques, heapqueue, sets, macros, bitops]
+{. warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off .}
 
 macro toTuple(lArg: openArray, n: static[int]): untyped =
   let l = genSym()
@@ -27,10 +26,3 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let
-  N = stdin.readLine.parseInt()
-var
-  A = stdin.readLine.split.map(parseInt)
-
-let res = (0..<N).toSeq.mapIt((A[it], it)).sorted()[^2][1] + 1
-echo res

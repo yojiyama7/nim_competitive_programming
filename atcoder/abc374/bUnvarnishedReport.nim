@@ -28,9 +28,14 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 ################################
 
 let
-  N = stdin.readLine.parseInt()
-var
-  A = stdin.readLine.split.map(parseInt)
+  S = stdin.readLine
+  T = stdin.readLine
 
-let res = (0..<N).toSeq.mapIt((A[it], it)).sorted()[^2][1] + 1
-echo res
+var i = 0;
+while i < len(S) and i < len(T) and S[i] == T[i]:
+  i += 1;
+
+if i < len(S) or i < len(T):
+  echo i + 1
+else:
+  echo 0

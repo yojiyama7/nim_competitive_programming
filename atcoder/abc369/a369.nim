@@ -27,10 +27,18 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let
-  N = stdin.readLine.parseInt()
 var
-  A = stdin.readLine.split.map(parseInt)
+  (A, B) = stdin.readLine.split.map(parseInt).toTuple(2)
 
-let res = (0..<N).toSeq.mapIt((A[it], it)).sorted()[^2][1] + 1
-echo res
+if A == B:
+  echo 1
+  quit()
+
+if A > B:
+  swap(A, B)
+
+if (B - A) mod 2 == 0:
+  echo 3
+else:
+  echo 2
+

@@ -26,17 +26,10 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let
-  N = stdin.readLine.parseInt()
-  X = stdin.readLine.split.map(parseInt)
-  P = stdin.readLine.split.map(parseInt)
-  Q = stdin.readLine.parseInt()
-  LR = newSeqWith(Q, stdin.readLine.split.map(parseInt).toTuple(2))
+let A = stdin.readLine.split.map(parseInt)
 
-let accP = @[0] & P.cumsummed()
-
-for (l, r) in LR:
-  let bl = X.lowerBound(l)
-  let br = X.upperBound(r)
-  let score = accP[br] - accP[bl]
-  echo score
+let cnts = A.toCountTable().values.toSeq.sorted()
+if cnts.len >= 2 and cnts[^1] >= 3 and cnts[^2] >= 2:
+  echo "Yes"
+else:
+  echo "No"

@@ -28,15 +28,16 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 let
   N = stdin.readLine.parseInt()
-  X = stdin.readLine.split.map(parseInt)
-  P = stdin.readLine.split.map(parseInt)
-  Q = stdin.readLine.parseInt()
-  LR = newSeqWith(Q, stdin.readLine.split.map(parseInt).toTuple(2))
+  A = stdin.readLine.split.map(parseInt)
 
-let accP = @[0] & P.cumsummed()
+let c = A.toCountTable()
 
-for (l, r) in LR:
-  let bl = X.lowerBound(l)
-  let br = X.upperBound(r)
-  let score = accP[br] - accP[bl]
-  echo score
+var max_score = 0
+var idx1 = -1
+for ai, a in A:
+  if c[a] == 1:
+    if a > max_score:
+      max_score = a
+      idx1 = ai + 1
+
+echo idx1

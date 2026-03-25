@@ -26,17 +26,5 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let
-  N = stdin.readLine.parseInt()
-  X = stdin.readLine.split.map(parseInt)
-  P = stdin.readLine.split.map(parseInt)
-  Q = stdin.readLine.parseInt()
-  LR = newSeqWith(Q, stdin.readLine.split.map(parseInt).toTuple(2))
-
-let accP = @[0] & P.cumsummed()
-
-for (l, r) in LR:
-  let bl = X.lowerBound(l)
-  let br = X.upperBound(r)
-  let score = accP[br] - accP[bl]
-  echo score
+let 
+  N = 

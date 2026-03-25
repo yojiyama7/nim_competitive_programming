@@ -27,16 +27,29 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 ################################
 
 let
-  N = stdin.readLine.parseInt()
-  X = stdin.readLine.split.map(parseInt)
-  P = stdin.readLine.split.map(parseInt)
-  Q = stdin.readLine.parseInt()
-  LR = newSeqWith(Q, stdin.readLine.split.map(parseInt).toTuple(2))
+  (N, R, C) = stdin.readLine.split.map(parseInt).toTuple(3)
+  S = stdin.readLine
 
-let accP = @[0] & P.cumsummed()
-
-for (l, r) in LR:
-  let bl = X.lowerBound(l)
-  let br = X.upperBound(r)
-  let score = accP[br] - accP[bl]
-  echo score
+var offsetY, offsetX = 0
+var smokes = [(0, 0)].toHashSet()
+for s in S:
+  case s
+  of 'N':
+    offsetY -= 1
+  of 'S':
+    offsetY += 1
+  of 'W':
+    offsetX -= 1
+  of 'E':
+    offsetX += 1
+  else: discard
+  smokes.incl((0 - offsetX, 0 - offsetY))
+  let pos = (C - offsetX, R - offsetY)
+  # echo (offsetX, offsetY), pos, smokes
+  # for smoke in smokes:
+  #   echo (smoke[0]+offsetX, smoke[1]+offsetY)
+  if pos in smokes:
+    stdout.write('1')
+  else:
+    stdout.write('0')
+echo ""

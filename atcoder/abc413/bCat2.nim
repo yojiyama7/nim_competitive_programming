@@ -26,25 +26,15 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let
+let 
   N = stdin.readLine.parseInt()
-  H = stdin.readLine.split.map(parseInt)
+  S = newSeqWith(N, stdin.readLine)
 
-var result = 1
-for step in 1..<N:
-  for offset in 0..<step:
-    var i = offset
-    var bh = -1
-    var score = 0
-    while (i < N):
-      # echo (step, offset, i, score)
-      if bh == -1 or bh == H[i]:
-        score += 1
-      else:
-        result = max(score, result)
-        score = 1
-      bh = H[i]
-      i += step
-    result = max(score, result)
+var words = initHashSet[string]()
+for i, s in S:
+  for j, t in S:
+    if i == j:
+      continue
+    words.incl(s & t)
 
-echo result
+echo words.len()

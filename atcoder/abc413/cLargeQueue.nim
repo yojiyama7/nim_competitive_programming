@@ -27,24 +27,21 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 ################################
 
 let
-  N = stdin.readLine.parseInt()
-  H = stdin.readLine.split.map(parseInt)
+  Q = stdin.readLine.parseInt()
+  QUERY = newSeqWith(Q, stdin.readLine.split.map(parseInt))
 
-var result = 1
-for step in 1..<N:
-  for offset in 0..<step:
-    var i = offset
-    var bh = -1
+var d = initDeque[(int, int)]()
+for query in QUERY:
+  if query[0] == 1:
+    d.addLast((query[1], query[2]))
+  elif query[0] == 2:
+    var remain = query[1]
     var score = 0
-    while (i < N):
-      # echo (step, offset, i, score)
-      if bh == -1 or bh == H[i]:
-        score += 1
-      else:
-        result = max(score, result)
-        score = 1
-      bh = H[i]
-      i += step
-    result = max(score, result)
-
-echo result
+    while remain > 0 and remain >= d[0][0]:
+      remain -= d[0][0]
+      score += d[0][0] * d[0][1]
+      d.popFirst()
+    if remain > 0:
+      d[0][0] -= remain
+      score += remain * d[0][1]
+    echo score

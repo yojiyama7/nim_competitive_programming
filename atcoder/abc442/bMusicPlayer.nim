@@ -26,6 +26,3 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let S = stdin.readLine
-
-echo S[0].parseInt * S[2].parseInt

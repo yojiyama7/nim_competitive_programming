@@ -26,6 +26,21 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let S = stdin.readLine
+let
+  N = stdin.readLine.parseInt()
+  TXY = newSeqWith(N, stdin.readLine.split.map(parseInt).toTuple(3))
 
-echo S[0].parseInt * S[2].parseInt
+proc is_ok(): bool =
+  var (bt, bx, by) = (0, 0, 0)
+  for (t, x, y) in TXY:
+    if abs(x - bx) + abs(y - by) > t - bt:
+      return false
+    if (abs(x - bx) + abs(y - by)) mod 2 != (t - bt) mod 2:
+      return false
+    (bt, bx, by) = (t, x, y)
+  return true
+
+if is_ok():
+  echo "Yes"
+else:
+  echo "No"

@@ -26,6 +26,12 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let S = stdin.readLine
+let (N, Y) = stdin.readLine.split.map(parseInt).toTuple(2)
 
-echo S[0].parseInt * S[2].parseInt
+for i in 0..N:
+  for j in 0..N-i:
+    let k = N - i - j
+    if 10000*i + 5000*j + 1000*k == Y:
+      echo &"{i} {j} {k}"
+      quit()
+echo "-1 -1 -1"

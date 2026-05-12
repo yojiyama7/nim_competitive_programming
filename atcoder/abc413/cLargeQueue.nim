@@ -26,6 +26,22 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let S = stdin.readLine
+let
+  Q = stdin.readLine.parseInt()
+  QUERY = newSeqWith(Q, stdin.readLine.split.map(parseInt))
 
-echo S[0].parseInt * S[2].parseInt
+var d = initDeque[(int, int)]()
+for query in QUERY:
+  if query[0] == 1:
+    d.addLast((query[1], query[2]))
+  elif query[0] == 2:
+    var remain = query[1]
+    var score = 0
+    while remain > 0 and remain >= d[0][0]:
+      remain -= d[0][0]
+      score += d[0][0] * d[0][1]
+      d.popFirst()
+    if remain > 0:
+      d[0][0] -= remain
+      score += remain * d[0][1]
+    echo score

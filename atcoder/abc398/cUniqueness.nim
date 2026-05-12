@@ -26,6 +26,18 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let S = stdin.readLine
+let
+  N = stdin.readLine.parseInt()
+  A = stdin.readLine.split.map(parseInt)
 
-echo S[0].parseInt * S[2].parseInt
+let c = A.toCountTable()
+
+var max_score = 0
+var idx1 = -1
+for ai, a in A:
+  if c[a] == 1:
+    if a > max_score:
+      max_score = a
+      idx1 = ai + 1
+
+echo idx1

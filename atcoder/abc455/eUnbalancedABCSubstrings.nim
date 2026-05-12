@@ -30,8 +30,19 @@ let
   N = stdin.readLine.parseInt()
   S = stdin.readLine
 
-var i = 0
-while i < N and S[i] == 'o':
-  i += 1
+var acc_a = @[0] & S.mapIt(if it == 'A': 1 else: 0).cumsummed()
+var acc_b = @[0] & S.mapIt(if it == 'B': 1 else: 0).cumsummed()
+var acc_c = @[0] & S.mapIt(if it == 'C': 1 else: 0).cumsummed()
 
-echo S[i..^1]
+let
+  abc_diffs = (0..N).mapIt((acc_a[it] - acc_b[it], acc_a[it] - acc_c[it]))
+  abc_score = abc_diffs.toCountTable.values.toSeq.mapIt(it * (it-1) div 2).sum()
+  ab_diffs = (0..N).mapIt(acc_a[it] - acc_b[it])
+  ab_score = ab_diffs.toCountTable.values.toSeq.mapIt(it * (it-1) div 2).sum()
+  bc_diffs = (0..N).mapIt(acc_b[it] - acc_c[it])
+  bc_score = bc_diffs.toCountTable.values.toSeq.mapIt(it * (it-1) div 2).sum()
+  ca_diffs = (0..N).mapIt(acc_c[it] - acc_a[it])
+  ca_score = ca_diffs.toCountTable.values.toSeq.mapIt(it * (it-1) div 2).sum()
+
+let res = N * (N+1) div 2 - ab_score - bc_score - ca_score + 2*abc_score
+echo res

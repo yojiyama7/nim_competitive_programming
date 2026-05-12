@@ -1,5 +1,6 @@
-import std/[sequtils, strutils, strformat, strscans, algorithm, math, sugar, hashes, tables, complex, random, deques, heapqueue, sets, macros, bitops]
-{. warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off .}
+import std/[sequtils, strutils, strformat, strscans, algorithm, math, sugar,
+    hashes, tables, complex, random, deques, heapqueue, sets, macros, bitops]
+{.warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off.}
 
 macro toTuple(lArg: openArray, n: static[int]): untyped =
   let l = genSym()
@@ -24,8 +25,22 @@ iterator skipBy(r: HSlice, step: int): int =
     yield i
 proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
-################################
+############################
 
-let S = stdin.readLine
+let
+  ABCDE = stdin.readLine.split.map(parseInt)
 
-echo S[0].parseInt * S[2].parseInt
+var l = newSeq[(int, string)]()
+for i in 1..<32:
+  var score = 0;
+  var t = ""
+  for j in 0..<5:
+    if bool((i shr j) and 1):
+      score += ABCDE[j]
+      t &= "ABCDE"[j]
+  l.add((score, t))
+
+l = l.sortedByIt((-it[0], it[1]))
+for (ls, lname) in l:
+  echo lname
+

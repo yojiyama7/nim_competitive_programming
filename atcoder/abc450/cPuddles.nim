@@ -26,6 +26,31 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let S = stdin.readLine
+let
+  (H, W) = stdin.readLine.split.map(parseInt).toTuple(2)
+  S = newSeqWith(H, stdin.readLine)
 
-echo S[0].parseInt * S[2].parseInt
+var res = 0
+var visited = newSeqWith(H, newSeqWith(W, false))
+for cy in 0..<H:
+  for cx in 0..<W:
+    if visited[cy][cx] or S[cy][cx] == '#':
+      continue
+    visited[cy][cx] = true
+    var stack = @[(cx, cy)]
+    var is_surrounded = true
+    while stack.len > 0:
+      let (tx, ty) = stack.pop()
+      for (dx, dy) in [(0, 1), (1, 0), (0, -1), (-1, 0)]:
+        let (x, y) = (tx+dx, ty+dy)
+        if not (x in 0..<W and y in 0..<H):
+          is_surrounded = false
+          continue
+        if visited[y][x] or S[y][x] == '#':
+          continue
+        visited[y][x] = true
+        stack.add((x, y))
+    if is_surrounded:
+      res += 1
+
+echo res

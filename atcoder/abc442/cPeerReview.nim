@@ -26,6 +26,19 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let S = stdin.readLine
+let
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+  A1B1 = newSeqWith(M, stdin.readLine.split.map(parseInt).toTuple(2))
 
-echo S[0].parseInt * S[2].parseInt
+var invalid_reviewers  = newSeqWith(N, 1)
+for (a1, b1) in A1B1:
+  let (a, b) = (a1-1, b1-1)
+  invalid_reviewers[a] += 1
+  invalid_reviewers[b] += 1
+
+var res = newSeqWith(N, -1)
+for i in 0..<N:
+  let x = N - invalid_reviewers[i]
+  res[i] = x * (x-1) * (x-2) div 6
+
+echo res.join(" ")

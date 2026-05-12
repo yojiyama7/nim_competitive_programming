@@ -26,6 +26,22 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let S = stdin.readLine
+let 
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+  A1B1 = newSeqWith(M, stdin.readLine.split.map(parseInt).toTuple(2))
 
-echo S[0].parseInt * S[2].parseInt
+var g = newSeqWith(N, initHashSet[int]())
+for (a1, b1) in A1B1:
+  g[a1-1].incl(b1-1)
+
+var visited = newSeqWith(N, false)
+var stack = @[0]
+while stack.len > 0:
+  let t = stack.pop()
+  visited[t] = true
+  for to in g[t]:
+    if visited[to]:
+      continue
+    stack.add(to)
+
+echo visited.count(true)

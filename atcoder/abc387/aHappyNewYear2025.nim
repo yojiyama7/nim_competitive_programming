@@ -26,3 +26,7 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let
+  (A, B) = stdin.readLine.split.map(parseInt).toTuple(2)
+
+echo (A+B)^2

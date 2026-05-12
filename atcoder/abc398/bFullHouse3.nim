@@ -26,6 +26,10 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let S = stdin.readLine
+let A = stdin.readLine.split.map(parseInt)
 
-echo S[0].parseInt * S[2].parseInt
+let cnts = A.toCountTable().values.toSeq.sorted()
+if cnts.len >= 2 and cnts[^1] >= 3 and cnts[^2] >= 2:
+  echo "Yes"
+else:
+  echo "No"

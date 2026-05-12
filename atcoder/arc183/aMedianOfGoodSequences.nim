@@ -26,8 +26,6 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (N, K) = stdin.readLine.split.map(parseInt).toTuple(2)
-
 # 辞書順で 前半 or 後半 を判定したい
 # もうちょい考察する
 # (1,1,2,2)
@@ -61,3 +59,7 @@ let (N, K) = stdin.readLine.split.map(parseInt).toTuple(2)
 
 # 長さNのxから始まるものはxが何であっても同じ個数ある
 # ということは、長さNで最初はN/2になるべき
+
+let
+  (N, K) = stdin.readLine.split.map(parseInt).toTuple(2)
+

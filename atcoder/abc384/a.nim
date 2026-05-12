@@ -1,5 +1,6 @@
-import std/[sequtils, strutils, strformat, strscans, algorithm, math, sugar, hashes, tables, complex, random, deques, heapqueue, sets, macros, bitops]
-{. warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off .}
+import std/[sequtils, strutils, strformat, strscans, algorithm, math, sugar,
+    hashes, tables, complex, random, deques, heapqueue, sets, macros, bitops]
+{.warning[UnusedImport]: off, hint[XDeclaredButNotUsed]: off, hint[Name]: off.}
 
 macro toTuple(lArg: openArray, n: static[int]): untyped =
   let l = genSym()
@@ -24,8 +25,17 @@ iterator skipBy(r: HSlice, step: int): int =
     yield i
 proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
-################################
+############################
 
-let S = stdin.readLine
+var
+  (N, C1, C2) = stdin.readLine.split.toTuple(3)
+  S = stdin.readLine
 
-echo S[0].parseInt * S[2].parseInt
+var t = ""
+for s in S:
+  if s == C1[0]:
+    t &= s
+  else:
+    t &= C2[0]
+
+echo t

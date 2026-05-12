@@ -26,6 +26,30 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let S = stdin.readLine
+let
+  (N, R, C) = stdin.readLine.split.map(parseInt).toTuple(3)
+  S = stdin.readLine
 
-echo S[0].parseInt * S[2].parseInt
+var offsetY, offsetX = 0
+var smokes = [(0, 0)].toHashSet()
+for s in S:
+  case s
+  of 'N':
+    offsetY -= 1
+  of 'S':
+    offsetY += 1
+  of 'W':
+    offsetX -= 1
+  of 'E':
+    offsetX += 1
+  else: discard
+  smokes.incl((0 - offsetX, 0 - offsetY))
+  let pos = (C - offsetX, R - offsetY)
+  # echo (offsetX, offsetY), pos, smokes
+  # for smoke in smokes:
+  #   echo (smoke[0]+offsetX, smoke[1]+offsetY)
+  if pos in smokes:
+    stdout.write('1')
+  else:
+    stdout.write('0')
+echo ""

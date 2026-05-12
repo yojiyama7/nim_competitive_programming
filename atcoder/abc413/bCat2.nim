@@ -26,6 +26,15 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let S = stdin.readLine
+let 
+  N = stdin.readLine.parseInt()
+  S = newSeqWith(N, stdin.readLine)
 
-echo S[0].parseInt * S[2].parseInt
+var words = initHashSet[string]()
+for i, s in S:
+  for j, t in S:
+    if i == j:
+      continue
+    words.incl(s & t)
+
+echo words.len()

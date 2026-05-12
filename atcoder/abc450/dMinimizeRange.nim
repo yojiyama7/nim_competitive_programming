@@ -26,6 +26,17 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let S = stdin.readLine
+let
+  (N, K) = stdin.readLine.split.map(parseInt).toTuple(2)
+  A = stdin.readLine.split.map(parseInt)
 
-echo S[0].parseInt * S[2].parseInt
+let remains = A.mapIt(it mod K).toHashSet.toSeq.sorted()
+if remains.len <= 1:
+  echo 0
+  quit()
+# echo remains
+var res = remains[^1] - remains[0]
+for i in 0..<remains.len-1:
+  res = min(res, (remains[i] + K - remains[i+1]))
+
+echo res

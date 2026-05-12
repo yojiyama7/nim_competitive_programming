@@ -26,6 +26,11 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let S = stdin.readLine
+let 
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+  A = stdin.readLine.split.map(parseInt)
 
-echo S[0].parseInt * S[2].parseInt
+if A.sum() <= M:
+  echo "Yes"
+else:
+  echo "No"

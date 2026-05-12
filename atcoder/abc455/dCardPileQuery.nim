@@ -26,23 +26,31 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let T = stdin.readLine.parseInt()
+let
+  (N, Q) = stdin.readLine.split.map(parseInt).toTuple(2)
+  C1P1 = newSeqWith(Q, stdin.readLine.split.map(parseInt).toTuple(2))
 
-proc reduced(raw_s: string): string =
-  var s = ""
-  for c in raw_s:
-    s.add c
-    if s.endsWith("(xx)"):
-      s.removeSuffix("(xx)")
-      s &= "xx"
-  # echo "red: ", s
-  return s
+var is_decks = newSeqWith(N, true)
+var cards = (0..<N).mapIt((prev: -1, next: -1))
+for (c1, p1) in C1P1:
+  let (c, p) = (c1-1, p1-1)
+  is_decks[c] = false
+  if cards[c].prev != -1:
+    cards[cards[c].prev].next = -1
+  cards[p].next = c
+  cards[c].prev = p
 
-for _ in 0..<T:
-  let
-    A = stdin.readLine()
-    B = stdin.readLine()
-  if A.reduced == B.reduced:
-    echo "Yes"
-  else:
-    echo "No"
+var result = newSeq[int]()
+for i in 0..<N:
+  if not is_decks[i]:
+    result.add(0)
+    continue
+  var
+    score = 0
+    cur = i
+  while cur != -1:
+    cur = cards[cur].next
+    score += 1
+  result.add(score)
+
+echo result.join(" ")

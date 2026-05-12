@@ -26,23 +26,3 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let T = stdin.readLine.parseInt()
-
-proc reduced(raw_s: string): string =
-  var s = ""
-  for c in raw_s:
-    s.add c
-    if s.endsWith("(xx)"):
-      s.removeSuffix("(xx)")
-      s &= "xx"
-  # echo "red: ", s
-  return s
-
-for _ in 0..<T:
-  let
-    A = stdin.readLine()
-    B = stdin.readLine()
-  if A.reduced == B.reduced:
-    echo "Yes"
-  else:
-    echo "No"

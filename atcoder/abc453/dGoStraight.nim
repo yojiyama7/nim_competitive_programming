@@ -38,10 +38,14 @@ for y in 0..<H:
     if S[y][x] == 'G':
       (gx, gy) = (x, y)
 
+const dir_lables = "RULD"
 const dir_cands = @[(1, 0), (0, -1), (-1, 0), (0, 1)]
 const INF = 10^18
 
+# var m = newTable[(int, int, int), int]()
 var m = newSeqWith(H, newSeqWith(W, newSeqWith(4, INF)))
+# var before = newTable[(int, int, int), (int, int, int)]()
+var before = newSeqWith(H, newSeqWith(W, newSeqWith(4, (-1, -1, -1))))
 var stack = @[(sx, sy, 0)]
 m[sy][sx][0] = 0
 while stack.len > 0:
@@ -55,50 +59,43 @@ while stack.len > 0:
     dirs.excl(tdir)
   else:
     dirs = (0..<4).toSeq.toHashSet()
-  # echo dirs
   for di in dirs:
     let (dx, dy) = dir_cands[di]
     let (x, y) = (tx+dx, ty+dy)
     if not (x in 0..<W and y in 0..<H):
       continue
-    if m[y][x][di] != INF:
-      continue
     if S[y][x] == '#':
       continue
+    if m[y][x][di] != INF:
+      continue
+    # echo (x, y, dir_lables[di])
     m[y][x][di] = m[ty][tx][tdir] + 1
+    before[y][x][di] = (tx, ty, tdir)
+    # echo before[y][x][di]
     stack.add((x, y, di))
 
-# for mi in m:
-#   var lines = newSeq[string]()
-#   for scores in mi:
-#     var a = ""
-#     for k, s in scores:
-#       if s == INF:
-#         a.add '.'
-#       else:
-#         a.add "^<V>"[k]
-#     lines.add a
-#   echo lines.join("|")
+# for y in 0..<H:
+#   var words = newSeq[string]()
+#   for x in 0..<W:
+#     var a = "...."
+#     for k in 0..<4:
+#       if m[y][x][k] != INF:
+#         a[k] = ">^<V"[k]
+#         # assert((x, y) == (sx, sy) or before[y][x][k] != (-1, -1, -1))
+#     words.add a
+#   echo words.join("|")
 
-var (cx, cy) = (gx, gy)
-var rev_res = ""
-var remain = m[cy][cx].min()
-while (cx, cy) != (sx, sy):
-  var could_move = false
-  for di in 0..<4:
-    let (dx, dy) = dir_cands[(di + 2) mod 4]
-    let (x, y) = (cx+dx, cy+dy)
-    if not (x in 0..<W and y in 0..<H): continue
-    if m[cy][cx][di] == INF: continue
-    if (0..<4).anyIt( m[y][x][it] + 1 == remain ):
-      (cx, cy) = (x, y)
-      rev_res.add "RULD"[di]
-      remain -= 1
-      could_move = true
-      break
-  if not could_move:
-    echo "No"
-    quit()
-
+# echo before
+let l = (0..<4).toSeq.filterIt(m[gy][gx][it] != INF)
+if l.len == 0:
+  echo "No"
+  quit()
 echo "Yes"
-echo rev_res.reversed.join("")
+var (cx, cy, cdir) = (gx, gy, l[0])
+
+var rev_res = ""
+while (cx, cy) != (sx, sy):
+  # echo (cx, cy, cdir), before[cy][cx][cdir]
+  rev_res.add dir_lables[cdir]
+  (cx, cy, cdir) = before[cy][cx][cdir]
+echo rev_res.reversed.join()

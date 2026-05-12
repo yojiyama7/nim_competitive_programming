@@ -26,3 +26,17 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let S = stdin.readline.split.toTuple(3)
+
+let d = {
+  (0, 1): S[0],
+  (0, 2): S[1],
+  (1, 2): S[2],
+}.toTable()
+
+echo "ABC"[(0..<3).toSeq.sorted((a, b) => (
+  if d[(a, b)] == "<":
+    -1
+  else:
+    1
+))[1]]

@@ -26,3 +26,12 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+var ABC = stdin.readLine.split.map(parseInt)
+
+ABC.sort()
+let (A, B, C) = ABC.toTuple(3)
+
+if A + B == C or (A == B and B == C):
+  echo "Yes"
+else:
+  echo "No"

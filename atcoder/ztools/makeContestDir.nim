@@ -86,10 +86,10 @@ discard os.existsOrCreateDir(contestDir)
 for p in problemsInContest:
   # echo p
   let pRawIndexChar = p["problem_index"].getStr()
-  var x = "ABCDEFG".find(pRawIndexChar)
+  var x = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".find(pRawIndexChar)
   if x == -1:
     x = 7
-  let indexChar = "ABCDEFGH"[x].toLowerAscii()
+  let indexChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[x].toLowerAscii()
   let
     pRawName = p["name"].getStr()
     problemName = indexChar & formatToValidName(pRawName, isCapitalize=true)

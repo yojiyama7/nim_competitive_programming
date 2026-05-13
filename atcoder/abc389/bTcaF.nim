@@ -26,3 +26,11 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let X = stdin.readLine.parseInt()
+
+var a = 1
+for i in 1..X: # 1..
+  a *= i
+  if a == X:
+    echo i
+    break

@@ -26,3 +26,9 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let
+  (N, D) = stdin.readLine.split.map(parseInt).toTuple(2)
+  TL = newSeqWith(N, stdin.readLine.split.map(parseInt).toTuple(2))
+
+for k in 1..D:
+  echo TL.mapIt(it[0] * (it[1] + k)).max()

@@ -26,3 +26,12 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+var A = newSeq[int]()
+while true:
+  let a = stdin.readLine.parseInt()
+  A.add(a)
+  if a == 0:
+    break
+
+for a in A.reversed():
+  echo a

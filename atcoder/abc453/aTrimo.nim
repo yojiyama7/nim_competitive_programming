@@ -26,3 +26,12 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let
+  N = stdin.readLine.parseInt()
+  S = stdin.readLine
+
+var i = 0
+while i < N and S[i] == 'o':
+  i += 1
+
+echo S[i..^1]

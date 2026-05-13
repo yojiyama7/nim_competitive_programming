@@ -30,13 +30,11 @@ let
   S = stdin.readLine
   T = stdin.readLine
 
-### Sのi文字目(1-idx)までで、Tの文字目(1-idx)までを構成するパターン数
-var dp = newSeqWith(S.len+1, newSeqWith(T.len + 1, 0))
+var dp = newSeqWith(S.len+1, newSeqWith(T.len+1, 0))
 dp[0][0] = 1
-for i1 in 1..S.len:
-  for j1 in 1..T.len:
-    dp[i1][j1] += dp[i1 - 1][j1]
-    if S[i1-1] == T[j1-1]:
-      dp[i1][j1] += dp[i1][j1 - 1]
-
-echo dp[S.len][T.len]
+for i in 0..<S.len:
+  for j in 0..T.len:
+    dp[i + 1][j] += dp[i][j]
+    if j < T.len and S[i] == T[j]:
+      dp[i + 1][j + 1] += dp[i][j]
+for dpi in dp: echo dpi

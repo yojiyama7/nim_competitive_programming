@@ -26,3 +26,21 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let N = stdin.readLine.parseInt()
+
+var visited = newSeqWith(10000, false)
+var cur = N
+while (not visited[cur]):
+  visited[cur] = true
+  if cur == 1:
+    break
+  cur = cur.intToStr.mapIt(
+    block:
+      let x = it.parseInt()
+      x * x
+    ).sum()
+
+if visited[1]:
+  echo "Yes"
+else:
+  echo "No"

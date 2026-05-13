@@ -26,3 +26,9 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let 
+  N = stdin.readLine.parseInt()
+  A = newSeqWith(N, stdin.readLine.split.map(parseInt))
+
+for i in 0..<N:
+  echo (0..<N).toSeq.filterIt(A[i][it] == 1).mapIt(it + 1).join(" ")

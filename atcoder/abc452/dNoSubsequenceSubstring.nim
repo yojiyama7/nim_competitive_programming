@@ -31,10 +31,20 @@ let
   T = stdin.readLine
 
 var dp = newSeqWith(S.len+1, newSeqWith(T.len+1, 0))
-dp[0][0] = 1
-for i in 0..<S.len:
+# dp[0][0] = 1
+for i in 1..S.len:
   for j in 0..T.len:
-    dp[i + 1][j] += dp[i][j]
-    if j < T.len and S[i] == T[j]:
-      dp[i + 1][j + 1] += dp[i][j]
-for dpi in dp: echo dpi
+    # 開始するが、matchはせず
+    if j == 0 and S[i-1] != T[0]:
+      dp[i][j] += 1
+    # 開始して、即match
+    if j == 1 and S[i-1] == T[0]:
+      dp[i][j] += 1
+    # すでに開始済で、matchせずただ追加
+    if j == T.len or S[i-1] != T[j]:
+      dp[i][j] += dp[i-1][j]
+    # すでに開始済で、matchする
+    if j > 0 and S[i-1] == T[j-1]:
+      dp[i][j] += dp[i-1][j-1]
+
+echo (0..S.len).mapIt(dp[it][0..<T.len].sum()).sum()

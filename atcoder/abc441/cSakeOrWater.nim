@@ -26,9 +26,17 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (M, D) = stdin.readLine.split.map(parseInt).toTuple(2)
+let (N, K, X) = stdin.readLine.split.map(parseInt).toTuple(3)
+var A = stdin.readLine.split.map(parseInt)
 
-if (M, D) in @[(1, 7), (3, 3), (5, 5), (7, 7), (9, 9)]:
-  echo "Yes"
-else:
-  echo "No"
+# Aiの小さいK個が酒である場合が最悪
+A.sort()
+let sake_sum = A[0..<K].sum()
+var drunk_sake = 0;
+for i in 0..<K:
+  drunk_sake += A[K-i-1]
+  let score = (N - K + i+1)
+  if drunk_sake >= X:
+    echo score
+    quit()
+echo -1

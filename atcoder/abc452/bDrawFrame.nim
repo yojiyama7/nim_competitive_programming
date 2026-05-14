@@ -26,3 +26,15 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let (H, W) = stdin.readLine.split.map(parseInt).toTuple(2)
+
+var m = newSeqWith(H, '.'.repeat(W))
+for i in 0..<H:
+  m[i][0] = '#'
+  m[i][^1] = '#'
+for j in 0..<W:
+  m[0][j] = '#'
+  m[^1][j] = '#'
+
+for line in m:
+  echo line

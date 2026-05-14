@@ -26,9 +26,17 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (M, D) = stdin.readLine.split.map(parseInt).toTuple(2)
+let
+  (N, T) = stdin.readLine.split.map(parseInt).toTuple(2)
+  A = stdin.readLine.splitWhitespace.map(parseInt)
 
-if (M, D) in @[(1, 7), (3, 3), (5, 5), (7, 7), (9, 9)]:
-  echo "Yes"
-else:
-  echo "No"
+var s = 0
+var total = 0
+for a in A:
+  if s < a:
+    total += a - s
+    s = a + 100
+if s < T:
+  total += T - s
+
+echo total

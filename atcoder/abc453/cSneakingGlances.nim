@@ -26,3 +26,22 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let
+  N = stdin.readLine.parseInt()
+  L = stdin.readLine.split.map(parseInt)
+
+var res = 0
+for i in 0..(1 shl N):
+  var x = 0
+  var score = 0
+  for j in 0..<N:
+    let xx = x
+    if i.testBit(j):
+      x += L[j]
+    else:
+      x -= L[j]
+    if x >= 0 xor xx >= 0:
+      score += 1
+  res = max(res, score)
+
+echo res

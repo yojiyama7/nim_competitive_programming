@@ -26,9 +26,18 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (M, D) = stdin.readLine.split.map(parseInt).toTuple(2)
+let
+  (N, M) = stdin.readLine.split.map(parseInt).toTuple(2)
+  R1C1 = newSeqWith(M, stdin.readLine.split.map(parseInt).toTuple(2))
 
-if (M, D) in @[(1, 7), (3, 3), (5, 5), (7, 7), (9, 9)]:
-  echo "Yes"
-else:
-  echo "No"
+var visited = initHashSet[(int, int)]()
+var res = 0
+for (r1, c1) in R1C1:
+  let (r, c) = (r1-1, c1-1)
+  let cells = @[(r, c), (r, c+1), (r+1, c), (r+1, c+1)]
+  if cells.allIt(it notin visited):
+    for c in cells:
+      visited.incl(c)
+    res += 1
+
+echo res

@@ -26,9 +26,19 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (M, D) = stdin.readLine.split.map(parseInt).toTuple(2)
+let T = stdin.readLine.parseInt()
 
-if (M, D) in @[(1, 7), (3, 3), (5, 5), (7, 7), (9, 9)]:
-  echo "Yes"
-else:
-  echo "No"
+for _ in 0..<T:
+  let
+    (N, D) = stdin.readLine.split.map(parseInt).toTuple(2)
+    A = stdin.readLine.split.map(parseInt)
+    B = stdin.readLine.split.map(parseInt)
+  var hq = initHeapQueue[int]()
+  for i in 0..<N:
+    for j in 0..<A[i]:
+      hq.push(i)
+    for j in 0..<B[i]:
+      discard hq.pop()
+    while (hq.len > 0 and i - hq[0] >= D):
+      discard hq.pop()
+  echo hq.len

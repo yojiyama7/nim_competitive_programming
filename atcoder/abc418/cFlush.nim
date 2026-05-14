@@ -26,9 +26,30 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
-let (M, D) = stdin.readLine.split.map(parseInt).toTuple(2)
+let 
+  (N, Q) = stdin.readLine.split.map(parseInt).toTuple(2)
+  A = stdin.readLine.split.map(parseInt)
+  B = newSeqWith(Q, stdin.readLine.parseInt())
 
-if (M, D) in @[(1, 7), (3, 3), (5, 5), (7, 7), (9, 9)]:
-  echo "Yes"
-else:
-  echo "No"
+let sumA = A.sum()
+var numsA = newSeq[int](A.max()+1)
+for a in A:
+  numsA[a] += 1
+# echo numsA
+var l = newSeq[int](A.max()+1)
+l[^1] = 0
+for i in (0..<numsA.len()-1).toSeq.reversed():
+  l[i] += l[i+1] + numsA[i+1]
+# echo l
+
+var accl = newSeq[int](l.len() + 1)
+for i in 0..<l.len():
+  accl[i+1] = accl[i] + l[i]
+
+for b in B:
+  if b < l.len():
+    # echo l[0..<b-1].sum() + 1
+    echo accl[b-1] + 1
+  else:
+    echo -1
+

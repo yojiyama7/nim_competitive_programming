@@ -26,3 +26,40 @@ proc initHashSet[T](): Hashset[T] = initHashSet[T](0)
 
 ################################
 
+let
+  S = stdin.readLine()
+  T = stdin.readLine()
+
+# 終端がi番目で、Tのj番目までを丁度部分列に含むような連続部分列のパターン数
+var dp = newSeqWith(S.len+1, newSeqWith(T.len+1, 0))
+dp[0][0] = 1
+for i in 1..S.len:
+  dp[i][0] += 1
+  if S[i-1] == T[0]:
+    dp[i][1] += 1
+  for j in 0..T.len:
+    if j == T.len or S[i-1] != T[j]:
+      dp[i][j] += dp[i-1][j]
+    if j > 0 and S[i-1] == T[j-1]:
+      dp[i][j] += dp[i-1][j-1]
+
+for dpi in dp:
+  echo dpi
+echo S.len * (S.len + 1) div 2 - (0..S.len).mapIt(dp[it][T.len]).sum()
+
+# うまく dp を設計できず
+# var dp = newSeqWith(S.len+1, newSeqWith(T.len+1, 0))
+# dp[0][0] = 1
+# for i in 1..S.len:
+#   for j in 0..T.len:
+#     if j > 0 and S[i-1] == T[j-1]:
+#       dp[i][j] = dp[i-1][j] + dp[i][j-1]
+#     else:
+#       dp[i][j] = dp[i-1][j] + 1
+# for dpi in dp:
+#   echo dpi
+# echo dp[S.len][T.len]
+# var score = 0
+# for i in 0..S.len:
+#   score += dp[i][T.len]
+# echo score
